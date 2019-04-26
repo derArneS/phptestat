@@ -16,17 +16,17 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active" style="width: 100%; height: 500px">
-        <a href="test.php">
+        <a href="../welcome/test.php">
           <img class="d-block w-100"src="../pics/car1.jpg" alt="First slide">
         </a>
       </div>
       <div class="carousel-item" style="width: 100%; height: 500px">
-        <a href="test.php">
+        <a href="../welcome/test.php">
           <img class="d-block w-100" src="../pics/car2.jpg" alt="Second slide">
         </a>
       </div>
       <div class="carousel-item" style="width: 100%; height: 500px">
-        <a href="test.php">
+        <a href="../welcome/test.php">
           <img class="d-block w-100" src="../pics/car3.jpeg" alt="Third slide">
         </a>
       </div>
