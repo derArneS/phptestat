@@ -1,5 +1,7 @@
+<?php require "root.php" ?>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="../welcome/">
+  <a class="navbar-brand" href=<?= root?>>
     <img src="../pics/h.png" class="d-inline-block align-top" width="30" height="30" alt="H">
     Hotel25
   </a>
@@ -10,7 +12,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="../welcome/">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href=<?= root?>>Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
@@ -30,10 +32,10 @@
 
     <ul class="navbar-nav mr-0 my-lg-0">
       <li class="nav-item">
-        <a class="nav-link" href="../welcome/register.php">Registrieren</a>
+        <a class="nav-link" href=<?= root . "/welcome/register.php"?>>Registrieren</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../welcome/login.php">Login</a>
+        <a class="nav-link" href=<?= root . "/welcome/login.php"?>>Login</a>
       </li>
     </ul>
     <!--

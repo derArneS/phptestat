@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -28,7 +29,7 @@
       </div>
       <div class="carousel-item" style="width: 100%; max-height: 400px">
         <a href="../welcome/search.php">
-          <img class="d-block w-100" src="../pics/car3.jpeg" alt="Third slide">
+          <img class="d-block w-100" src="../pics/car3.jpg" alt="Third slide">
         </a>
       </div>
     </div>

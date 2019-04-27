@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title></title>
   <?php require "../const/head.php" ?>
-  <link rel="stylesheet" href="../css/welcomecarousel.css">
+  <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
   <?php require "../const/navbar.php" ?>
