@@ -6,31 +6,40 @@
   <title></title>
   <?php require "../const/head.php" ?>
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/carousel.css">
 </head>
 <body>
   <?php require '../const/navbar.php'; ?>
-  <section>
-  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width: 100%; height: 100%">
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
       <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
       <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
     </ol>
     <div class="carousel-inner">
-      <div class="carousel-item active" style="width: 100%; max-height: 400px">
+      <div class="carousel-item active">
         <a href="../welcome/search.php">
           <img class="d-block w-100"src="../pics/car1.jpg" alt="First slide">
         </a>
+        <div class="carousel-caption d-none d-md-block">
+          <h1>BMW</h1>
+        </div>
       </div>
-      <div class="carousel-item" style="width: 100%; max-height: 400px">
+      <div class="carousel-item">
         <a href="../welcome/search.php">
           <img class="d-block w-100" src="../pics/car2.jpg" alt="Second slide">
         </a>
+        <div class="carousel-caption d-none d-md-block">
+          <h1>Audi</h1>
+        </div>
       </div>
-      <div class="carousel-item" style="width: 100%; max-height: 400px">
+      <div class="carousel-item">
         <a href="../welcome/search.php">
           <img class="d-block w-100" src="../pics/car3.jpg" alt="Third slide">
         </a>
+        <div class="carousel-caption d-none d-md-block">
+          <h1>Porsche</h1>
+        </div>
       </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -42,30 +51,5 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
-  </section>
-
-<!--
-  <section class="search-sec">
-    <div class="container">
-      <form action="#" method="post" novalidate="novalidate">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="row">
-              <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                <input type="text" class="form-control search-slt" placeholder="Reiseort">
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                <input type="text" class="form-control search-slt" placeholder="Reiseort">
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                <button type="button" class="btn btn-danger wrn-btn">Suche</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  </section>
--->
 </body>
 </html>

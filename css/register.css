@@ -8,11 +8,6 @@
   min-height: 94vh;
 }
 
-.bg-image {
-  background-image: url('../pics/login.jpg');
-  background-size: 100%;
-  background-position: center;
-}
 
 .login-heading {
   font-weight: 300;
