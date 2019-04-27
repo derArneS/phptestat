@@ -8,6 +8,7 @@
 </head>
 <body>
   <?php require '../const/navbar.php'; ?>
+  <section>
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width: 100%; height: 100%">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -15,18 +16,18 @@
       <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
     </ol>
     <div class="carousel-inner">
-      <div class="carousel-item active" style="width: 100%; height: 500px">
-        <a href="../welcome/test.php">
+      <div class="carousel-item active" style="width: 100%; max-height: 400px">
+        <a href="../welcome/search.php">
           <img class="d-block w-100"src="../pics/car1.jpg" alt="First slide">
         </a>
       </div>
-      <div class="carousel-item" style="width: 100%; height: 500px">
-        <a href="../welcome/test.php">
+      <div class="carousel-item" style="width: 100%; max-height: 400px">
+        <a href="../welcome/search.php">
           <img class="d-block w-100" src="../pics/car2.jpg" alt="Second slide">
         </a>
       </div>
-      <div class="carousel-item" style="width: 100%; height: 500px">
-        <a href="../welcome/test.php">
+      <div class="carousel-item" style="width: 100%; max-height: 400px">
+        <a href="../welcome/search.php">
           <img class="d-block w-100" src="../pics/car3.jpeg" alt="Third slide">
         </a>
       </div>
@@ -40,7 +41,30 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
+  </section>
 
-
+<!--
+  <section class="search-sec">
+    <div class="container">
+      <form action="#" method="post" novalidate="novalidate">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                <input type="text" class="form-control search-slt" placeholder="Reiseort">
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                <input type="text" class="form-control search-slt" placeholder="Reiseort">
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                <button type="button" class="btn btn-danger wrn-btn">Suche</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+-->
 </body>
 </html>
