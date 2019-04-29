@@ -8,6 +8,7 @@
 </head>
 <body>
   <?php require '../const/navbar.php'; ?>
+
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width: 100%; height: 100%">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -16,17 +17,17 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active" style="width: 100%; height: 500px">
-        <a href="../welcome/test.php">
+        <a href="../welcome/hotelVorschlag1.php">
           <img class="d-block w-100"src="../pics/car1.jpg" alt="First slide">
         </a>
       </div>
       <div class="carousel-item" style="width: 100%; height: 500px">
-        <a href="../welcome/test.php">
+        <a href="../welcome/hotelVorschlag2.php">
           <img class="d-block w-100" src="../pics/car2.jpg" alt="Second slide">
         </a>
       </div>
       <div class="carousel-item" style="width: 100%; height: 500px">
-        <a href="../welcome/test.php">
+        <a href="../welcome/hotelVorschlag3.php">
           <img class="d-block w-100" src="../pics/car3.jpeg" alt="Third slide">
         </a>
       </div>
@@ -41,6 +42,8 @@
     </a>
   </div>
 
+
+  <?php require '../const/footer.php'; ?>
 
 </body>
 </html>
