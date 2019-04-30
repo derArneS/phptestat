@@ -1,4 +1,9 @@
-<?php require "root.php" ?>
+<?php
+
+session_start();
+require "root.php"
+
+?>
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href=<?= root?>>Auto</a>
@@ -27,25 +32,26 @@
       </li>
     </ul>
 
+    <?php if(isset($_SESSION['benutzername'])) { ?>
+      <ul class="navbar-nav mr-0 my-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <?php echo $_SESSION['benutzername']; ?>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="../login/logout.php">Logout</a>
+          </div>
+        </li>
+      </ul>
+    <?php } else {?>
     <ul class="navbar-nav mr-0 my-lg-0">
       <li class="nav-item">
-        <a class="nav-link" href=<?= root . "/welcome/register.php"?>>Registrieren</a>
+        <a class="nav-link" href=<?= root . "/register"?>>Registrieren</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href=<?= root . "/welcome/login.php"?>>Login</a>
+        <a class="nav-link" href=<?= root . "/login"?>>Login</a>
       </li>
     </ul>
-    <!--
-    <ul class="navbar-nav mr-0 my-lg-0">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          User
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="../welcome/login.php">Login</a>
-        </div>
-      </li>
-    </ul>
-  -->
+  <?php } ?>
   </div>
 </nav>
