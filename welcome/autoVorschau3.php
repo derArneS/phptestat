@@ -17,7 +17,7 @@
     <div class="row">
 
       <div class="col-md-8">
-        <img class="img-fluid" src="../pics/car3.jpeg" alt="">
+        <img class="img-fluid" src="../pics/car3.jpg" alt="">
       </div>
 
       <div class="col-md-4">

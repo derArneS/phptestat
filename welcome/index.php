@@ -18,7 +18,7 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <a href="../welcome/search.php">
+        <a href="../welcome/hotelVorschlag1.php">
           <img class="d-block w-100"src="../pics/car1.jpg" alt="First slide">
         </a>
         <div class="carousel-caption d-none d-md-block">
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="carousel-item">
-        <a href="../welcome/search.php">
+        <a href="../welcome/autoVorschau2.php">
           <img class="d-block w-100" src="../pics/car2.jpg" alt="Second slide">
         </a>
         <div class="carousel-caption d-none d-md-block">
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="carousel-item">
-        <a href="../welcome/search.php">
+        <a href="../welcome/autoVorschau3.php">
           <img class="d-block w-100" src="../pics/car3.jpg" alt="Third slide">
         </a>
         <div class="carousel-caption d-none d-md-block">
@@ -51,5 +51,6 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
+  <?php require "../const/footer.php" ?>
 </body>
 </html>
