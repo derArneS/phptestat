@@ -1,8 +1,5 @@
 <?php
-
-session_start();
-require "root.php"
-
+require "root.php";
 ?>
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">

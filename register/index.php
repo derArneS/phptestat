@@ -1,5 +1,9 @@
 <?php
   session_start();
+
+  if (isset($_SESSION['benutzername'])) {
+    header("Location: ../welcome");
+  }
 ?>
 
 <!DOCTYPE html>
@@ -8,30 +12,30 @@
   <meta charset="utf-8">
   <title></title>
   <?php require "../const/head.php" ?>
-  <link rel="stylesheet" href="../css/login.css">
+  <link rel="stylesheet" href="../login/login.css">
 </head>
 <body>
   <?php require "../const/navbar.php" ?>
-  <?php if ($_SESSION['errorRegister']) { ?> <div class="alert alert-danger" role="alert">errorRegister</div> <?php } ?>
-  <?php if ($_SESSION['errorBenutzer']) { ?> <div class="alert alert-danger" role="alert">errorBenutzer</div> <?php } ?>
+  <?php if (isset($_SESSION['errorRegister']) && $_SESSION['errorRegister']) { ?> <div class="alert alert-danger  alert-round" role="alert">errorRegister</div> <?php } ?>
+  <?php if (isset($_SESSION['errorBenutzer']) && $_SESSION['errorBenutzer']) { ?> <div class="alert alert-danger  alert-round" role="alert">errorBenutzer</div> <?php } ?>
   <div class="login d-flex align-items-center py-5">
     <div class="container">
       <div class="row">
         <div class="col-md-9 col-lg-8 mx-auto">
           <h3 class="login-heading mb-4">Willkommen!</h3>
           <form method="post" action="action.php">
-            <?php if ($_SESSION['errorBenutzername']) { ?> <div class="alert alert-danger" role="alert">Benutzername schon vergeben: Bitte einen anderen auswählen oder einloggen.</div> <?php } ?>
+            <?php if (isset($_SESSION['errorBenutzername']) && $_SESSION['errorBenutzername']) { ?> <div class="alert alert-danger alert-round" role="alert">Benutzername schon vergeben: Bitte einen anderen auswählen oder einloggen.</div> <?php } ?>
             <div class="form-label-group">
               <input type="benutzername" name="inputBenutzername" id="inputBenutzername" class="form-control" placeholder="Benutzername" required autofocus>
               <label for="inputBenutzername">Benutzername</label>
             </div>
-            <?php if ($_SESSION['errorEmail']) { ?> <div class="alert alert-danger" role="alert">Email wurde schon benutzt: Bitte eine andere auswählen oder einloggen.</div> <?php } ?>
+            <?php if (isset($_SESSION['errorEmail']) && $_SESSION['errorEmail']) { ?> <div class="alert alert-danger  alert-round" role="alert">Email wurde schon benutzt: Bitte eine andere auswählen oder einloggen.</div> <?php } ?>
             <div class="form-label-group">
               <input type="email" name="inputEmail"  id="inputEmail" class="form-control" placeholder="E-mail Adresse" required autofocus>
               <label for="inputEmail">E-mail Addresse</label>
             </div>
 
-            <?php if ($_SESSION['errorPasswort']) { ?> <div class="alert alert-danger" role="alert">Passwörter stimmen nicht über ein.</div> <?php } ?>
+            <?php if (isset($_SESSION['errorPasswort']) && $_SESSION['errorPasswort']) { ?> <div class="alert alert-danger  alert-round" role="alert">Passwörter stimmen nicht über ein.</div> <?php } ?>
             <div class="form-label-group">
               <input type="password" name="inputPassword"  id="inputPassword" class="form-control" placeholder="Passwort" required>
               <label for="inputPassword">Passwort</label>

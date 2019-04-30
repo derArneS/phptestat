@@ -5,7 +5,6 @@
   require "../database/database.php";
 
   if (isset($_SESSION['benutzername'])) {
-    echo $_SESSION['benutzername'];
     goto err;
   }
 
@@ -47,8 +46,7 @@
   goto noerr;
 
   err:
-  //header("Location: index.php");
-  print_r($_SESSION);
+  header("Location: index.php");
   closeConnection($databaseconnection);
   die();
 

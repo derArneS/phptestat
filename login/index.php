@@ -1,5 +1,8 @@
 <?php
   session_start();
+  if (isset($_SESSION['benutzername'])) {
+    header("Location: ../welcome");
+  }
 ?>
 
 <!DOCTYPE html>
@@ -23,11 +26,13 @@
               <div class="col-md-9 col-lg-8 mx-auto">
                 <h3 class="login-heading mb-4">Welcome back!</h3>
                 <form method="post" action='action.php'>
+                  <?php if (isset($_SESSION['errorEmailBenutzer']) && $_SESSION['errorEmailBenutzer']) { ?> <div class="alert alert-danger  alert-round" role="alert">errorBenutzer</div> <?php } ?>
                   <div class="form-label-group">
-                    <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                    <input type="text" name="inputEmailBenutzer" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                     <label for="inputEmail">Email address</label>
                   </div>
 
+                  <?php if (isset($_SESSION['errorPasswort']) && $_SESSION['errorPasswort']) { ?> <div class="alert alert-danger  alert-round" role="alert">errorBenutzer</div> <?php } ?>
                   <div class="form-label-group">
                     <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
                     <label for="inputPassword">Password</label>
@@ -43,9 +48,13 @@
                     <div class="text-center">
                       <a class="small" href="#">Forgot password?</a>
                     </div>
-
-                  </div>
                   </form>
+
+                  <?php
+                  unset($_SESSION['errorEmailBenutzer']);
+                  unset($_SESSION['errorPasswort']);
+                  ?>
+                </div>
                 </div>
               </div>
             </div>
