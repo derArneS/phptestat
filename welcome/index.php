@@ -1,4 +1,4 @@
-
+<?php session_start(); require "../const/cookie.php"; cookie();?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
