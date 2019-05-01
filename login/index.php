@@ -26,7 +26,7 @@
               <div class="col-md-9 col-lg-8 mx-auto">
                 <h3 class="login-heading mb-4">Welcome back!</h3>
                 <form method="post" action='action.php'>
-                  <?php if (isset($_SESSION['errorEmailBenutzer']) && $_SESSION['errorEmailBenutzer']) { ?> <div class="alert alert-danger  alert-round" role="alert">errorBenutzer</div> <?php } ?>
+                  <?php if (isset($_SESSION['errorEmailBenutzer']) && $_SESSION['errorEmailBenutzer']) { ?> <div class="alert alert-danger alert-round" role="alert">errorBenutzer</div> <?php } ?>
                   <div class="form-label-group">
                     <input type="text" name="inputEmailBenutzer" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                     <label for="inputEmail">Email address</label>
@@ -39,7 +39,7 @@
                   </div>
 
                   <div class="custom-control custom-checkbox mb-3">
-                    <input type="checkbox" name="inputRememberPassword" class="custom-control-input" id="customCheck1">
+                    <input type="checkbox" name="inputRememberPassword" class="custom-control-input" id="customCheck1" value="cookie">
                     <label class="custom-control-label" for="customCheck1">Remember password</label>
                   </div>
 
@@ -49,6 +49,9 @@
                       <a class="small" href="#">Forgot password?</a>
                     </div>
                   </form>
+
+                  <?php print_r($_COOKIE); ?>
+                  <?php print_r($_SESSION); ?>
 
                   <?php
                   unset($_SESSION['errorEmailBenutzer']);

@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php session_start(); require "../const/cookie.php"; cookie();?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -51,5 +51,6 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
+  <?php print_r($_COOKIE);print_r($_SESSION); ?>
 </body>
 </html>
