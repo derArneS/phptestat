@@ -36,7 +36,9 @@ require "root.php";
             <?php echo $_SESSION['benutzername']; ?>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="../login/logout.php">Logout</a>
+            <a class="dropdown-item" href=<?= root . "/inserieren"?>>Inserieren</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href=<?= root . "/login/logout.php"?>>Logout</a>
           </div>
         </li>
       </ul>

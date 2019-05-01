@@ -1,8 +1,5 @@
 <?php
 function cookie (){
-
-  require "../database/database.php";
-
   if (isset($_COOKIE['benutzername']) && isset($_COOKIE['passwort'])) {
     if (!isset($_SESSION['benutzername'])) {
       $databaseconnection = createConnection();

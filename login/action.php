@@ -2,6 +2,7 @@
   session_start();
 
   require "../database/database.php";
+  require "../const/root.php";
 
   $databaseconnection = createConnection();
 
@@ -22,8 +23,7 @@
   }
 
   $_SESSION['benutzername'] = $row['Benutzername'];
-  setcookie("benutzername", $row['Benutzername'], time() + 60 * 60 * 24, "/");
-  setcookie("passwort", $row['Passwort'], time() + 60 * 60 * 24, "/");
+
 
   goto noerr;
 
@@ -33,9 +33,14 @@
   die();
 
   noerr:
-  if ($_POST["inputRememberPassword"] == "cookie") {
-    header("Location: ../const/cookie.php");
-  } else  {
+  if (isset($_POST['inputRememberPassword']) && $_POST["inputRememberPassword"] == "cookie") {
+    setcookie("benutzername", $row['Benutzername'], time() + 60 * 60 * 24, "/");
+    setcookie("passwort", $row['Passwort'], time() + 60 * 60 * 24, "/");
+  }
+
+  if (isset($_SESSION['redirect'])) {
+    header("Location: " . root . $_SESSION['redirect']);
+  } else {
     header("Location: ../welcome");
   }
   closeConnection($databaseconnection);

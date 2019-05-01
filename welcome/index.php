@@ -1,4 +1,4 @@
-<?php session_start(); require "../const/cookie.php"; cookie();?>
+<?php session_start(); require "../const/cookie.php"; cookie(false);?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -18,7 +18,7 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <a href="../welcome/hotelVorschlag1.php">
+        <a href="../welcome/autoVorschau1.php">
           <img class="d-block w-100"src="../pics/car1.jpg" alt="First slide">
         </a>
         <div class="carousel-caption d-none d-md-block">

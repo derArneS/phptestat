@@ -26,12 +26,12 @@
           <form method="post" action="action.php">
             <?php if (isset($_SESSION['errorBenutzername']) && $_SESSION['errorBenutzername']) { ?> <div class="alert alert-danger alert-round" role="alert">Benutzername schon vergeben: Bitte einen anderen auswählen oder einloggen.</div> <?php } ?>
             <div class="form-label-group">
-              <input type="benutzername" name="inputBenutzername" id="inputBenutzername" class="form-control" placeholder="Benutzername" required autofocus>
+              <input type="text" name="inputBenutzername" id="inputBenutzername" class="form-control" placeholder="Benutzername" required autofocus>
               <label for="inputBenutzername">Benutzername</label>
             </div>
             <?php if (isset($_SESSION['errorEmail']) && $_SESSION['errorEmail']) { ?> <div class="alert alert-danger  alert-round" role="alert">Email wurde schon benutzt: Bitte eine andere auswählen oder einloggen.</div> <?php } ?>
             <div class="form-label-group">
-              <input type="email" name="inputEmail"  id="inputEmail" class="form-control" placeholder="E-mail Adresse" required autofocus>
+              <input type="email" name="inputEmail"  id="inputEmail" class="form-control" placeholder="E-mail Adresse" required>
               <label for="inputEmail">E-mail Addresse</label>
             </div>
 
