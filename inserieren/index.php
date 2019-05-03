@@ -4,6 +4,14 @@ require "../database/database.php";
 require "../const/cookie.php"; cookie();
 require "../const/private.php";
 
+if (isset($_SESSION['cache'])) {
+  $marke = $_SESSION['cache']['insert']['marke'];
+  $modell = $_SESSION['cache']['insert']['modell'];
+  $km = $_SESSION['cache']['insert']['inputKM'];
+
+  unset($_SESSION['cache']);
+}
+
 if (!isPrivate(true)) {
   $_SESSION['errorPrivate'] = true;
   $_SESSION['redirect'] = "/inserieren";
@@ -20,18 +28,21 @@ if (!isPrivate(true)) {
   <?php require "../const/head.php" ?>
   <link rel="stylesheet" href="insert.css">
 </head>
-<body>
+<body onload="ajax()">
   <?php require "../const/navbar.php"; ?>
 
+  <?php echo ("var modellID = ".(isset($modell)?$modell.";":"0;")) ?>
+
   <script type="text/javascript">
-  $(document).ready(function(){
-    $('#marke').on('change',function(){
-      var markeID = $(this).val();
-      if(markeID){
+  function ajax(){
+      var marke = $('#marke').val();
+        <?php echo ("var modell = ".(isset($modell)?$modell.";":"0;")) ?>
+      var ajaxString = 'marke='+ encodeURIComponent(marke) + '&modell='+ encodeURIComponent(modell);
+      if(marke){
         $.ajax({
           type:'POST',
           url:'ajaxData.php',
-          data:'markeID='+markeID,
+          data: ajaxString,
           success:function(html){
             $('#modell').html(html);
           }
@@ -39,8 +50,9 @@ if (!isPrivate(true)) {
       }else{
         $('#modell').html('<option value="">Modell</option>');
       }
-    });
-  });
+    };
+
+    document.onload = ajax();
   </script>
 
   <?php
@@ -61,12 +73,12 @@ if (!isPrivate(true)) {
           <div class="row mx-0 px-0">
             <legend style="padding: 0px 0px 0px 17px">Modell</legend>
             <div class="col-6 form-label-group">
-              <select class="form-control" id="marke" name="marke">
+              <select class="form-control" id="marke" name="marke" onchange="ajax()">
                 <option value="">Beliebig</option>
                 <?php
                 if($rowCount > 0){
                   while($row = $resultset->fetch_assoc()){
-                    echo '<option value="'.$row['ID'].'">'.$row['Marke'].'</option>';
+                    echo '<option '.((isset($marke) && $marke == $row['ID'])?'selected="selected"':' ').'value="'.$row['ID'].'">'.$row['Marke'].'</option>';
                   }
                 }else{
                   echo '<option value="">Keine Marken</option>';
@@ -76,7 +88,7 @@ if (!isPrivate(true)) {
             </div>
             <div class="col-6 form-label-group">
               <select class="form-control" id="modell" name="modell">
-                <option value="">Modell</option>
+                <option value="0">Modell</option>
               </select>
             </div>
           </div>
@@ -99,8 +111,12 @@ if (!isPrivate(true)) {
           <div class="row mx-0 px-0 my-3">
             <legend style="padding: 0px 0px 0px 17px">Daten</legend>
             <div class="col-4 form-label-group">
-              <input type="text" name="inputKM" id="inputKM" class="form-control" placeholder="Kilometerstand" required>
+              <input type="text" name="inputKM" id="inputKM" class="form-control" placeholder="Kilometerstand" value="<?= (isset($km)?$km:null); ?>" required>
               <label for="inputKM">Kilometerstand</label>
+            </div>
+            <div class="col-4 form-label-group">
+              <input type="text" name="inputtest" id="inputtest" class="form-control" placeholder="test" value="test" required>
+              <label for="inputtest">test</label>
             </div>
           </div>
         </fieldset>
@@ -108,6 +124,8 @@ if (!isPrivate(true)) {
     </div>
   </div>
 
+  <br>
+  <?php print_r($_SESSION) ?>
 
   <footer class="bg-dark fixed-bottom align-center">
     <div class="container text-center my-3 col-6">
