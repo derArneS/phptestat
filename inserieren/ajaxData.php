@@ -2,7 +2,7 @@
 require "../database/database.php";
 
 if(!empty($_POST["markeID"])){
-
+  $databaseconnection = createConnection();
   if (($statement = $databaseconnection->prepare("SELECT * FROM Modell WHERE Marke_ID=? ORDER BY Name ASC"))
   && ($statement->bind_param("s", $_POST["markeID"]))
   && ($statement->execute())
@@ -11,12 +11,12 @@ if(!empty($_POST["markeID"])){
   }
     //State option list
     if($rowCount > 0){
-        echo '<option value="">Modell</option>';
+        echo '<option value="">Beliebig</option>';
         while($row = $resultset->fetch_assoc()){
             echo '<option value="'.$row['Modell_ID'].'">'.$row['Name'].'</option>';
         }
     }else{
-        echo '<option value="">State not available</option>';
+        echo '<option value="">Keine Modelle</option>';
     }
 }
 ?>

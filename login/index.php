@@ -22,7 +22,7 @@
       <div class="col-12 col-lg-6">
         <div class="login d-flex align-items-center py-5">
           <div class="container">
-            <div class="row">
+            <div class="row row-stretch">
               <div class="col-md-9 col-lg-9 col-xl-8 mx-auto">
                 <h3 class="login-heading mb-4">Welcome back!</h3>
                 <form method="post" action='action.php'>
@@ -46,9 +46,11 @@
 
                   <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Submit">Sign in</button>
 
+                  <!--
                     <div class="text-center">
-                      <a class="small" href="#">Forgot password?</a>
+                      <a class="small" href="forgotpassword.php">Forgot password?</a>
                     </div>
+                  -->
                   </form>
 
                   <?php print_r($_COOKIE); ?>
