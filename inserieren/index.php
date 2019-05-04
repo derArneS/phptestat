@@ -31,7 +31,7 @@ if (!isPrivate(true)) {
 <body onload="ajax()">
   <?php require "../const/navbar.php"; ?>
 
-  <?php echo ("var modellID = ".(isset($modell)?$modell.";":"0;")) ?>
+  <?php //echo ("var modellID = ".(isset($modell)?$modell.";":"0;")) ?>
 
   <script type="text/javascript">
   function ajax(){

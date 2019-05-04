@@ -40,6 +40,7 @@
 
   if (isset($_SESSION['redirect'])) {
     header("Location: " . root . $_SESSION['redirect']);
+    unset($_SESSION['redirect']);
   } else {
     header("Location: ../welcome");
   }
