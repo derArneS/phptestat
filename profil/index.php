@@ -1,8 +1,9 @@
 <?php
 session_start();
-require "../const/cookie.php"; cookie();
-require "../const/private.php";
 require "../database/database.php";
+require "../const/cookie.php";
+require "../const/private.php"; isPrivate(true, "/profil");
+
 
 if (!isPrivate(true)) {
   $_SESSION['errorPrivate'] = true;
@@ -28,43 +29,167 @@ $row = $resultset->fetch_assoc();
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <?php require "../const/head.php" ?>
-    <link rel="stylesheet" href="profil.css">
-  </head>
-  <body>
-    <?php require '../const/navbar.php'; ?>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <?php require "../const/head.php" ?>
+  <link rel="stylesheet" href="profil.css">
+</head>
+<body>
+  <?php require '../const/navbar.php'; ?>
 
-<div class="container col-11 mt-5 box">
+  <div class="container col-11 mt-5 box">
+
     <nav>
-    <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist" fill>
-      <a class="nav-item nav-link" id="nav-angebote-tab" data-toggle="tab" href="#nav-angebote" role="tab" aria-controls="nav-home" aria-selected="true">Eigene Angebote</a>
-      <a class="nav-item nav-link" id="nav-favoriten-tab" data-toggle="tab" href="#nav-favoriten" role="tab" aria-controls="nav-profile" aria-selected="false">Favoriten</a>
-      <a class="nav-item nav-link active" id="nav-daten-tab" data-toggle="tab" href="#nav-daten" role="tab" aria-controls="nav-contact" aria-selected="false">Persönliche Daten</a>
-    </div>
-  </nav>
-  <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade " id="nav-angebote" role="tabpanel" aria-labelledby="nav-home-tab">
-      Hallo :-)
-    </div>
-    <div class="tab-pane fade" id="nav-favoriten" role="tabpanel" aria-labelledby="nav-profile-tab">
-      ...
-    </div>
-    <div class="tab-pane fade show active" id="nav-daten" role="tabpanel" aria-labelledby="nav-contact-tab">
-      <div class="row">
-        <div class="form-label-group col-6">
-          <input disabled class="col-12 form-control" type="text" id="benutzername" name="benutzername" value="<?=$row['Benutzername'] ?>">
-          <label for="benutzername">Benutzername</label>
-        </div>
-        <div class="form-label-group col-6 text-center">
-          <button class="btn btn-primary btn-login col-4" type="submit" name="insert">Ändern</button>
+      <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist" fill>
+        <a class="nav-item nav-link" id="nav-angebote-tab" data-toggle="tab" href="#nav-angebote" role="tab" aria-controls="nav-home" aria-selected="true">Eigene Angebote</a>
+        <a class="nav-item nav-link" id="nav-favoriten-tab" data-toggle="tab" href="#nav-favoriten" role="tab" aria-controls="nav-profile" aria-selected="false">Favoriten</a>
+        <a class="nav-item nav-link active" id="nav-daten-tab" data-toggle="tab" href="#nav-daten" role="tab" aria-controls="nav-contact" aria-selected="false">Persönliche Daten</a>
+      </div>
+    </nav>
+
+
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade " id="nav-angebote" role="tabpanel" aria-labelledby="nav-home-tab">
+        Hallo :-)
+      </div>
+      <div class="tab-pane fade" id="nav-favoriten" role="tabpanel" aria-labelledby="nav-profile-tab">
+        Test
+      </div>
+
+      <div class="tab-pane fade show active col-12 mt-5 box" id="nav-daten" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <div class="container col-12 mt-5 box">
+          <div class="row">
+
+
+<!-- Profil - Benutzername -->
+            <div class="input-group mb-3 col-6">
+              <div class="input-group-prepend">
+                <span class="input-group-addon" id="inputGroup-sizing-default">Benutzername</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default name="benutzername" id="benutzername" value="<?=$row['Benutzername'] ?>"">
+            </div>
+
+            <div class="text-center">
+              <button type="buttom" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">Ändern</button>
+            </div>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Geben Sie Ihren neuen Benutzernamen ein</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Neuer Benutzername</label>
+                        <input type="text" class="form-control" id="benutzername-neu">
+                      </div>
+                      <div class="form-group">
+                        <label for="message-text" class="col-form-label">Benutzername bestätigen</label>
+                        <input type="text" class="form-control" id="benutzername-bestätigen">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn btn-primary">Bestätigen</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+<!-- Profil - Vorname -->
+            <div class="input-group mb-3 col-6">
+              <div class="input-group-prepend">
+                <span class="input-group-addon" id="inputGroup-sizing-default">Vorname</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="vorname" id="vorname">
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary mb-2">Ändern</button>
+            </div>
+
+
+            <div class="input-group mb-3 col-6">
+              <div class="input-group-prepend">
+                <span class="input-group-addon" id="inputGroup-sizing-default">Nachname</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="nachname" id="nachname">
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary mb-2">Ändern</button>
+            </div>
+
+            <div class="input-group mb-3 col-6">
+              <div class="input-group-prepend">
+                <span class="input-group-addon" id="inputGroup-sizing-default">E-Mail</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="email" id="email" value="<?=$row['Email'] ?>">
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary mb-2">Ändern</button>
+            </div>
+
+            <div class="input-group mb-3 col-6">
+              <div class="input-group-prepend">
+                <span class="input-group-addon" id="inputGroup-sizing-default">Adresse</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="benutzername" id="benutzername">
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary mb-2">Ändern</button>
+            </div>
+
+            <div class="input-group mb-3 col-6">
+              <div class="input-group-prepend">
+                <span class="input-group-addon" id="inputGroup-sizing-default">Postleitzahl</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="benutzername" id="benutzername">
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary mb-2">Ändern</button>
+            </div>
+
+            <div class="input-group mb-3 col-6">
+              <div class="input-group-prepend">
+                <span class="input-group-addon" id="inputGroup-sizing-default">Stadt</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="benutzername" id="benutzername">
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary mb-2">Ändern</button>
+            </div>
+
+            <div class="input-group mb-3 col-6">
+              <div class="input-group-prepend">
+                <span class="input-group-addon" id="inputGroup-sizing-default">Passwort</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="passwort" id="passwort" value="<?=$row['Passwort'] ?>">
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary mb-2">Ändern</button>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-  </body>
+
+  </div>
+
+</body>
 </html>
