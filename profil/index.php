@@ -4,13 +4,6 @@ require "../database/database.php";
 require "../const/cookie.php";
 require "../const/private.php"; isPrivate(true, "/profil");
 
-
-if (!isPrivate(true)) {
-  $_SESSION['errorPrivate'] = true;
-  $_SESSION['redirect'] = "/profil";
-  header('Location: ../login');
-  die();
-}
 ?>
 
 <?php
@@ -84,7 +77,7 @@ $row = $resultset->fetch_assoc();
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form>
+                    <form method="post">
                       <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Neuer Benutzername</label>
                         <input type="text" class="form-control" id="benutzername-neu">
@@ -93,12 +86,12 @@ $row = $resultset->fetch_assoc();
                         <label for="message-text" class="col-form-label">Benutzername bestätigen</label>
                         <input type="text" class="form-control" id="benutzername-bestätigen">
                       </div>
-                    </form>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                    <button type="button" class="btn btn-primary">Bestätigen</button>
+                    <button type="submit" name="button" class="btn btn-primary" value="insert" data-dismiss="modal">Bestätigen</button>
                   </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -143,7 +136,7 @@ $row = $resultset->fetch_assoc();
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Adresse</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="benutzername" id="benutzername">
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="adresse" id="adresse">
             </div>
 
             <div class="text-center">
@@ -154,7 +147,7 @@ $row = $resultset->fetch_assoc();
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Postleitzahl</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="benutzername" id="benutzername">
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="postleitzahl" id="postleitzahl">
             </div>
 
             <div class="text-center">
@@ -165,7 +158,7 @@ $row = $resultset->fetch_assoc();
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Stadt</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="benutzername" id="benutzername">
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="stadt" id="stadt">
             </div>
 
             <div class="text-center">
