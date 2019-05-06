@@ -37,6 +37,7 @@ require "root.php";
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href=<?= root . "/inserieren"?>>Inserieren</a>
+            <a class="dropdown-item" href=<?= root . "/profil"?>>Profil</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href=<?= root . "/login/logout.php"?>>Logout</a>
           </div>
