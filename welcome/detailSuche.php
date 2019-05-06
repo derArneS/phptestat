@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <title></title>
 </head>
-<body>
+<body style="padding-bottom: 80px">
 
   <?php require '../const/navbar.php'; ?>
 

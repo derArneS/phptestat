@@ -6,7 +6,7 @@
 
   $databaseconnection = createConnection();
 
-  if (!($statement = $databaseconnection->prepare("SELECT Passwort, Benutzername FROM Benutzer WHERE Email = ? OR Benutzername = ?"))
+  if (!($statement = $databaseconnection->prepare("SELECT Passwort, Benutzername, ID FROM Benutzer WHERE Email = ? OR Benutzername = ?"))
   || !($statement->bind_param('ss', $_POST['inputEmailBenutzer'], $_POST['inputEmailBenutzer']))
   || !($statement->execute())
   || !($resultset = $statement->get_result())) {
@@ -23,6 +23,7 @@
   }
 
   $_SESSION['benutzername'] = $row['Benutzername'];
+  $_SESSION['id'] = $row['ID'];
 
 
   goto noerr;

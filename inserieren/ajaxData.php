@@ -17,12 +17,12 @@ if(!empty($_POST["marke"])){
 
     //State option list
     if($rowCount > 0){
-        echo '<option value="0">Beliebig</option>';
+        echo '<option value="">Beliebig</option>';
         while($row = $resultset->fetch_assoc()){
             echo '<option '.((isset($modell) && $modell == $row['Modell_ID'])?'selected="selected"':' ').' value="'.$row['Modell_ID'].'">'.$row['Name'].'</option>';
         }
     }else{
-        echo '<option value="0">Keine Modelle</option>';
+        echo '<option value="">Keine Modelle</option>';
     }
 }
 ?>

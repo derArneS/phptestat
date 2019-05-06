@@ -1,8 +1,10 @@
 <?php
-  function isPrivate($private){
-    if ($private && !isset($_SESSION['benutzername'])) {
-      return false;
-    }
-    return true;
+function isPrivate($private){
+  if ($private && !isset($_SESSION['benutzername'])) {
+    $_SESSION['errorPrivate'] = true;
+    $_SESSION['redirect'] = "/inserieren";
+    header('Location: ../login');
+    die();
   }
+}
  ?>
