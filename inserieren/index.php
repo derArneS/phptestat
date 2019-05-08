@@ -2,7 +2,7 @@
 session_start();
 require "../database/database.php";
 require "../const/cookie.php";
-require "../const/private.php"; isPrivate(true);
+require "../const/private.php"; isPrivate(true, "/inserieren");
 
 
 if (isset($_SESSION['cache'])) {
@@ -82,7 +82,7 @@ if (isset($_SESSION['cache'])) {
       <div class="container col-12 mx-0 px-0">
         <?php if (isset($_SESSION['errorEingabe']) && $_SESSION['errorEingabe']) { ?> <div class="alert alert-danger alert-round" role="alert">Fehlerhafte Eingaben!</div> <?php } ?>
 
-        <fieldset class="box my-4">
+        <fieldset class="box mb-4">
           <div class="row mx-0 px-0 my-3">
             <legend style="padding: 0px 0px 0px 17px">Titel</legend>
             <div class="col-4 form-label-group">

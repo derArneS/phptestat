@@ -22,7 +22,8 @@ if ($_POST['button'] == "pic") {
   closeConnection($databaseconnection);
 } else if ($_POST['button'] =="insert") {
   $databaseconnection = createConnection();
-  $img_id = $_POST['img_id'];
+
+  $img_id = isset($_POST['img_id']) ? $_POST['img_id'] : 0;
 
   if ($_FILES['datei']['error'] == 0 && is_uploaded_file($_FILES['datei']['tmp_name'])) {
     $img = addslashes(file_get_contents($_FILES['datei']['tmp_name']));

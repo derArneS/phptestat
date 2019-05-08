@@ -1,8 +1,8 @@
 <?php
-function isPrivate($private){
+function isPrivate($private, $redirect){
   if ($private && !isset($_SESSION['benutzername'])) {
     $_SESSION['errorPrivate'] = true;
-    $_SESSION['redirect'] = "/inserieren";
+    $_SESSION['redirect'] = $redirect;
     header('Location: ../login');
     die();
   }
