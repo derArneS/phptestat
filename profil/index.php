@@ -33,6 +33,7 @@ $row = $resultset->fetch_assoc();
 
   <div class="container col-11 mt-5 box">
 
+<!-- Tableiste mit drei Tabs -->
     <nav>
       <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist" fill>
         <a class="nav-item nav-link" id="nav-angebote-tab" data-toggle="tab" href="#nav-angebote" role="tab" aria-controls="nav-home" aria-selected="true">Eigene Angebote</a>
@@ -43,27 +44,33 @@ $row = $resultset->fetch_assoc();
 
 
     <div class="tab-content" id="nav-tabContent">
+
+<!-- Tab - Eigene Angebote -->
       <div class="tab-pane fade " id="nav-angebote" role="tabpanel" aria-labelledby="nav-home-tab">
         Hallo :-)
       </div>
+
+<!-- Tab - Favoriten -->
       <div class="tab-pane fade" id="nav-favoriten" role="tabpanel" aria-labelledby="nav-profile-tab">
         Test
       </div>
 
+
+<!-- Tab - Persönliche Daten -->
       <div class="tab-pane fade show active col-12 mt-5 box" id="nav-daten" role="tabpanel" aria-labelledby="nav-contact-tab">
         <div class="container col-12 mt-5 box">
           <div class="row">
 
 
-<!-- Profil - Benutzername -->
-            <div class="input-group mb-3 col-6">
+            <!-- Profil - Benutzername -->
+            <div class="input-group mb-3 ml-auto col-6">
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Benutzername</span>
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default name="benutzername" id="benutzername" value="<?=$row['Benutzername'] ?>"">
             </div>
 
-            <div class="text-center">
+            <div class="text-center mr-auto">
               <button type="buttom" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">Ändern</button>
             </div>
 
@@ -97,82 +104,93 @@ $row = $resultset->fetch_assoc();
             </div>
 
 
-<!-- Profil - Vorname -->
-            <div class="input-group mb-3 col-6">
+            <!-- Profil - Vorname -->
+            <div class="input-group mb-3 ml-auto col-6">
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Vorname</span>
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="vorname" id="vorname">
             </div>
 
-            <div class="text-center">
+            <div class="text-center mr-auto">
               <button type="submit" class="btn btn-primary mb-2">Ändern</button>
             </div>
 
 
-            <div class="input-group mb-3 col-6">
+            <!-- Profil - Nachname -->
+            <div class="input-group mb-3 ml-auto col-6">
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Nachname</span>
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="nachname" id="nachname">
             </div>
 
-            <div class="text-center">
+            <div class="text-center mr-auto">
               <button type="submit" class="btn btn-primary mb-2">Ändern</button>
             </div>
 
-            <div class="input-group mb-3 col-6">
+
+            <!-- Profil - E-Mail -->
+            <div class="input-group mb-3 ml-auto col-6">
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">E-Mail</span>
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="email" id="email" value="<?=$row['Email'] ?>">
             </div>
 
-            <div class="text-center">
+            <div class="text-center mr-auto">
               <button type="submit" class="btn btn-primary mb-2">Ändern</button>
             </div>
 
-            <div class="input-group mb-3 col-6">
+
+            <!-- Profil - Straße -->
+            <div class="input-group mb-3 ml-auto col-6">
               <div class="input-group-prepend">
-                <span class="input-group-addon" id="inputGroup-sizing-default">Adresse</span>
+                <span class="input-group-addon" id="inputGroup-sizing-default">Straße</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="adresse" id="adresse">
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="strasse" id="strasse">
             </div>
 
-            <div class="text-center">
+            <div class="text-center mr-auto">
               <button type="submit" class="btn btn-primary mb-2">Ändern</button>
             </div>
 
-            <div class="input-group mb-3 col-6">
+
+            <!-- Profil - Postleitzahl -->
+            <div class="input-group mb-3 ml-auto col-6">
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Postleitzahl</span>
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="postleitzahl" id="postleitzahl">
             </div>
 
-            <div class="text-center">
+            <div class="text-center mr-auto">
               <button type="submit" class="btn btn-primary mb-2">Ändern</button>
             </div>
 
-            <div class="input-group mb-3 col-6">
+
+            <!-- Profil - Stadt -->
+            <div class="input-group mb-3 ml-auto col-6">
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Stadt</span>
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="stadt" id="stadt">
             </div>
 
-            <div class="text-center">
+            <div class="text-center mr-auto">
               <button type="submit" class="btn btn-primary mb-2">Ändern</button>
             </div>
 
-            <div class="input-group mb-3 col-6">
+
+            <!-- Profil - Passwort -->
+            <div class="input-group mb-3 ml-auto col-6">
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Passwort</span>
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="passwort" id="passwort" value="<?=$row['Passwort'] ?>">
             </div>
 
-            <div class="text-center">
+            <div class="text-center mr-auto">
               <button type="submit" class="btn btn-primary mb-2">Ändern</button>
             </div>
 
