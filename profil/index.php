@@ -14,9 +14,9 @@ if (!($statement = $databaseconnection->prepare("SELECT * FROM Benutzer WHERE Be
 || !($resultset = $statement->get_result())) {
 
 }
-closeConnection($databaseconnection);
 $row = $resultset->fetch_assoc();
 
+closeConnection($databaseconnection);
 ?>
 
 
@@ -67,7 +67,7 @@ $row = $resultset->fetch_assoc();
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Benutzername</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default name="benutzername" id="benutzername" value="<?=$row['Benutzername'] ?>"">
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="benutzername" id="benutzername" value="<?=$row['Benutzername'] ?>">
             </div>
 
             <div class="text-center mr-auto">
@@ -84,19 +84,19 @@ $row = $resultset->fetch_assoc();
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form method="post">
+                    <form method="post" action="action.php">
                       <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Neuer Benutzername</label>
-                        <input type="text" class="form-control" id="benutzername-neu">
+                        <label for="benutzername-neu" class="col-form-label">Neuer Benutzername</label>
+                        <input type="text" class="form-control" name="benutzername-neu" id="benutzername-neu">
                       </div>
                       <div class="form-group">
-                        <label for="message-text" class="col-form-label">Benutzername bestätigen</label>
-                        <input type="text" class="form-control" id="benutzername-bestätigen">
+                        <label for="benutzername-bestätigen" class="col-form-label">Benutzername bestätigen</label>
+                        <input type="text" class="form-control" name="benutzername-bestätigen" id="benutzername-bestätigen">
                       </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                    <button type="submit" name="button" class="btn btn-primary" value="insert" data-dismiss="modal">Bestätigen</button>
+                    <button type="submit" name="button" class="btn btn-primary" value="insert">Bestätigen</button>
                   </div>
                   </form>
                 </div>
