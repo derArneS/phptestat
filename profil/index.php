@@ -16,8 +16,13 @@ if (!($statement = $databaseconnection->prepare("SELECT * FROM Benutzer WHERE Be
 }
 $row = $resultset->fetch_assoc();
 
+if (!($statement = $databaseconnection->prepare("SELECT * FROM Adressen WHERE ID=?"))
+|| !($statement->bind_param('i', $row['Adress_ID']))
+|| !($statement->execute())
+|| !($resultset = $statement->get_result())) {
 
-
+}
+$adressrow = $resultset->fetch_assoc();
 
 closeConnection($databaseconnection);
 ?>
@@ -63,6 +68,8 @@ closeConnection($databaseconnection);
       <div class="tab-pane fade show active col-12 mt-5 box" id="nav-daten" role="tabpanel" aria-labelledby="nav-contact-tab">
         <div class="container col-12 mt-5 box">
           <?php if (isset($_SESSION['errorBenutzername']) && $_SESSION['errorBenutzername']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">Der angegebene Benutzername ist leider schon vorhanden. </div> <?php } ?>
+          <?php if (isset($_SESSION['test']) && $_SESSION['test']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">test</div> <?php } ?>
+          <?php if (isset($_SESSION['errorPlz']) && $_SESSION['errorPlz']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">Fehlerhafte Eingabe. Bitte die Postleitzahl erneut eingeben.</div> <?php } ?>
 
 
           <div class="row">
@@ -72,7 +79,7 @@ closeConnection($databaseconnection);
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Benutzername</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="benutzername" id="benutzername" value="<?=$row['Benutzername'] ?>">
+              <input disabled style="background-color:white" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="benutzername" id="benutzername" value="<?=$row['Benutzername'] ?>">
             </div>
 
             <div class="text-center mr-auto">
@@ -114,7 +121,7 @@ closeConnection($databaseconnection);
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Vorname</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="vorname" id="vorname" value="<?=$row['Vorname'] ?>">
+              <input disabled style="background-color:white" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="vorname" id="vorname" value="<?=$row['Vorname'] ?>">
             </div>
 
             <div class="text-center mr-auto">
@@ -156,7 +163,7 @@ closeConnection($databaseconnection);
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Nachname</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="nachname" id="nachname" value="<?=$row['Nachname'] ?>">
+              <input disabled style="background-color:white" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="nachname" id="nachname" value="<?=$row['Nachname'] ?>">
             </div>
 
             <div class="text-center mr-auto">
@@ -198,7 +205,7 @@ closeConnection($databaseconnection);
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">E-Mail</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="email" id="email" value="<?=$row['Email'] ?>">
+              <input disabled style="background-color:white" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="email" id="email" value="<?=$row['Email'] ?>">
             </div>
 
             <div class="text-center mr-auto">
@@ -240,7 +247,7 @@ closeConnection($databaseconnection);
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Straße</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="strasse" id="strasse">
+              <input disabled style="background-color:white" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="strasse" id="strasse" value="<?=$adressrow['Strasse'] ?>">
             </div>
 
             <div class="text-center mr-auto">
@@ -282,7 +289,7 @@ closeConnection($databaseconnection);
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Postleitzahl</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="postleitzahl" id="postleitzahl">
+              <input disabled style="background-color:white" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="postleitzahl" id="postleitzahl" value="<?=$adressrow['Postleitzahl'] ?>">
             </div>
 
             <div class="text-center mr-auto">
@@ -324,7 +331,7 @@ closeConnection($databaseconnection);
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Stadt</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="stadt" id="stadt">
+              <input disabled style="background-color:white" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="stadt" id="stadt" value="<?=$adressrow['Ort'] ?>">
             </div>
 
             <div class="text-center mr-auto">
@@ -366,7 +373,7 @@ closeConnection($databaseconnection);
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Passwort</span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="passwort" id="passwort" value="<?=$row['Passwort'] ?>">
+              <input disabled style="background-color:white" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="passwort" id="passwort" value="<?=$row['Passwort'] ?>">
             </div>
 
             <div class="text-center mr-auto">
@@ -386,11 +393,11 @@ closeConnection($databaseconnection);
                     <form method="post" action="action.php">
                       <div class="form-group">
                         <label for="passwort-neu" class="col-form-label">Neues Passwort</label>
-                        <input type="text" class="form-control" name="passwort-neu" id="passwort-neu">
+                        <input type="password" class="form-control" name="passwort-neu" id="passwort-neu">
                       </div>
                       <div class="form-group">
-                        <label for="passwort-bestätigen" class="col-form-label">E-Mail Adresse bestätigen</label>
-                        <input type="text" class="form-control" name="passwort-bestätigen" id="passwort-bestätigen">
+                        <label for="passwort-bestätigen" class="col-form-label">Passwort bestätigen</label>
+                        <input type="password" class="form-control" name="passwort-bestätigen" id="passwort-bestätigen">
                       </div>
                   </div>
                   <div class="modal-footer">
@@ -405,6 +412,8 @@ closeConnection($databaseconnection);
           </div>
           <?php
             unset($_SESSION['errorBenutzername']);
+            unset($_SESSION['test']);
+            unset($_SESSION['errorPlz']);
           ?>
 
         </div>
