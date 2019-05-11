@@ -34,14 +34,23 @@
 
   $passwordHash = password_hash($_POST['inputPassword'], PASSWORD_BCRYPT);
 
-  if (!($statement = $databaseconnection->prepare("INSERT INTO Benutzer (Benutzername, Email, Passwort) VALUES (?, ?, ?)"))
-  || !($statement->bind_param('sss', $_POST['inputBenutzername'], $_POST['inputEmail'], $passwordHash))
+  if (!($statement = $databaseconnection->prepare("INSERT INTO Adressen (Ort) VALUES (null)"))
   || !($statement->execute())) {
     $_SESSION['errorRegister'] = true;
     goto err;
+  } else {
+    $adressid = $databaseconnection->insert_id;
+    if (!($statement = $databaseconnection->prepare("INSERT INTO Benutzer (Benutzername, Email, Passwort, Adress_ID) VALUES (?, ?, ?, ?)"))
+    || !($statement->bind_param('sssi', $_POST['inputBenutzername'], $_POST['inputEmail'], $passwordHash, $adressid))
+    || !($statement->execute())) {
+      $_SESSION['errorRegister'] = true;
+      goto err;
+    }
   }
 
+
   $_SESSION['benutzername'] = $_POST['inputBenutzername'];
+  $_SESSION['id'] = $databaseconnection->insert_id;
 
   goto noerr;
 
