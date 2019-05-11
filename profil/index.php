@@ -224,12 +224,12 @@ closeConnection($databaseconnection);
                   <div class="modal-body">
                     <form method="post" action="action.php">
                       <div class="form-group">
-                        <label for="benutzername-neu" class="col-form-label">Neue E-Mail Adresse</label>
-                        <input type="text" class="form-control" name="benutzername-neu" id="benutzername-neu">
+                        <label for="email-neu" class="col-form-label">Neue E-Mail Adresse</label>
+                        <input type="text" class="form-control" name="email-neu" id="email-neu">
                       </div>
                       <div class="form-group">
-                        <label for="benutzername-bestätigen" class="col-form-label">E-Mail Adresse bestätigen</label>
-                        <input type="text" class="form-control" name="benutzername-bestätigen" id="benutzername-bestätigen">
+                        <label for="email-bestätigen" class="col-form-label">E-Mail Adresse bestätigen</label>
+                        <input type="text" class="form-control" name="email-bestätigen" id="email-bestätigen">
                       </div>
                   </div>
                   <div class="modal-footer">

@@ -53,7 +53,25 @@ if(isset($_POST['nachname-neu']) && isset($_POST['nachname-bestätigen']) && $_P
 }
 
 //PHP-Code E-Mail Adresse ändern
+if (isset($_POST['email-neu']) && isset($_POST['email-bestätigen']) && $_POST['email-bestätigen'] == $_POST['email-neu']) {
+  if (!($statement = $databaseconnection->prepare("SELECT Email FROM Benutzer WHERE Benutzername=?"))
+  || !($statement->bind_param('s', $_POST['email-neu']))
+  || !($statement->execute())) {
+    goto err;
+  } else if (!($resultset = $statement->get_result()) || !($resultset->num_rows === 0)) {
+    if ($row = $resultset->fetch_assoc()) {
+      goto err;
+    }
+  }
 
+  if (($statement = $databaseconnection->prepare("UPDATE Benutzer set Email=? where id=?"))
+  && ($statement->bind_param('si', $_POST['email-neu'], $_SESSION['id']))
+  && ($statement->execute())){
+    header('Location: index.php');
+    closeConnection($databaseconnection);
+    die();
+  }
+}
 
 //PHP-Code Adresse hinzufügen/ändern
 if (isset($_POST['strasse-neu']) && isset($_POST['strasse-bestätigen']) && $_POST['strasse-bestätigen'] == $_POST['strasse-neu']) {
