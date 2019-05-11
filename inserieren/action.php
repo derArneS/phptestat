@@ -17,7 +17,6 @@ if ($_POST['button'] == "pic") {
     $_SESSION['errorEingabe'] = true;
   }
 
-
   header("Location: index.php");
   closeConnection($databaseconnection);
 } else if ($_POST['button'] =="insert") {
@@ -64,29 +63,11 @@ if ($_POST['button'] == "pic") {
   $standheizung = isset($_POST['standheizung']) && $_POST['standheizung'] == 'true' ? 1 : 0;
   $startStopp = isset($_POST['startStopp']) && $_POST['startStopp'] == 'true' ? 1 : 0;
 
-  if (!($statement = $databaseconnection->prepare("INSERT INTO Autos (Benutzer, Name, Marke, Modell, Preis, Baujahr, Kilometerstand, Leistung, kraftstoff, Getriebe, Alarmanlage, Anhaengerkupplung, Bluetooth, Bordcomputer, HeadUP, Multilenk, Navi, Regensensor, Sitzheizung, Sound, Standheiz, StartStopp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))
-  || !($statement->bind_param('isiiiiiiiiiiiiiiiiiiii',$_SESSION['id'],
-                                                       $_POST['titel'],
-                                                       $_POST['marke'],
-                                                       $_POST['modell'],
-                                                       $_POST['inputPreis'],
-                                                       $_POST['inputBJ'],
-                                                       $_POST['inputKM'],
-                                                       $_POST['inputLeistung'],
-                                                       $_POST['kraftstoff'],
-                                                       $_POST['getriebe'],
-                                                       $alarmanlage,
-                                                       $anhaengerkupplung,
-                                                       $bluetooth,
-                                                       $bordcomputer,
-                                                       $head,
-                                                       $multifunktionslenkrad,
-                                                       $navigationssystem,
-                                                       $regensensor,
-                                                       $sitzheizung,
-                                                       $soundsystem,
-                                                       $standheizung,
-                                                       $startStopp))
+  if (!($statement = $databaseconnection->prepare("INSERT INTO Angebote (Benutzer_ID, Titel, Marken_ID, Modell_ID, Preis, Baujahr, Kilometerstand, Leistung, kraftstoff, Getriebe, Alarmanlage, Anhaengerkupplung, Bluetooth, Bordcomputer, HeadUP, Multilenk, Navi, Regensensor, Sitzheizung, Sound, Standheiz, StartStopp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))
+  || !($statement->bind_param('isiiiiiiiiiiiiiiiiiiii',$_SESSION['id'], $_POST['titel'], $_POST['marke'], $_POST['modell'], $_POST['inputPreis'], $_POST['inputBJ'], $_POST['inputKM'],
+                                                       $_POST['inputLeistung'], $_POST['kraftstoff'], $_POST['getriebe'],
+                                                       $alarmanlage, $anhaengerkupplung, $bluetooth, $bordcomputer, $head, $multifunktionslenkrad, $navigationssystem,
+                                                       $regensensor, $sitzheizung, $soundsystem, $standheizung, $startStopp))
   || !($statement->execute())) {
     header("Location: index.php");
     closeConnection($databaseconnection);
@@ -95,7 +76,7 @@ if ($_POST['button'] == "pic") {
 
   $auto_id = $databaseconnection->insert_id;
 
-  if (!($statement = $databaseconnection->prepare("UPDATE Bilder SET Auto_ID = ? WHERE ID = ?"))
+  if (!($statement = $databaseconnection->prepare("UPDATE Bilder SET Angebot_ID = ? WHERE ID = ?"))
   || !($statement->bind_param('ii', $auto_id, $img_id))
   || !($statement->execute())) {
     header("Location: index.php");
@@ -103,7 +84,8 @@ if ($_POST['button'] == "pic") {
     die();
   }
 
+  if (isset($_SESSION['cache'])) unset($_SESSION['cache']);
   closeConnection($databaseconnection);
-  header("Location: ../welcome");
+  header("Location: ../uebersicht/angebot.php?id=$auto_id");
 }
 ?>
