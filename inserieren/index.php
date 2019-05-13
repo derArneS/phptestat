@@ -83,7 +83,7 @@ if (isset($_SESSION['cache'])) {
         <?php if (isset($_SESSION['errorEingabe']) && $_SESSION['errorEingabe']) { ?> <div class="alert alert-danger alert-round" role="alert">Fehlerhafte Eingaben!</div> <?php } ?>
 
         <fieldset class="box mb-4">
-          <div class="row mx-0 px-0 my-3">
+          <div class="row mx-0 px-0 mb-3">
             <legend style="padding: 0px 0px 0px 17px">Titel</legend>
             <div class="col-4 form-label-group">
               <input type="text" name="titel" id="titel" class="form-control" placeholder="Titel" value="<?= (isset($titel)?$titel:null); ?>">
@@ -118,7 +118,7 @@ if (isset($_SESSION['cache'])) {
         </fieldset>
 
         <fieldset class="box my-4">
-          <div class="row mx-0 px-0 my-3">
+          <div class="row mx-0 px-0 mb-3">
             <legend style="padding: 0px 0px 0px 17px">Bild</legend>
             <div class="col-6">
               <img class="col-12" style="padding-left: 0px" src="../const/loadPic.php?id=<?php if(isset($img_id)) echo $img_id ?>" alt="">
@@ -137,7 +137,7 @@ if (isset($_SESSION['cache'])) {
         <input type="hidden" name="img_id" value="<?= isset($img_id) ? $img_id : 0 ?>">
 
         <fieldset class="box my-4">
-          <div class="row mx-0 px-0 my-3">
+          <div class="row mx-0 px-0 mb-3">
             <legend style="padding: 0px 0px 0px 17px">Daten</legend>
             <div class="col-4 form-label-group">
               <input type="text" name="inputPreis" id="inputPreis" class="form-control" placeholder="Preis" value="<?= (isset($preis)?$preis:null); ?>">
@@ -175,7 +175,7 @@ if (isset($_SESSION['cache'])) {
         </fieldset>
 
         <fieldset class="box my-4">
-          <div class="row mx-0 px-0 my-3">
+          <div class="row mx-0 px-0 mb-3">
             <legend style="padding: 0px 0px 0px 17px">Ausstattung</legend>
 
             <div class="col-3" style="padding-left: 17px">

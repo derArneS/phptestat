@@ -18,7 +18,7 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <a href="../welcome/autoVorschau1.php">
+        <a href="../welcome/action.php?marke=1">
           <img class="d-block w-100"src="../pics/car1.jpg" alt="First slide">
         </a>
         <div class="carousel-caption d-none d-md-block">
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="carousel-item">
-        <a href="../welcome/autoVorschau2.php">
+        <a href="../welcome/action.php?marke=2">
           <img class="d-block w-100" src="../pics/car2.jpg" alt="Second slide">
         </a>
         <div class="carousel-caption d-none d-md-block">
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="carousel-item">
-        <a href="../welcome/autoVorschau3.php">
+        <a href="../welcome/action.php?marke=7">
           <img class="d-block w-100" src="../pics/car3.jpg" alt="Third slide">
         </a>
         <div class="carousel-caption d-none d-md-block">
