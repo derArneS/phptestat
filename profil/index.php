@@ -44,9 +44,9 @@ closeConnection($databaseconnection);
 <!-- Tableiste mit drei Tabs -->
     <nav>
       <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist" fill>
-        <a class="nav-item nav-link" id="nav-angebote-tab" data-toggle="tab" href="#nav-angebote" role="tab" aria-controls="nav-home" aria-selected="true">Eigene Angebote</a>
+        <a class="nav-item nav-link active" id="nav-angebote-tab" data-toggle="tab" href="#nav-angebote" role="tab" aria-controls="nav-home" aria-selected="true">Eigene Angebote</a>
         <a class="nav-item nav-link" id="nav-favoriten-tab" data-toggle="tab" href="#nav-favoriten" role="tab" aria-controls="nav-profile" aria-selected="false">Favoriten</a>
-        <a class="nav-item nav-link active" id="nav-daten-tab" data-toggle="tab" href="#nav-daten" role="tab" aria-controls="nav-contact" aria-selected="false">Persönliche Daten</a>
+        <a class="nav-item nav-link" id="nav-daten-tab" data-toggle="tab" href="#nav-daten" role="tab" aria-controls="nav-contact" aria-selected="false">Persönliche Daten</a>
       </div>
     </nav>
 
@@ -54,9 +54,14 @@ closeConnection($databaseconnection);
     <div class="tab-content" id="nav-tabContent">
 
 <!-- Tab - Eigene Angebote -->
-      <div class="tab-pane fade " id="nav-angebote" role="tabpanel" aria-labelledby="nav-home-tab">
-        Hallo :-)
+      <div class="tab-pane fade show active col-12 mt-5 box" id="nav-angebote" role="tabpanel" aria-labelledby="nav-home-tab">
+
+
+
+
       </div>
+
+
 
 <!-- Tab - Favoriten -->
       <div class="tab-pane fade" id="nav-favoriten" role="tabpanel" aria-labelledby="nav-profile-tab">
@@ -65,7 +70,7 @@ closeConnection($databaseconnection);
 
 
 <!-- Tab - Persönliche Daten -->
-      <div class="tab-pane fade show active col-12 mt-5 box" id="nav-daten" role="tabpanel" aria-labelledby="nav-contact-tab">
+      <div class="tab-pane fade col-12 mt-5 box" id="nav-daten" role="tabpanel" aria-labelledby="nav-contact-tab">
         <div class="container col-12 mt-5 box">
           <?php if (isset($_SESSION['errorBenutzername']) && $_SESSION['errorBenutzername']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">Der angegebene Benutzername ist leider schon vorhanden. </div> <?php } ?>
           <?php if (isset($_SESSION['test']) && $_SESSION['test']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">test</div> <?php } ?>
