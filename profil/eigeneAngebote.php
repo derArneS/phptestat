@@ -1,5 +1,10 @@
 <div class="tab-pane fade pt-3" id="nav-angebote" role="tabpanel" aria-labelledby="nav-home-tab">
   <?php
+
+  if ($resultset3->num_rows == 0) {
+    echo "Du hast scheinbar noch keine Angebote...";
+  }
+
   while ($angebotrow = $resultset3->fetch_assoc()) {
     echo'
       <div class="container">
@@ -30,7 +35,5 @@
     ';
   }
 
-  #<button type="button" class="" " name="button">
-  #</button>
    ?>
 </div>
