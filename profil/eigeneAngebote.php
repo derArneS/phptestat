@@ -2,9 +2,12 @@
   <?php
   while ($angebotrow = $resultset3->fetch_assoc()) {
     echo'
-    <a href="../uebersicht/angebot.php?id='.$angebotrow['Angebot_ID'].'">
       <div class="container">
       <fieldset class="mb-4 mx-auto" style="box-shadow: 0 1px 2px 0 rgba(0,0,0,.5); border-radius: 4px; padding: 13px 17px 0px 17px;">
+        <div>
+          <a href="deleteAngebot.php?id='.$angebotrow['Angebot_ID'].'" class="btn btn-primary" style="position: absolute; right: 200px;">Löschen</a>
+        </div>
+      <a href="../uebersicht/angebot.php?id='.$angebotrow['Angebot_ID'].'">
         <div class="row mx-0 px-0 mb-3">
           <legend style="padding: 0px 0px 0px 17px">'.$angebotrow['Titel'].'</legend>
           <div class="col-3">
@@ -21,10 +24,13 @@
             <h2>'.$angebotrow['Preis'].' €</h2>
           </div>
         </div>
+        </a>
       </fieldset>
       </div>
-    </a>
     ';
   }
+
+  #<button type="button" class="" " name="button">
+  #</button>
    ?>
 </div>
