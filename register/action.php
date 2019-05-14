@@ -3,6 +3,7 @@
   session_start();
 
   require "../database/database.php";
+  require '../const/deletecache.php';
 
   if (isset($_SESSION['benutzername'])) {
     goto err;

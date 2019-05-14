@@ -3,6 +3,10 @@ session_start();
 require "../database/database.php";
 require "../const/cookie.php";
 
+if (isset($_SESSION['cache']['insert'])) {
+  unset($_SESSION['cache']['insert']);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -49,9 +53,13 @@ require "../const/cookie.php";
 
   ?>
   <form action="action.php" method="post">
-  <div class="container col-7 mt-5">
+  <div class="container mt-4">
     <div class="row mx-0 px-0">
       <div class="container col-12 mx-0 px-0">
+        <div class="mb-3 mx-auto">
+
+          <a href="reset.php">Suche zurücksetzen</a>
+        </div>
         <?php if (isset($_SESSION['errorErgebnis']) && $_SESSION['errorErgebnis']) { ?> <div class="alert alert-danger alert-round" role="alert">Leider keine Inserate gefunden...</div> <?php } ?>
 
         <fieldset class="box mb-4">

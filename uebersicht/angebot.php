@@ -2,8 +2,6 @@
 session_start();
 require "../database/database.php";
 require "../const/cookie.php";
-require "../const/private.php"; isPrivate(true, "/uebersicht");
-require '../const/deletecache.php';
 ?>
 
 <!DOCTYPE html>
@@ -33,9 +31,13 @@ require '../const/deletecache.php';
   }
 
   ?>
-  <div class="container col-7 mt-5">
+  <div class="container col-7 mt-4">
     <div class="row mx-0 px-0">
       <div class="container col-12 mx-0 px-0">
+
+        <div class="mb-3 mx-auto">
+          <a href="index.php">Zurück zu den Ergebnissen</a>
+        </div>
 
         <fieldset class="box mb-4">
           <div class="row mx-0 px-0 my-3">
