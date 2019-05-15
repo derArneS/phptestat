@@ -1,5 +1,5 @@
-<div class="tab-pane fade col-12 mt-5 box" id="nav-daten" role="tabpanel" aria-labelledby="nav-contact-tab">
-  <div class="container col-12 mt-5 box">
+<div class="tab-pane fade col-12 mt-5 <?php if(isset($_GET['tab']) && $_GET['tab'] == 3) echo "show active";?>" id="nav-daten" role="tabpanel" aria-labelledby="nav-contact-tab">
+  <div class="container col-12 mt-5">
     <?php if (isset($_SESSION['errorBenutzername']) && $_SESSION['errorBenutzername']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">Der angegebene Benutzername ist leider schon vorhanden. </div> <?php } ?>
     <?php if (isset($_SESSION['test']) && $_SESSION['test']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">test</div> <?php } ?>
     <?php if (isset($_SESSION['errorPlz']) && $_SESSION['errorPlz']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">Fehlerhafte Eingabe. Bitte die Postleitzahl erneut eingeben.</div> <?php } ?>
@@ -157,12 +157,12 @@
             <div class="modal-body">
               <form method="post" action="action.php">
                 <div class="form-group">
-                  <label for="benutzername-neu" class="col-form-label">Neue E-Mail Adresse</label>
-                  <input type="text" class="form-control" name="benutzername-neu" id="benutzername-neu">
+                  <label for="email-neu" class="col-form-label">Neue E-Mail Adresse</label>
+                  <input type="text" class="form-control" name="email-neu" id="email-neu">
                 </div>
                 <div class="form-group">
-                  <label for="benutzername-bestätigen" class="col-form-label">E-Mail Adresse bestätigen</label>
-                  <input type="text" class="form-control" name="benutzername-bestätigen" id="benutzername-bestätigen">
+                  <label for="email-bestätigen" class="col-form-label">E-Mail Adresse bestätigen</label>
+                  <input type="text" class="form-control" name="email-bestätigen" id="email-bestätigen">
                 </div>
             </div>
             <div class="modal-footer">
@@ -306,7 +306,7 @@
         <div class="input-group-prepend">
           <span class="input-group-addon" id="inputGroup-sizing-default">Passwort</span>
         </div>
-        <input disabled style="background-color:white" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="passwort" id="passwort" value="<?=$row['Passwort'] ?>">
+        <input disabled style="background-color:white" type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="passwort" id="passwort" value="12345">
       </div>
 
       <div class="text-center mr-auto">

@@ -41,3 +41,19 @@ require "root.php";
   <?php } ?>
   </div>
 </nav>
+
+<?php
+
+
+if (isset($_SESSION['benutzername']) && (!isset($_SESSION['vorname']) || !isset($_SESSION['nachname']) || !isset($_SESSION['strasse']) || !isset($_SESSION['postleitzahl']) || !isset($_SESSION['stadt']))) {
+  echo '
+    <div class="alert alert-warning alert-dismissible fade show m-0" role="alert">
+      Scheinbar ist dein Profil noch nicht fertig! <a href="'.root.'/profil/index.php?tab=3" class="alert-link">Hier vervollständigen.</a>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  ';
+}
+
+?>

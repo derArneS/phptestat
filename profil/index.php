@@ -50,14 +50,16 @@ closeConnection($databaseconnection);
 <body>
   <?php require '../const/navbar.php'; ?>
 
-  <div class="container col-11 mt-5 box">
+  <?php print_r($_SESSION) ?>
+
+  <div class="container col-11 mt-5 pb-3 box">
 
 <!-- Tableiste mit drei Tabs -->
     <nav>
       <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist" fill>
-        <a class="nav-item nav-link active" id="nav-angebote-tab" data-toggle="tab" href="#nav-angebote" role="tab" aria-controls="nav-home" aria-selected="true">Eigene Angebote</a>
-        <a class="nav-item nav-link" id="nav-favoriten-tab" data-toggle="tab" href="#nav-favoriten" role="tab" aria-controls="nav-profile" aria-selected="false">Favoriten</a>
-        <a class="nav-item nav-link" id="nav-daten-tab" data-toggle="tab" href="#nav-daten" role="tab" aria-controls="nav-contact" aria-selected="false">Persönliche Daten</a>
+        <a class="nav-item nav-link <?php if(isset($_GET['tab']) && $_GET['tab'] == 1) echo "active"; if(!isset($_GET['tab'])) echo "active";?>" id="nav-angebote-tab" data-toggle="tab" href="#nav-angebote" role="tab" aria-controls="nav-home" aria-selected="true">Eigene Angebote</a>
+        <a class="nav-item nav-link <?php if(isset($_GET['tab']) && $_GET['tab'] == 2) echo "active";?>" id="nav-favoriten-tab" data-toggle="tab" href="#nav-favoriten" role="tab" aria-controls="nav-profile" aria-selected="false">Favoriten</a>
+        <a class="nav-item nav-link <?php if(isset($_GET['tab']) && $_GET['tab'] == 3) echo "active";?>" id="nav-daten-tab" data-toggle="tab" href="#nav-daten" role="tab" aria-controls="nav-contact" aria-selected="false">Persönliche Daten</a>
       </div>
     </nav>
 
@@ -68,8 +70,9 @@ closeConnection($databaseconnection);
 
 
 <!-- Tab - Favoriten -->
-      <?php include "favoriten.php" ?>
-
+      <div class="tab-pane fade <?php if(isset($_GET['tab']) && $_GET['tab'] == 2) echo "show active";?>" id="nav-favoriten" role="tabpanel" aria-labelledby="nav-profile-tab">
+        Hallo :-)
+      </div>
 
 <!-- Tab - Persönliche Daten -->
       <?php include "persDaten.php" ?>

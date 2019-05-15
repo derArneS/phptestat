@@ -21,11 +21,11 @@ if (isset($_POST['benutzername-neu']) && isset($_POST['benutzername-bestätigen'
     }
   }
 
-  if (($statement = $databaseconnection->prepare("UPDATE Benutzer set benutzername=? where id=?"))
+  if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Benutzername=? WHERE ID=?"))
   && ($statement->bind_param('si', $_POST['benutzername-neu'], $_SESSION['id']))
   && ($statement->execute())){
     $_SESSION['benutzername'] = $_POST['benutzername-neu'];
-    header('Location: index.php');
+    header('Location: index.php?tab=3');
     closeConnection($databaseconnection);
     die();
   }
@@ -33,10 +33,11 @@ if (isset($_POST['benutzername-neu']) && isset($_POST['benutzername-bestätigen'
 
 //PHP-Code Vorname einfügen/ändern
 if(isset($_POST['vorname-neu']) && isset($_POST['vorname-bestätigen']) && $_POST['vorname-bestätigen'] == $_POST['vorname-neu']){
-  if (($statement = $databaseconnection->prepare("UPDATE Benutzer set Vorname=? where id=?"))
+  if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Vorname=? WHERE ID=?"))
   && ($statement->bind_param('si', $_POST['vorname-neu'], $_SESSION['id']))
   && ($statement->execute())){
-    header('Location: index.php');
+    $_SESSION['vorname'] = $_POST['vorname-neu'];
+    header('Location: index.php?tab=3');
     closeConnection($databaseconnection);
     die();
   }
@@ -44,10 +45,11 @@ if(isset($_POST['vorname-neu']) && isset($_POST['vorname-bestätigen']) && $_POS
 
 //PHP-Code Nachname einfügen/ändern
 if(isset($_POST['nachname-neu']) && isset($_POST['nachname-bestätigen']) && $_POST['nachname-bestätigen'] == $_POST['nachname-neu']){
-  if (($statement = $databaseconnection->prepare("UPDATE Benutzer set Nachname=? where id=?"))
+  if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Nachname=? WHERE ID=?"))
   && ($statement->bind_param('si', $_POST['nachname-neu'], $_SESSION['id']))
   && ($statement->execute())){
-    header('Location: index.php');
+    $_SESSION['nachname'] = $_POST['nachname-neu'];
+    header('Location: index.php?tab=3');
     closeConnection($databaseconnection);
     die();
   }
@@ -55,15 +57,26 @@ if(isset($_POST['nachname-neu']) && isset($_POST['nachname-bestätigen']) && $_P
 
 //PHP-Code E-Mail Adresse ändern
 if (isset($_POST['email-neu']) && isset($_POST['email-bestätigen']) && $_POST['email-bestätigen'] == $_POST['email-neu']) {
-  if (!($statement = $databaseconnection->prepare("SELECT Email FROM Benutzer WHERE Benutzername=?"))
+  if (!($statement = $databaseconnection->prepare("SELECT Email FROM Benutzer WHERE Email=?"))
   || !($statement->bind_param('s', $_POST['email-neu']))
   || !($statement->execute())) {
+    $_SESSION['errorEmail'] = true;
     goto err;
   } else if (!($resultset = $statement->get_result()) || !($resultset->num_rows === 0)) {
     if ($row = $resultset->fetch_assoc()) {
+      $_SESSION['errorEmail'] = true;
       goto err;
     }
   }
+
+  if (($statement = $databaseconnection->prepare("UPDATE Email SET Email=? WHERE ID=?"))
+  && ($statement->bind_param('si', $_POST['email-neu'], $_SESSION['id']))
+  && ($statement->execute())){
+    header('Location: index.php?tab=3');
+    closeConnection($databaseconnection);
+    die();
+  }
+}
 
   if (($statement = $databaseconnection->prepare("UPDATE Benutzer set Email=? where id=?"))
   && ($statement->bind_param('si', $_POST['email-neu'], $_SESSION['id']))
@@ -82,10 +95,11 @@ if (isset($_POST['strasse-neu']) && isset($_POST['strasse-bestätigen']) && $_PO
     $_SESSION['errorBenutzer'] = true;
     goto err;
   } else if (($resultset = $statement->get_result()) && !($resultset->num_rows == 0) && ($row = $resultset->fetch_assoc())) {
-    if (($statement = $databaseconnection->prepare("UPDATE Adressen set Strasse=? where ID=?"))
+    if (($statement = $databaseconnection->prepare("UPDATE Adressen SET Strasse=? WHERE ID=?"))
     && ($statement->bind_param('si', $_POST['strasse-neu'], $row['Adress_ID']))
     && ($statement->execute())){
-      header('Location: index.php');
+      $_SESSION['strasse'] = $_POST['strasse-neu'];
+      header('Location: index.php?tab=3');
       closeConnection($databaseconnection);
       die();
     } else {
@@ -102,11 +116,11 @@ if (isset($_POST['plz-neu']) && isset($_POST['plz-bestätigen']) && $_POST['plz-
     $_SESSION['errorBenutzer'] = true;
     goto err;
   } else if (($resultset = $statement->get_result()) && !($resultset->num_rows == 0) && ($row = $resultset->fetch_assoc())) {
-    if (($statement = $databaseconnection->prepare("UPDATE Adressen set Postleitzahl=? where ID=?"))
+    if (($statement = $databaseconnection->prepare("UPDATE Adressen SET Postleitzahl=? WHERE ID=?"))
     && ($statement->bind_param('si', $_POST['plz-neu'], $row['Adress_ID']))
     && ($statement->execute())){
-      header('Location: index.php');
-
+      $_SESSION['postleitzahl'] = $_POST['plz-neu'];
+      header('Location: index.php?tab=3');
       closeConnection($databaseconnection);
       die();
     } else {
@@ -124,10 +138,11 @@ if (isset($_POST['stadt-neu']) && isset($_POST['stadt-bestätigen']) && $_POST['
     $_SESSION['errorBenutzer'] = true;
     goto err;
   } else if (($resultset = $statement->get_result()) && !($resultset->num_rows == 0) && ($row = $resultset->fetch_assoc())) {
-    if (($statement = $databaseconnection->prepare("UPDATE Adressen set Ort=? where ID=?"))
+    if (($statement = $databaseconnection->prepare("UPDATE Adressen SET Ort=? WHERE ID=?"))
     && ($statement->bind_param('si', $_POST['stadt-neu'], $row['Adress_ID']))
     && ($statement->execute())){
-      header('Location: index.php');
+      $_SESSION['stadt'] = $_POST['stadt-neu'];
+      header('Location: index.php?tab=3');
       closeConnection($databaseconnection);
       die();
     } else {
@@ -139,17 +154,17 @@ if (isset($_POST['stadt-neu']) && isset($_POST['stadt-bestätigen']) && $_POST['
 //PHP-Code Passwort ändern
 if(isset($_POST['passwort-neu']) && isset($_POST['passwort-bestätigen']) && $_POST['passwort-bestätigen'] == $_POST['passwort-neu']){
   $passwordHash = password_hash($_POST['passwort-neu'], PASSWORD_BCRYPT);
-  if (($statement = $databaseconnection->prepare("UPDATE Benutzer set Passwort=? where id=?"))
+  if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Passwort=? WHERE ID=?"))
   && ($statement->bind_param('si', $passwordHash, $_SESSION['id']))
   && ($statement->execute())){
-    header('Location: index.php');
+    header('Location: index.php?tab=3');
     closeConnection($databaseconnection);
     die();
   }
 }
 
 err:
-header("Location: index.php");
+header("Location: index.php?tab=1");
 closeConnection($databaseconnection);
 die();
 
