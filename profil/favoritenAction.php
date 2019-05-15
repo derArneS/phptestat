@@ -18,7 +18,7 @@ if(isset($_GET['id'])){
   if (($statement = $databaseconnection->prepare("INSERT INTO Favoriten (Benutzer_ID, Angebot_ID) VALUES (?,?)"))
   && ($statement->bind_param('ii', $_SESSION['id'], $_GET['id']))
   && ($statement->execute())){
-    header('Location: ../uebersicht/index.php');
+    header("Location: ../uebersicht/index.php");
     closeConnection($databaseconnection);
     die();
   }
