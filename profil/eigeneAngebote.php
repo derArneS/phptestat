@@ -1,4 +1,4 @@
-<div class="tab-pane fade pt-3" id="nav-angebote" role="tabpanel" aria-labelledby="nav-home-tab">
+<div class="tab-pane show active fade pt-3" id="nav-angebote" role="tabpanel" aria-labelledby="nav-home-tab">
   <?php
 
   if ($resultset3->num_rows == 0) {

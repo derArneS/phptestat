@@ -1,4 +1,4 @@
-<div class="tab-pane fade show active col-12 mt-5 box" id="nav-daten" role="tabpanel" aria-labelledby="nav-contact-tab">
+<div class="tab-pane fade col-12 mt-5 box" id="nav-daten" role="tabpanel" aria-labelledby="nav-contact-tab">
   <div class="container col-12 mt-5 box">
     <?php if (isset($_SESSION['errorBenutzername']) && $_SESSION['errorBenutzername']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">Der angegebene Benutzername ist leider schon vorhanden. </div> <?php } ?>
     <?php if (isset($_SESSION['test']) && $_SESSION['test']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">test</div> <?php } ?>
