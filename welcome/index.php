@@ -1,4 +1,11 @@
-<?php session_start(); require '../database/database.php'; require "../const/cookie.php"; require '../const/deletecache.php';?>
+<?php
+
+session_start();
+require '../database/database.php';
+require "../const/cookie.php";
+require '../const/deletecache.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>

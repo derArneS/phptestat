@@ -4,6 +4,10 @@ require "../database/database.php";
 require "../const/cookie.php";
 require "../const/private.php"; isPrivate(true, "/inserieren");
 
+if (isset($_SESSION['cache']['suche'])) {
+  unset($_SESSION['cache']['suche']);
+}
+
 
 if (isset($_SESSION['cache'])) {
   $titel = (isset($_SESSION['cache']['insert']['titel'])) ? $_SESSION['cache']['insert']['titel'] : null;
@@ -77,7 +81,7 @@ if (isset($_SESSION['cache'])) {
 
   ?>
   <form action="action.php" method="post" enctype="multipart/form-data">
-  <div class="container col-7 mt-5">
+  <div class="container mt-4">
     <div class="row mx-0 px-0">
       <div class="container col-12 mx-0 px-0">
         <?php if (isset($_SESSION['errorEingabe']) && $_SESSION['errorEingabe']) { ?> <div class="alert alert-danger alert-round" role="alert">Fehlerhafte Eingaben!</div> <?php } ?>
@@ -178,84 +182,84 @@ if (isset($_SESSION['cache'])) {
           <div class="row mx-0 px-0 mb-3">
             <legend style="padding: 0px 0px 0px 17px">Ausstattung</legend>
 
-            <div class="col-3" style="padding-left: 17px">
+            <div class="col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="alarmanlage" class="custom-control-input" id="alarmanlage" value="true" <?php if (isset($alarmanlage) && $alarmanlage == "true") echo "checked='checked'"; ?>>
                 <label class="custom-control-label" for="alarmanlage">Alarmanlage</label>
               </div>
             </div>
 
-            <div class="col-3" style="padding-left: 17px">
+            <div class="col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="anhaengerkupplung" class="custom-control-input" id="anhaengerkupplung" value="true" <?php if (isset($anhaengerkupplung) && $anhaengerkupplung == "true") echo "checked='checked'"; ?>>
                 <label class="custom-control-label" for="anhaengerkupplung">Anhaengerkupplung</label>
               </div>
             </div>
 
-            <div class=" col-3" style="padding-left: 17px">
+            <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="bluetooth" class="custom-control-input" id="bluetooth" value="true" <?php if (isset($bluetooth) && $bluetooth == "true") echo "checked='checked'"; ?>>
                 <label class="custom-control-label" for="bluetooth">Bluetooth</label>
               </div>
             </div>
 
-            <div class=" col-3" style="padding-left: 17px">
+            <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="bordcomputer" class="custom-control-input" id="bordcomputer" value="true" <?php if (isset($bordcomputer) && $bordcomputer == "true") echo "checked='checked'"; ?>>
                 <label class="custom-control-label" for="bordcomputer">Bordcomputer</label>
               </div>
             </div>
 
-            <div class=" col-3" style="padding-left: 17px">
+            <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="head" class="custom-control-input" id="head" value="true" <?php if (isset($head) && $head == "true") echo "checked='checked'"; ?>>
                 <label class="custom-control-label" for="head">Head-Up Display</label>
               </div>
             </div>
 
-            <div class=" col-3" style="padding-left: 17px">
+            <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="multifunktionslenkrad" class="custom-control-input" id="multifunktionslenkrad" value="true" <?php if (isset($multifunktionslenkrad) && $multifunktionslenkrad == "true") echo "checked='checked'"; ?>>
                 <label class="custom-control-label" for="multifunktionslenkrad">Multifunktionslenkrad</label>
               </div>
             </div>
 
-            <div class=" col-3" style="padding-left: 17px">
+            <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="navigationssystem" class="custom-control-input" id="navigationssystem" value="true" <?php if (isset($navigationssystem) && $navigationssystem == "true") echo "checked='checked'"; ?>>
                 <label class="custom-control-label" for="navigationssystem">Navigationssystem</label>
               </div>
             </div>
 
-            <div class=" col-3" style="padding-left: 17px">
+            <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="regensensor" class="custom-control-input" id="regensensor" value="true" <?php if (isset($regensensor) && $regensensor == "true") echo "checked='checked'"; ?>>
                 <label class="custom-control-label" for="regensensor">Regensensor</label>
               </div>
             </div>
 
-            <div class=" col-3" style="padding-left: 17px">
+            <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="sitzheizung" class="custom-control-input" id="sitzheizung" value="true" <?php if (isset($sitzheizung) && $sitzheizung == "true") echo "checked='checked'"; ?>>
                 <label class="custom-control-label" for="sitzheizung">Sitzheizung</label>
               </div>
             </div>
 
-            <div class=" col-3" style="padding-left: 17px">
+            <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="soundsystem" class="custom-control-input" id="soundsystem" value="true" <?php if (isset($soundsystem) && $soundsystem == "true") echo "checked='checked'"; ?>>
                 <label class="custom-control-label" for="soundsystem">Soundsystem</label>
               </div>
             </div>
 
-            <div class=" col-3" style="padding-left: 17px">
+            <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="standheizung" class="custom-control-input" id="standheizung" value="true" <?php if (isset($standheizung) && $standheizung == "true") echo "checked='checked'"; ?>>
                 <label class="custom-control-label" for="standheizung">Standheizung</label>
               </div>
             </div>
 
-            <div class=" col-3" style="padding-left: 17px">
+            <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="startStopp" class="custom-control-input" id="startStopp" value="true" <?php if (isset($startStopp) && $startStopp == "true") echo "checked='checked'"; ?>>
                 <label class="custom-control-label" for="startStopp">Start/Stopp-Automatik</label>

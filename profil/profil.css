@@ -3,21 +3,6 @@
   --input-padding-y: 0.75rem;
 }
 
-.login,
-.image {
-  min-height: 100vh;
-}
-
-.bg-image {
-  background-image: url('https://source.unsplash.com/WEQbe2jBg40/600x1200');
-  background-size: cover;
-  background-position: center;
-}
-
-.login-heading {
-  font-weight: 300;
-}
-
 .btn-login {
   font-size: 0.9rem;
   letter-spacing: 0.05rem;
@@ -108,4 +93,8 @@
     width: 200px;
 }
 
-input[type="text"]:disabled{background-color:red;}
+.box {
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.5);
+  border-radius: 4px;
+  padding: 13px 17px 0px 17px;
+}

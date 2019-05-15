@@ -2,8 +2,6 @@
 
 session_start();
 
-print_r($_POST);
-
 if ($_POST['inputPreisMin'] > $_POST['inputPreisMax'] || $_POST['inputPreisMin'] < 0) {
   $_SESSION['error']['preis'] = true;
   header("Location: index.php");
@@ -51,7 +49,8 @@ $statement = "SELECT Angebote.ID AS Angebot_ID, Benutzer_ID, Titel, Marken_ID, M
                . (isset($_POST['sitzheizung']) ? " AND Sitzheizung = 1" : " AND Sitzheizung >= 0")
                . (isset($_POST['sound']) ? " AND Sound = 1" : " AND Sound >= 0")
                . (isset($_POST['standheizung']) ? " AND Standheiz = 1" : " AND Standheiz >= 0")
-               . (isset($_POST['startStopp']) ? " AND StartStopp = 1" : " AND StartStopp >= 0");
+               . (isset($_POST['startStopp']) ? " AND StartStopp = 1" : " AND StartStopp >= 0")
+               . " ORDER BY Angebote.ID DESC";
 
 $_SESSION['statement'] = $statement;
 

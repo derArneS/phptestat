@@ -2,6 +2,7 @@
 <?php
 session_start();
 require "../database/database.php";
+require "../const/deletecache.php";
 
 $databaseconnection = createConnection();
 

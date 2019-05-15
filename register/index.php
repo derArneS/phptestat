@@ -3,6 +3,7 @@
 
   if (isset($_SESSION['benutzername'])) {
     header("Location: ../welcome");
+    die();
   }
 ?>
 
