@@ -78,6 +78,14 @@ if (isset($_POST['email-neu']) && isset($_POST['email-bestätigen']) && $_POST['
   }
 }
 
+  if (($statement = $databaseconnection->prepare("UPDATE Benutzer set Email=? where id=?"))
+  && ($statement->bind_param('si', $_POST['email-neu'], $_SESSION['id']))
+  && ($statement->execute())){
+    header('Location: index.php');
+    closeConnection($databaseconnection);
+    die();
+  }
+}
 
 //PHP-Code Adresse hinzufügen/ändern
 if (isset($_POST['strasse-neu']) && isset($_POST['strasse-bestätigen']) && $_POST['strasse-bestätigen'] == $_POST['strasse-neu']) {

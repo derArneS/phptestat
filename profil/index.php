@@ -61,26 +61,19 @@ closeConnection($databaseconnection);
       </div>
     </nav>
 
-
     <div class="tab-content" id="nav-tabContent">
 
 <!-- Tab - Eigene Angebote -->
       <?php include "eigeneAngebote.php" ?>
 
 
-
 <!-- Tab - Favoriten -->
-      <div class="tab-pane fade <?php if(isset($_GET['tab']) && $_GET['tab'] == 2) echo "show active";?>" id="nav-favoriten" role="tabpanel" aria-labelledby="nav-profile-tab">
-        Hallo :-)
-      </div>
-
+      <?php include "favoriten.php" ?>
 
 <!-- Tab - Persönliche Daten -->
       <?php include "persDaten.php" ?>
 
     </div>
-
-
   </div>
 
 </body>
