@@ -1,4 +1,4 @@
-<div class="tab-pane fade col-12 mt-5" id="nav-daten" role="tabpanel" aria-labelledby="nav-contact-tab">
+<div class="tab-pane fade col-12 mt-5 <?php if(isset($_GET['tab']) && $_GET['tab'] == 3) echo "show active";?>" id="nav-daten" role="tabpanel" aria-labelledby="nav-contact-tab">
   <div class="container col-12 mt-5">
     <?php if (isset($_SESSION['errorBenutzername']) && $_SESSION['errorBenutzername']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">Der angegebene Benutzername ist leider schon vorhanden. </div> <?php } ?>
     <?php if (isset($_SESSION['test']) && $_SESSION['test']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">test</div> <?php } ?>
@@ -306,7 +306,7 @@
         <div class="input-group-prepend">
           <span class="input-group-addon" id="inputGroup-sizing-default">Passwort</span>
         </div>
-        <input disabled style="background-color:white" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="passwort" id="passwort" value="<?=$row['Passwort'] ?>">
+        <input disabled style="background-color:white" type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="passwort" id="passwort" value="12345">
       </div>
 
       <div class="text-center mr-auto">

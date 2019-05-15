@@ -1,4 +1,4 @@
-<div class="tab-pane fade show active" id="nav-angebote" role="tabpanel" aria-labelledby="nav-home-tab">
+<div class="tab-pane fade <?php if(isset($_GET['tab']) && $_GET['tab'] == 1) echo "show active"; if(!isset($_GET['tab'])) echo "show active";?>" id="nav-angebote" role="tabpanel" aria-labelledby="nav-home-tab">
   <?php
 
   if ($resultset3->num_rows == 0) {
@@ -18,7 +18,7 @@
               </div>
               <div style=" border-left: 1px solid grey;  height: 135px;" class="col-6">
                 <p class="m-0" style="font-size: 20px">
-                  Baujahr: '.$angebotrow['Baujahr'].', Kilometerstand: '.$angebotrow['Kilometerstand'].', Leistung: '.$angebotrow['Leistung'].'
+                  Baujahr: '.$angebotrow['Baujahr'].', Kilometerstand: '.$angebotrow['Kilometerstand'].', Leistung: '.$angebotrow['Leistung'].'PS
                 </br>Kraftstoff: '; if($angebotrow['Kraftstoff'] == 1) echo "Benzin"; if($angebotrow['Kraftstoff'] == 2) echo "Diesel";
                 if($angebotrow['Kraftstoff'] == 3) echo "Elektro"; if($angebotrow['Kraftstoff'] == 4) echo "Wasserstoff"; echo ', Getriebe: ';
                 if($angebotrow['Getriebe'] == 1) echo "Manuell"; if($angebotrow['Getriebe'] == 2) echo "Automatik"; echo '

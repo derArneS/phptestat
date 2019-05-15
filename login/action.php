@@ -6,7 +6,7 @@
 
   $databaseconnection = createConnection();
 
-  if (!($statement = $databaseconnection->prepare("SELECT Passwort, Benutzername, ID FROM Benutzer WHERE Email = ? OR Benutzername = ?"))
+  if (!($statement = $databaseconnection->prepare("SELECT * FROM Benutzer WHERE Email = ? OR Benutzername = ?"))
   || !($statement->bind_param('ss', $_POST['inputEmailBenutzer'], $_POST['inputEmailBenutzer']))
   || !($statement->execute())
   || !($resultset = $statement->get_result())) {
@@ -22,9 +22,33 @@
     goto err;
   }
 
+
+  if (!($statement2 = $databaseconnection->prepare("SELECT * FROM Adressen WHERE ID=?"))
+  || !($statement2->bind_param('i', $row['Adress_ID']))
+  || !($statement2->execute())
+  || !($resultset2 = $statement2->get_result())) {
+
+  } else if ($row2 = $resultset2->fetch_assoc()) {
+    $_SESSION['strasse'] = $row2['Strasse'];
+    $_SESSION['postleitzahl'] = $row2['Postleitzahl'];
+    $_SESSION['stadt'] = $row2['Ort'];
+  }
+
+
   $_SESSION['benutzername'] = $row['Benutzername'];
   $_SESSION['id'] = $row['ID'];
 
+  if ($row['Vorname'] != '') {
+      $_SESSION['vorname'] = $row['Vorname'];
+  }
+
+  if ($row['Nachname'] != '') {
+      $_SESSION['nachname'] = $row['Nachname'];
+  }
+
+  print_r($_SESSION);
+  print_r($row);
+  print_r($row2);
 
   goto noerr;
 
