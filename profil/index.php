@@ -50,8 +50,6 @@ closeConnection($databaseconnection);
 <body>
   <?php require '../const/navbar.php'; ?>
 
-  <?php print_r($_SESSION) ?>
-
   <div class="container col-11 mt-5 pb-3 box">
 
 <!-- Tableiste mit drei Tabs -->
