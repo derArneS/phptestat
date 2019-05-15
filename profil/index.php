@@ -56,9 +56,6 @@ closeConnection($databaseconnection);
 <!-- Tab - Eigene Angebote -->
       <div class="tab-pane fade show active col-12 mt-5 box" id="nav-angebote" role="tabpanel" aria-labelledby="nav-home-tab">
 
-
-
-
       </div>
 
 
@@ -378,7 +375,7 @@ closeConnection($databaseconnection);
               <div class="input-group-prepend">
                 <span class="input-group-addon" id="inputGroup-sizing-default">Passwort</span>
               </div>
-              <input disabled style="background-color:white" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="passwort" id="passwort" value="<?=$row['Passwort'] ?>">
+              <input disabled style="background-color:white" type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="passwort" id="passwort" value="hahaha">
             </div>
 
             <div class="text-center mr-auto">
