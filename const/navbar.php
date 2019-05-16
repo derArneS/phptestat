@@ -27,7 +27,7 @@ if (($statementAnzahlNachricht = $databaseconnection->prepare("SELECT COUNT(Gele
     <?php if(isset($_SESSION['benutzername'])) { ?>
       <ul class="navbar-nav mr-0 my-lg-0">
         <li class="nav-item">
-          <a class="nav-link notification" href=<?= root . "/chat"?>><span>Nachrichten</span><span class="badge"><?= $anzahlUngelesen ?></span></a>
+          <a class="nav-link notification" href=<?= root . "/chat"?>><span>Nachrichten</span><?php if(isset($anzahlUngelesen) && $anzahlUngelesen != 0) { ?><span class="badge"><?= $anzahlUngelesen ?></span><?php } ?></a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -7,7 +7,7 @@ require "../const/cookie.php";
 require '../const/deletecache.php';
 
 $databaseconnection = createConnection();
-if (isset($_POST['text']) && isset($_POST['id']) && isset($_POST['empfaenger'])) {
+if (isset($_POST['text']) && isset($_SESSION['id']) && isset($_POST['empfaenger'])) {
   if (($statement = $databaseconnection->prepare("INSERT INTO Nachrichten (Text, Sender, Empfaenger) VALUES (?,?,?)"))
   && ($statement->bind_param('sii',$_POST['text'], $_SESSION['id'], $_POST['empfaenger']))
   && ($statement->execute())) {
@@ -15,6 +15,8 @@ if (isset($_POST['text']) && isset($_POST['id']) && isset($_POST['empfaenger']))
   }
 } else {
   #hier fehlt noch eine Fehlermeldung
+  header("Location: index.php");
+  closeConnection($databaseconnection);
   die();
 }
 
