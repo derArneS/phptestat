@@ -25,27 +25,27 @@
           <div class="container">
             <div class="row row-stretch">
               <div class="col-md-9 col-lg-9 col-xl-8 mx-auto">
-                <h3 class="login-heading mb-4">Welcome back!</h3>
+                <h3 class="login-heading mb-4">Willkommen zurück!</h3>
                 <form method="post" action='action.php'>
                   <?php if (isset($_SESSION['errorPrivate']) && $_SESSION['errorPrivate']) { ?> <div class="alert alert-danger alert-round" role="alert">Bitte erst anmelden!</div> <?php } ?>
                   <?php if (isset($_SESSION['errorEmailBenutzer']) && $_SESSION['errorEmailBenutzer']) { ?> <div class="alert alert-danger alert-round" role="alert">Benutzername oder Email nicht bekannt!</div> <?php } ?>
                   <div class="form-label-group">
                     <input type="text" name="inputEmailBenutzer" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                    <label for="inputEmail">Email address</label>
+                    <label for="inputEmail">Email oder Benutzername</label>
                   </div>
 
                   <?php if (isset($_SESSION['errorPasswort']) && $_SESSION['errorPasswort']) { ?> <div class="alert alert-danger  alert-round" role="alert">Passwort falsch!</div> <?php } ?>
                   <div class="form-label-group">
                     <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
-                    <label for="inputPassword">Password</label>
+                    <label for="inputPassword">Passwort</label>
                   </div>
 
                   <div class="custom-control custom-checkbox mb-3">
                     <input type="checkbox" name="inputRememberPassword" class="custom-control-input" id="customCheck1" value="cookie">
-                    <label class="custom-control-label" for="customCheck1">Remember password</label>
+                    <label class="custom-control-label" for="customCheck1">Passwort speichern</label>
                   </div>
 
-                  <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Submit">Sign in</button>
+                  <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Submit">Login</button>
 
                   <!--
                     <div class="text-center">
