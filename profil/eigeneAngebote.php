@@ -10,7 +10,7 @@
     <div class="container">
       <fieldset class="mt-4 mx-auto box" >
         <div class="row mx-0 px-0 mb-3">
-          <a class="col-11 p-0" href="../uebersicht/angebot.php?id='.$angebotrow['Angebot_ID'].'">
+          <a class="col-11 p-0" href="../uebersicht/angebot.php?id='.$angebotrow['Angebot_ID'].'&loc=1">
             <div class="row m-0 p-0">
               <legend style="padding: 0px 0px 0px 17px">'.$angebotrow['Titel'].'</legend>
               <div class="mr-2">
@@ -30,7 +30,7 @@
             </div>
             </div>
           </a>
-          <div class="col-1 pr-4">
+          <div class="col-1 pl-0">
             <a href="deleteAngebot.php?id='.$angebotrow['Angebot_ID'].'" class="btn btn-primary">Löschen</a>
           </div>
         </div>

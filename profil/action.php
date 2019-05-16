@@ -69,19 +69,10 @@ if (isset($_POST['email-neu']) && isset($_POST['email-bestätigen']) && $_POST['
     }
   }
 
-  if (($statement = $databaseconnection->prepare("UPDATE Email SET Email=? WHERE ID=?"))
+  if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Email=? WHERE ID=?"))
   && ($statement->bind_param('si', $_POST['email-neu'], $_SESSION['id']))
   && ($statement->execute())){
     header('Location: index.php?tab=3');
-    closeConnection($databaseconnection);
-    die();
-  }
-}
-
-  if (($statement = $databaseconnection->prepare("UPDATE Benutzer set Email=? where id=?"))
-  && ($statement->bind_param('si', $_POST['email-neu'], $_SESSION['id']))
-  && ($statement->execute())){
-    header('Location: index.php');
     closeConnection($databaseconnection);
     die();
   }
@@ -163,8 +154,11 @@ if(isset($_POST['passwort-neu']) && isset($_POST['passwort-bestätigen']) && $_P
   }
 }
 
+print_r($_SESSION);
+print_r($_POST);
+
 err:
-header("Location: index.php?tab=1");
+#header("Location: index.php?tab=1");
 closeConnection($databaseconnection);
 die();
 

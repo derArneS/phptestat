@@ -36,7 +36,15 @@ require "../const/cookie.php";
       <div class="container col-12 mx-0 px-0">
 
         <div class="mb-3 mx-auto">
-          <a href="index.php">Zurück zu den Ergebnissen</a>
+          <?php
+
+          if (isset($_GET['loc'])) {
+            echo '<a href="../profil">Zurück zum Profil</a>';
+          } else {
+            echo '<a href="index.php">Zurück zu den Ergebnissen</a>';
+          }
+
+          ?>
         </div>
 
         <fieldset class="box mb-4">

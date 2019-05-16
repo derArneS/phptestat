@@ -1,3 +1,3 @@
 <?php
-  define("root", "/niels", true);
+  define("root", "/arne", true);
  ?>
