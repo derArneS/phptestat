@@ -1,5 +1,14 @@
 <?php
 require "root.php";
+
+if (($statementAnzahlNachricht = $databaseconnection->prepare("SELECT COUNT(Gelesen) AS Anzahl FROM Nachrichten WHERE Empfaenger = ? AND Gelesen = 0"))
+&& ($statementAnzahlNachricht->bind_param('i', $_SESSION['id']))
+&& ($statementAnzahlNachricht->execute())
+&& ($resultsetAnzahlNachricht = $statementAnzahlNachricht->get_result())
+&& ($rowAnzahlNachricht = $resultsetAnzahlNachricht->fetch_assoc())) {
+  $anzahlUngelesen = $rowAnzahlNachricht['Anzahl'];
+}
+
 ?>
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
@@ -17,6 +26,9 @@ require "root.php";
 
     <?php if(isset($_SESSION['benutzername'])) { ?>
       <ul class="navbar-nav mr-0 my-lg-0">
+        <li class="nav-item">
+          <a class="nav-link notification" href=<?= root . "/chat"?>><span>Nachrichten</span><span class="badge"><?= $anzahlUngelesen ?></span></a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <?php echo $_SESSION['benutzername']; ?>
