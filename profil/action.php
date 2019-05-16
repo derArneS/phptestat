@@ -85,7 +85,6 @@ if (isset($_POST['email-neu']) && isset($_POST['email-bestätigen']) && $_POST['
     closeConnection($databaseconnection);
     die();
   }
-}
 
 //PHP-Code Adresse hinzufügen/ändern
 if (isset($_POST['strasse-neu']) && isset($_POST['strasse-bestätigen']) && $_POST['strasse-bestätigen'] == $_POST['strasse-neu']) {
