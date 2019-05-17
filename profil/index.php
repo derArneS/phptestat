@@ -66,7 +66,6 @@ closeConnection($databaseconnection);
 <!-- Tab - Eigene Angebote -->
       <?php include "eigeneAngebote.php" ?>
 
-
 <!-- Tab - Favoriten -->
       <?php include "favoriten.php" ?>
 
