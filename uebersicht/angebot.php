@@ -13,10 +13,11 @@ require "../const/cookie.php";
   <link rel="stylesheet" href="uebersicht.css">
 </head>
 <body style="padding-bottom: 80px">
+  <?php $databaseconnection = createConnection(); ?>
   <?php require "../const/navbar.php"; ?>
 
   <?php
-  $databaseconnection = createConnection();
+
 
   if (!($statement = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_ID, Benutzer_ID, Titel, Angebote.Marken_ID AS Angebot_Marke_ID, Angebote.Modell_ID AS Angebote_Modell_ID, Preis, Baujahr, Kilometerstand, Leistung, Kraftstoff, Getriebe,
                                                           Alarmanlage, Anhaengerkupplung, Bluetooth, Bordcomputer, HeadUP, Multilenk, Navi, Regensensor, Sitzheizung,

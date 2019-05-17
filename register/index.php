@@ -1,6 +1,10 @@
 <?php
   session_start();
 
+  require '../database/database.php';
+
+  $databaseconnection = createConnection();
+
   if (isset($_SESSION['benutzername'])) {
     header("Location: ../welcome");
     die();
@@ -60,6 +64,8 @@
             unset($_SESSION['errorPasswort']);
             unset($_SESSION['errorBenutzer']);
             unset($_SESSION['errorRegister']);
+
+            closeConnection($databaseconnection);
             ?>
           </div>
         </form>

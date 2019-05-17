@@ -1,5 +1,12 @@
 <?php
   session_start();
+
+require '../database/database.php';
+
+$databaseconnection = createConnection();
+
+
+
   if (isset($_SESSION['benutzername'])) {
     header("Location: ../welcome");
     die();
@@ -59,6 +66,7 @@
                   unset($_SESSION['errorEmailBenutzer']);
                   unset($_SESSION['errorPasswort']);
                   unset($_SESSION['errorPrivate']);
+                  closeConnection($databaseconnection);
                   ?>
                 </div>
                 </div>
