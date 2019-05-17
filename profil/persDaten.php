@@ -4,6 +4,10 @@
     <?php if (isset($_SESSION['test']) && $_SESSION['test']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">test</div> <?php } ?>
     <?php if (isset($_SESSION['errorPlz']) && $_SESSION['errorPlz']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">Fehlerhafte Eingabe. Bitte die Postleitzahl erneut eingeben.</div> <?php } ?>
 
+<!--
+Anzeige der persönlichen Daten im Profil. Dabei ist jede Reihe gleich aufgebaut. Bestehend aus Input Feldern und Buttons.
+Bei betätigen des Buttons öffnet sich ein Modal und fordert die Eingaben die für die Änderung der persönlichen Daten benötigt werden.
+-->
 
     <div class="row">
 
@@ -19,6 +23,7 @@
         <button type="buttom" class="btn btn-primary mb-2" data-toggle="modal" data-target="#benutzernameModal">Ändern</button>
       </div>
 
+      <!-- Modal mit einer Form die auf action.php verweist -->
       <div class="modal fade" id="benutzernameModal" tabindex="-1" role="dialog" aria-labelledby="benutzernameModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -61,6 +66,7 @@
         <button type="submit" class="btn btn-primary mb-2" data-toggle="modal" data-target="#vornameModal">Ändern</button>
       </div>
 
+      <!-- Modal mit einer Form die auf action.php verweist -->
       <div class="modal fade" id="vornameModal" tabindex="-1" role="dialog" aria-labelledby="vornameModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -103,6 +109,8 @@
         <button type="submit" class="btn btn-primary mb-2" data-toggle="modal" data-target="#nachnameModal">Ändern</button>
       </div>
 
+
+      <!-- Modal mit einer Form die auf action.php verweist -->
       <div class="modal fade" id="nachnameModal" tabindex="-1" role="dialog" aria-labelledby="nachnameModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -145,6 +153,7 @@
         <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#emailModal">Ändern</button>
       </div>
 
+      <!-- Modal mit einer Form die auf action.php verweist -->
       <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -187,6 +196,7 @@
         <button type="submit" class="btn btn-primary mb-2" data-toggle="modal" data-target="#strasseModal">Ändern</button>
       </div>
 
+      <!-- Modal mit einer Form die auf action.php verweist -->
       <div class="modal fade" id="strasseModal" tabindex="-1" role="dialog" aria-labelledby="strasseModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -216,7 +226,7 @@
         </div>
       </div>
 
-    
+
 
 
       <!-- Profil - Postleitzahl -->
@@ -231,6 +241,7 @@
         <button type="submit" class="btn btn-primary mb-2" data-toggle="modal" data-target="#plzModal">Ändern</button>
       </div>
 
+      <!-- Modal mit einer Form die auf action.php verweist -->
       <div class="modal fade" id="plzModal" tabindex="-1" role="dialog" aria-labelledby="plzModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -273,6 +284,7 @@
         <button type="submit" class="btn btn-primary mb-2" data-toggle="modal" data-target="#stadtModal">Ändern</button>
       </div>
 
+      <!-- Modal mit einer Form die auf action.php verweist -->
       <div class="modal fade" id="stadtModal" tabindex="-1" role="dialog" aria-labelledby="stadtModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -315,6 +327,7 @@
         <button type="submit" class="btn btn-primary mb-2" data-toggle="modal" data-target="#passwortModal">Ändern</button>
       </div>
 
+      <!-- Modal mit einer Form die auf action.php verweist -->
       <div class="modal fade" id="passwortModal" tabindex="-1" role="dialog" aria-labelledby="passwortModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">

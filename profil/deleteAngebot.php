@@ -13,6 +13,7 @@ if (isset($_GET['id'])) {
   echo $_GET['id'];
   echo $_SESSION['id'];
 
+  //Das eigene eingestellte Angebot wird entfernt
   if (($statement = $databaseconnection->prepare("SELECT * FROM Benutzer, Angebote WHERE Benutzer.ID = Angebote.Benutzer_ID AND Benutzer.ID = ? AND Angebote.ID = ?"))
   && ($statement->bind_param('ii', $_SESSION['id'], $_GET['id']))
   && ($statement->execute())
@@ -28,7 +29,7 @@ if (isset($_GET['id'])) {
       if (($statement = $databaseconnection->prepare("DELETE FROM Angebote WHERE ID=? AND Benutzer_ID=?"))
       && ($statement->bind_param('ii', $_GET['id'], $_SESSION['id']))
       && ($statement->execute())) {
-        
+
       }
     }
 

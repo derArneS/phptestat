@@ -1,17 +1,16 @@
 <div class="tab-pane fade <?php if(isset($_GET['tab']) && $_GET['tab'] == 2) echo "show active";?>" id="nav-favoriten" role="tabpanel" aria-labelledby="nav-profile-tab">
 
 <?php
-
-
 $databaseconnection = createConnection();
-$sql = "SELECT Angebote.ID AS Angebot_ID, Favoriten.Benutzer_ID, Titel, Marken_ID, Modell_ID,
-                                                 Preis, Baujahr, Kilometerstand, Leistung, Kraftstoff, Getriebe, Alarmanlage,
-                                                 Anhaengerkupplung, Bluetooth, Bordcomputer, HeadUP, Multilenk, Navi, Regensensor,
-                                                 Sitzheizung, Sound, Standheiz, StartStopp, Bilder.ID AS Bild_ID FROM Angebote INNER JOIN Bilder ON Angebote.ID=Bilder.Angebot_ID INNER JOIN Favoriten ON Angebote.ID=Favoriten.Angebot_ID AND Favoriten.Benutzer_ID = ?";
+
+//SQL-Statement, welches für den angemeldeteten Benutzer die Favoriten ausgibt
+$sql = "SELECT Angebote.ID AS Angebot_ID, Favoriten.Benutzer_ID, Titel, Marken_ID, Modell_ID, Preis, Baujahr, Kilometerstand, Leistung, Kraftstoff,
+Getriebe, Alarmanlage, Anhaengerkupplung, Bluetooth, Bordcomputer, HeadUP, Multilenk, Navi, Regensensor, Sitzheizung, Sound, Standheiz, StartStopp,
+Bilder.ID AS Bild_ID FROM Angebote INNER JOIN Bilder ON Angebote.ID=Bilder.Angebot_ID INNER JOIN Favoriten ON Angebote.ID=Favoriten.Angebot_ID AND Favoriten.Benutzer_ID = ?";
 if (!($statement = $databaseconnection->prepare($sql)) || !($statement->bind_param('i', $_SESSION['id'])) || !($statement->execute())) {
 
-
 } else if (($resultset4 = $statement->get_result()) && ($resultset4->num_rows > 0)) {
+  //Die Favoriten werden nacheinander ausgegeben
   while($row2 = $resultset4->fetch_assoc()){
     echo'
     <div class="container">

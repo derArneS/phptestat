@@ -16,7 +16,9 @@ require '../const/deletecache.php';
   <link rel="stylesheet" href="../css/carousel.css">
 </head>
 <body>
+  <!--Einbinden der Navbar -->
   <?php require '../const/navbar.php'; ?>
+  <!--Slider mit drei Bildern, welche bei Auswahl auf eine vordefinierte Suche verweisen -->
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -58,6 +60,7 @@ require '../const/deletecache.php';
       <span class="sr-only">Next</span>
     </a>
   </div>
+  <!--Einbinden des Footers -->
   <?php require "../const/footer.php" ?>
 </body>
 </html>
