@@ -47,85 +47,90 @@ if (!isset($_SESSION['statement'])) {
       echo'
       <div class="container">
         <fieldset class="mt-4 mx-auto box" >
-          <div class="row mx-0 px-0 mb-3">
-            <a class="col-10 p-0" href="../uebersicht/angebot.php?id='.$row['Angebot_ID'].'">
-              <div class="row m-0 p-0">
-                <legend style="padding: 0px 0px 0px 17px">'.$row['Titel'].'</legend>
-                <div class="mr-2">
-                  <img class="" style="padding-left: 0px; height: 135px; width: 240px" src="../const/loadPic.php?id='.$row['Bild_ID'].'" alt="">
-                </div>
-                <div style=" border-left: 1px solid grey;  height: 135px;" class="col-6">
-                  <p class="m-0" style="font-size: 20px">
-                    Baujahr: '.$row['Baujahr'].', Kilometerstand: '.$row['Kilometerstand'].', Leistung: '.$row['Leistung'].'PS
-                  </br>Kraftstoff: '; if($row['Kraftstoff'] == 1) echo "Benzin"; if($row['Kraftstoff'] == 2) echo "Diesel";
-                  if($row['Kraftstoff'] == 3) echo "Elektro"; if($row['Kraftstoff'] == 4) echo "Wasserstoff"; echo ', Getriebe: ';
-                  if($row['Getriebe'] == 1) echo "Manuell"; if($row['Getriebe'] == 2) echo "Automatik"; echo '
-                </p>
-              </div>
-              <div style=" border-left: 1px solid grey;  height: 135px;" class="col pr-0">
-                <h4 style="height: 50%">Preis:</h4>
-                <h2>'.$row['Preis'].' €</h2>
-              </div>
-              </div>
-            </a>';
-            if ($row['Benutzer_ID'] != $_SESSION['id']) echo '
-            <div class="col-2 pr-4" style="padding: 0!important">
+        <div class="row">
+          <div class="col-10">
+            <a href="../uebersicht/angebot.php?id='.$row['Angebot_ID'].'"><h3 style="padding: 0px 0px 0px 17px">'.$row['Titel'].'</h3></a>
+          </div>';
+          if ($row['Benutzer_ID'] != $_SESSION['id']) { echo '
+            <div class="col-2 pr-4 mb-3" style="padding: 0!important">
               <a href="../profil/favoritenAction.php?id='.$row['Angebot_ID'].'" class="btn btn-primary">Favorit</a>';
-              if(!isset($_SESSION['id'])) {
-                echo '
-                  <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#ModalKontaktNoLogin'.$row['Angebot_ID'].'">Kontakt</button>
-                  <div class="modal fade" id="ModalKontaktNoLogin'.$row['Angebot_ID'].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalCenterTitle">Kontakt</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
+            if(!isset($_SESSION['id'])) {
+              echo '
+                <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#ModalKontaktNoLogin'.$row['Angebot_ID'].'">Kontakt</button>
+                <div class="modal fade" id="ModalKontaktNoLogin'.$row['Angebot_ID'].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Kontakt</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="text-center">
+                          <h3>Bitte erst einloggen</h3>
                         </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                        <a href="../login/index.php?red=/uebersicht/angebot.php?id='.$row['Angebot_ID'].'" class="btn btn-primary">Login</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                    ';
+            } else if ($row['Benutzer_ID'] != $_SESSION['id']) {
+              echo '
+                <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#ModalKontakt'.$row['Angebot_ID'].'">Kontakt</button>
+                <div class="modal fade" id="ModalKontakt'.$row['Angebot_ID'].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Kontakt</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <form class="" action="../chat/action.php" method="post">
                         <div class="modal-body">
-                          <div class="text-center">
-                            <h3>Bitte erst einloggen</h3>
-                          </div>
+                          <textarea name="text" class="form-control" rows="3" cols="80" required></textarea>
+                          <input type="hidden" name="empfaenger" value="'.$row['Benutzer_ID'].'">
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                          <a href="../login/index.php?red=/uebersicht/angebot.php?id='.$row['Angebot_ID'].'" class="btn btn-primary">Login</a>
+                          <input type="submit" class="btn btn-primary" name="" value="Senden">
                         </div>
-                      </div>
+                      </form>
                     </div>
                   </div>
                 </div>
-                      ';
-              } else if ($row['Benutzer_ID'] != $_SESSION['id']) {
-                echo '
-                  <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#ModalKontakt'.$row['Angebot_ID'].'">Kontakt</button>
-                  <div class="modal fade" id="ModalKontakt'.$row['Angebot_ID'].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalCenterTitle">Kontakt</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <form class="" action="../chat/action.php" method="post">
-                          <div class="modal-body">
-                            <textarea name="text" class="form-control" rows="3" cols="80" required></textarea>
-                            <input type="hidden" name="empfaenger" value="'.$row['Benutzer_ID'].'">
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                            <input type="submit" class="btn btn-primary" name="" value="Senden">
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
+              </div>
+                  ';
+            }
+          }
+          echo '
+        </div>
+          <div class="row mx-0 px-0 mb-3">
+            <a class="col-12 p-0" href="../uebersicht/angebot.php?id='.$row['Angebot_ID'].'">
+              <div class="row m-0 p-0">
+                <div class="mr-2">
+                  <img class="" style="padding-left: 0px; height: 135px; width: 240px" src="../const/loadPic.php?id='.$row['Bild_ID'].'" alt="">
                 </div>
-                    ';
-              }
-            echo '
+                <div style=" border-left: 1px solid grey;  height: 135px;" class="col-7">
+                  <p class="m-0" style="font-size: 20px">
+                    Baujahr: '.$row['Baujahr'].', Kilometerstand: '.$row['Kilometerstand'].', Leistung: '.$row['Leistung'].'PS
+                    </br>Kraftstoff: '; if($row['Kraftstoff'] == 1) echo "Benzin"; if($row['Kraftstoff'] == 2) echo "Diesel";
+                    if($row['Kraftstoff'] == 3) echo "Elektro"; if($row['Kraftstoff'] == 4) echo "Wasserstoff"; echo ', Getriebe: ';
+                    if($row['Getriebe'] == 1) echo "Manuell"; if($row['Getriebe'] == 2) echo "Automatik"; echo '
+                  </p>
+                </div>
+                <div style=" border-left: 1px solid grey;  height: 135px;" class="col pr-0">
+                  <h4 style="height: 50%">Preis:</h4>
+                  <h2>'.$row['Preis'].' €</h2>
+                </div>
+              </div>
+            </a>
           </div>
         </fieldset>
       </div>
@@ -133,11 +138,15 @@ if (!isset($_SESSION['statement'])) {
       }
     }
 
+
+
+
+
     ?>
 
     </div>
 
-
+<a href="#"></a>
 
     <div class="mb-3">
       <br>
