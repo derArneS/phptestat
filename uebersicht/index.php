@@ -24,7 +24,7 @@ $databaseconnection = createConnection();
 
     ?>
     <div class="container">
-      <div class="my-3 mx-auto">
+      <div class="my-3 pl-3">
         <a href="../suche/index.php">Suche verändern</a>
       </div>
 
@@ -74,6 +74,10 @@ $databaseconnection = createConnection();
 
     ?>
 
+  </div>
+
+  <div class="mb-3">
+    <br>
   </div>
 
 

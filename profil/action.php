@@ -78,8 +78,7 @@ if (isset($_POST['email-neu']) && isset($_POST['email-bestätigen']) && $_POST['
     }
   }
 
-
-  if (($statement = $databaseconnection->prepare("UPDATE Email SET Email=? WHERE ID=?"))
+  if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Email=? WHERE ID=?"))
   && ($statement->bind_param('si', $_POST['email-neu'], $_SESSION['id']))
   && ($statement->execute())){
     header('Location: index.php?tab=3');
@@ -87,15 +86,6 @@ if (isset($_POST['email-neu']) && isset($_POST['email-bestätigen']) && $_POST['
     die();
   }
 }
-
-  //Falls die E-Mail noch nicht vergeben ist, wird die E-Mail auf die Wunsch E-Mail geändert
-  if (($statement = $databaseconnection->prepare("UPDATE Benutzer set Email=? where id=?"))
-  && ($statement->bind_param('si', $_POST['email-neu'], $_SESSION['id']))
-  && ($statement->execute())){
-    header('Location: index.php');
-    closeConnection($databaseconnection);
-    die();
-  }
 
 //PHP-Code Adresse hinzufügen/ändern
 if (isset($_POST['strasse-neu']) && isset($_POST['strasse-bestätigen']) && $_POST['strasse-bestätigen'] == $_POST['strasse-neu']) {
@@ -182,7 +172,7 @@ if(isset($_POST['passwort-neu']) && isset($_POST['passwort-bestätigen']) && $_P
 
 //Wenn ein Fehler auftritt, wird die profil/index.php Datei wieder eingeblendet und die Datenbankconnection geschlossen
 err:
-header("Location: index.php?tab=1");
+#header("Location: index.php?tab=1");
 closeConnection($databaseconnection);
 die();
 
