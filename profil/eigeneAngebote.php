@@ -5,6 +5,7 @@
     echo "Du hast scheinbar noch keine Angebote...";
   }
 
+  //Die eigenen Angebote werden nacheinander ausgegeben. Inklusive der Option das eigene Angebot wieder zu entfernen.
   while ($angebotrow = $resultset3->fetch_assoc()) {
     echo'
     <div class="container">

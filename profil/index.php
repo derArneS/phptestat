@@ -8,6 +8,7 @@ require "../const/private.php"; isPrivate(true, "/profil");
 
 <?php
 $databaseconnection = createConnection();
+
 if (!($statement = $databaseconnection->prepare("SELECT * FROM Benutzer WHERE Benutzername = ?"))
 || !($statement->bind_param('s', $_SESSION['benutzername']))
 || !($statement->execute())
@@ -24,6 +25,7 @@ if (!($statement = $databaseconnection->prepare("SELECT * FROM Adressen WHERE ID
 }
 $adressrow = $resultset->fetch_assoc();
 
+//SQL-Statement für die vom Benutzer eigenen eingestellten Angebote
 if (!($statement3 = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_ID, Benutzer_ID, Titel, Marken_ID, Modell_ID,
                                                  Preis, Baujahr, Kilometerstand, Leistung, Kraftstoff, Getriebe, Alarmanlage,
                                                  Anhaengerkupplung, Bluetooth, Bordcomputer, HeadUP, Multilenk, Navi, Regensensor,
@@ -43,7 +45,7 @@ closeConnection($databaseconnection);
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Profil</title>
   <?php require "../const/head.php" ?>
   <link rel="stylesheet" href="profil.css">
 </head>
@@ -65,7 +67,6 @@ closeConnection($databaseconnection);
 
 <!-- Tab - Eigene Angebote -->
       <?php include "eigeneAngebote.php" ?>
-
 
 <!-- Tab - Favoriten -->
       <?php include "favoriten.php" ?>

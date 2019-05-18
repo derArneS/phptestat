@@ -6,6 +6,7 @@ if (isset($_GET['marke'])) {
   $_SESSION['cache']['suche'] = $_GET;
 }
 
+//vordefinierte SQL-Statements die nach Auswahl eines Bildes auf der Startseite in der Session abgelegt werden
 if (isset($_GET['marke']) && $_GET['marke'] == "1") {
   $_SESSION['statement'] = "SELECT Angebote.ID AS Angebot_ID, Benutzer_ID, Titel, Marken_ID, Modell_ID, Preis, Baujahr,
                             Kilometerstand, Leistung, Kraftstoff, Getriebe, Alarmanlage, Anhaengerkupplung,

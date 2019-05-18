@@ -39,7 +39,7 @@ require "../const/cookie.php";
           <?php
 
           if (isset($_GET['loc'])) {
-            echo '<a href="../profil">Zurück zum Profil</a>';
+            echo '<a href="../profil/index.php?tab='.$_GET['loc'].'">Zurück zum Profil</a>';
           } else {
             echo '<a href="index.php">Zurück zu den Ergebnissen</a>';
           }

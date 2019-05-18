@@ -19,7 +19,7 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Auto25</title>
   <?php require "../const/head.php" ?>
   <link rel="stylesheet" href="welcome.css">
   <link rel="stylesheet" href="../css/carousel.css">
@@ -47,6 +47,7 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
     document.onload = ajax();
   </script>
   <?php require '../const/navbar.php'; ?>
+  <!--Slider mit drei Bildern, welche bei Auswahl auf eine vordefinierte Suche verweisen -->
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>

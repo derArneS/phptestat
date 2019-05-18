@@ -13,7 +13,7 @@ if (isset($_SESSION['cache']['insert'])) {
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Suche</title>
   <?php require "../const/head.php" ?>
   <link rel="stylesheet" href="suche.css">
 </head>
