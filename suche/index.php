@@ -18,6 +18,7 @@ if (isset($_SESSION['cache']['insert'])) {
   <link rel="stylesheet" href="suche.css">
 </head>
 <body onload="ajax()" style="padding-bottom: 80px">
+  <?php $databaseconnection = createConnection(); ?>
   <?php require "../const/navbar.php"; ?>
 
   <script type="text/javascript">
@@ -43,7 +44,7 @@ if (isset($_SESSION['cache']['insert'])) {
   </script>
 
   <?php
-  $databaseconnection = createConnection();
+
 
   if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Name ASC"))
   && ($statement->execute())
