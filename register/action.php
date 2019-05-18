@@ -4,6 +4,7 @@
 
   require "../database/database.php";
   require '../const/deletecache.php';
+  require "../const/root.php";
 
   if (isset($_SESSION['benutzername'])) {
     goto err;
@@ -62,7 +63,12 @@
 
   noerr:
   $_SESSION['errorRegister'] = false;
-  header("Location: ../welcome");
+  if (isset($_SESSION['redirect'])) {
+    header("Location: " . root . $_SESSION['redirect']);
+    unset($_SESSION['redirect']);
+  } else {
+    header("Location: ../welcome");
+  }
   closeConnection($databaseconnection);
 
 ?>

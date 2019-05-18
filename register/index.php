@@ -21,6 +21,7 @@
 </head>
 <body>
   <?php require "../const/navbar.php" ?>
+  <?php print_r($_SESSION); ?>
   <?php if (isset($_SESSION['errorRegister']) && $_SESSION['errorRegister']) { ?> <div class="alert alert-danger  alert-round" role="alert">errorRegister</div> <?php } ?>
   <?php if (isset($_SESSION['errorBenutzer']) && $_SESSION['errorBenutzer']) { ?> <div class="alert alert-danger  alert-round" role="alert">errorBenutzer</div> <?php } ?>
   <div class="login d-flex align-items-center py-5">

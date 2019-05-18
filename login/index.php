@@ -23,6 +23,7 @@ $databaseconnection = createConnection();
 </head>
 <body>
   <?php require "../const/navbar.php" ?>
+  <?php print_r($_SESSION); ?>
 
   <div class="container-fluid">
     <div class="row no-gutter">
@@ -54,11 +55,16 @@ $databaseconnection = createConnection();
 
                   <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Submit">Login</button>
 
-                  <!--
-                    <div class="text-center">
-                      <a class="small" href="forgotpassword.php">Forgot password?</a>
+                  <div class="row">
+                    <div class="col-6 text-center">
+                        <a class="small" href="#">Forgot password?</a>
                     </div>
-                  -->
+                    <div class="col-6 text-center">
+                        <a class="small" href="../register">Noch kein Konto?</a>
+                    </div>
+                  </div>
+
+
                   </form>
 
 
