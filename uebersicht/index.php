@@ -70,8 +70,61 @@ if (!isset($_SESSION['statement'])) {
             </a>';
             if ($row['Benutzer_ID'] != $_SESSION['id']) echo '
             <div class="col-2 pr-4" style="padding: 0!important">
-              <a href="../profil/favoritenAction.php?id='.$row['Angebot_ID'].'" class="btn btn-primary" style="float: right">Favorit</a>
-            </div>';
+              <a href="../profil/favoritenAction.php?id='.$row['Angebot_ID'].'" class="btn btn-primary">Favorit</a>';
+              if(!isset($_SESSION['id'])) {
+                echo '
+                  <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#ModalKontaktNoLogin'.$row['Angebot_ID'].'">Kontakt</button>
+                  <div class="modal fade" id="ModalKontaktNoLogin'.$row['Angebot_ID'].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalCenterTitle">Kontakt</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="text-center">
+                            <h3>Bitte erst einloggen</h3>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                          <a href="../login/index.php?red=/uebersicht/angebot.php?id='.$row['Angebot_ID'].'" class="btn btn-primary">Login</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                      ';
+              } else if ($row['Benutzer_ID'] != $_SESSION['id']) {
+                echo '
+                  <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#ModalKontakt'.$row['Angebot_ID'].'">Kontakt</button>
+                  <div class="modal fade" id="ModalKontakt'.$row['Angebot_ID'].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalCenterTitle">Kontakt</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <form class="" action="../chat/action.php" method="post">
+                          <div class="modal-body">
+                            <textarea name="text" class="form-control" rows="3" cols="80" required></textarea>
+                            <input type="hidden" name="empfaenger" value="'.$row['Benutzer_ID'].'">
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                            <input type="submit" class="btn btn-primary" name="" value="Senden">
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                    ';
+              }
             echo '
           </div>
         </fieldset>
@@ -82,14 +135,18 @@ if (!isset($_SESSION['statement'])) {
 
     ?>
 
-  </div>
+    </div>
 
-  <div class="mb-3">
-    <br>
-  </div>
+
+
+    <div class="mb-3">
+      <br>
+    </div>
 
 
     <?php require "../const/footer.php" ?>
+
+
 
 
 

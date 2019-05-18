@@ -11,6 +11,10 @@ $databaseconnection = createConnection();
     header("Location: ../welcome");
     die();
   }
+
+  if (isset($_GET['red'])) {
+    $_SESSION['redirect'] = $_GET['red'];
+  }
 ?>
 
 <!DOCTYPE html>

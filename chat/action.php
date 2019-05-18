@@ -20,7 +20,7 @@ if (isset($_POST['text']) && isset($_SESSION['id']) && isset($_POST['empfaenger'
   die();
 }
 
-header("Location: index.php");
+header("Location: index.php?tab=".$_POST['empfaenger']);
 closeConnection($databaseconnection);
 
 ?>

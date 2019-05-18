@@ -41,14 +41,14 @@ if (($statement3 = $databaseconnection->prepare("UPDATE Nachrichten SET Gelesen 
         <div class="col-4">
           <div class="list-group" id="list-tab" role="tablist">
             <?php while ($row = $resultset->fetch_assoc()) { ?>
-              <a class="list-group-item list-group-item-action text-center active" id="list-<?= $row['Benutzername'] ?>-list" data-toggle="list" href="#list-<?= $row['Benutzername'] ?>" role="tab" aria-controls="<?= $row['Benutzername'] ?>"><?= $row['Benutzername'] ?></a>
+              <a class="list-group-item list-group-item-action text-center <?php if (isset($_GET['tab']) && $_GET['tab'] == $row['Empfaenger'] ) echo "active"; ?>" id="list-<?= $row['Benutzername'] ?>-list" data-toggle="list" href="#list-<?= $row['Benutzername'] ?>" role="tab" aria-controls="<?= $row['Benutzername'] ?>"><?= $row['Benutzername'] ?></a>
             <?php } $resultset->data_seek(0);?>
           </div>
         </div>
         <div class="col-8">
           <div class="tab-content" id="nav-tabContent">
             <?php while($row = $resultset->fetch_assoc()) { ?>
-            <div class="tab-pane fade show active" id="list-<?= $row['Benutzername'] ?>" role="tabpanel" aria-labelledby="list-<?= $row['Benutzername'] ?>-list">
+            <div class="tab-pane fade <?php if (isset($_GET['tab']) && $_GET['tab'] == $row['Empfaenger'] ) echo "show active"; ?>" id="list-<?= $row['Benutzername'] ?>" role="tabpanel" aria-labelledby="list-<?= $row['Benutzername'] ?>-list">
               <div class="container mb-3" style="height: 80vh; overflow-y: auto;">
                 <div class="row">
                   <?php

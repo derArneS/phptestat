@@ -38,7 +38,7 @@ require "../const/cookie.php";
 
         <div class="mb-3 mx-auto">
           <div class="row">
-            <div class="col-10">
+            <div class="col-8">
               <?php
 
               if (isset($_GET['loc'])) {
@@ -49,17 +49,24 @@ require "../const/cookie.php";
 
               ?>
             </div>
-
-            <?php if ($row['Benutzer_ID'] != $_SESSION['id']) { ?>
-            <div class="col-2">
+          <?php if(!isset($_SESSION['id'])) { ?>
+            <div class="col-4">
               <div class="pr-4" style="padding: 0!important">
-                <a href="../profil/favoritenAction.php?id=<?= $row['Angebot_ID'] ?>" class="btn btn-primary" style="float: right">Favorit</a>
+                <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#ModalKontaktNoLogin">Kontakt</button>
+                <a href="../profil/favoritenAction.php?id=<?= $row['Angebot_ID'] ?>" class="btn btn-primary mx-3" style="float: right">Favorit</a>
+              </div>
+            </div>
+          <?php } else if ($row['Benutzer_ID'] != $_SESSION['id']) { ?>
+            <div class="col-4">
+              <div class="pr-4" style="padding: 0!important">
+                <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#ModalKontakt">Kontakt</button>
+                <a href="../profil/favoritenAction.php?id=<?= $row['Angebot_ID'] ?>" class="btn btn-primary mx-3" style="float: right">Favorit</a>
               </div>
             </div>
           <?php } else { ?>
-            <div class="col-2">
+            <div class="col-4">
               <div class="pr-4" style="padding: 0!important">
-                <button type="button" class="btn btn-danger" style="float: right" data-toggle="modal" data-target="#exampleModalCenter">Löschen</button>
+                <button type="button" class="btn btn-danger" style="float: right" data-toggle="modal" data-target="#ModalLöschen">Löschen</button>
               </div>
             </div>
           <?php } ?>
@@ -238,7 +245,7 @@ require "../const/cookie.php";
     </div>
   </div>
 
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal fade" id="ModalLöschen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -248,12 +255,60 @@ require "../const/cookie.php";
           </button>
         </div>
         <div class="modal-body">
-        <h2>Achtung!</h2>
-        <h4>Wollen Sie dieses Angebot wirklich löschen?</h4>
+          <h2>Achtung!</h2>
+          <h4>Wollen Sie dieses Angebot wirklich löschen?</h4>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
           <a href="deleteAngebot.php?id=<?= $row['Angebot_ID'] ?>" class="btn btn-danger">Löschen</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="ModalKontakt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Kontakt</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form class="" action="../chat/action.php" method="post">
+          <div class="modal-body">
+            <textarea name="text" class="form-control" rows="3" cols="80" required></textarea>
+            <input type="hidden" name="empfaenger" value="<?= $row['Benutzer_ID'] ?>">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+            <input type="submit" class="btn btn-primary" name="" value="Senden">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="ModalKontaktNoLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Kontakt</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center">
+            <h3>Bitte erst einloggen</h3>
+            <?php if (!isset($_SESSION['id'])) {
+              $_SESSION['redirect'] = "/uebersicht/angebot.php?id=".$row['Angebot_ID'];
+            } ?>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+          <a href="../login" class="btn btn-primary">Login</a>
         </div>
       </div>
     </div>
