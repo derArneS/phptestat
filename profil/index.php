@@ -45,7 +45,7 @@ closeConnection($databaseconnection);
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Profil</title>
   <?php require "../const/head.php" ?>
   <link rel="stylesheet" href="profil.css">
 </head>

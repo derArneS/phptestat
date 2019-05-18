@@ -11,7 +11,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Registrieren</title>
   <?php require "../const/head.php" ?>
   <link rel="stylesheet" href="../login/login.css">
 </head>

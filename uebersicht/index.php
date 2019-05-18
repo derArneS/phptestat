@@ -7,6 +7,12 @@ require "../const/cookie.php";
 
 $databaseconnection = createConnection();
 
+if (!isset($_SESSION['statement'])) {
+  $_SESSION['statement'] = "SELECT Angebote.ID AS Angebot_ID, Benutzer_ID, Titel, Marken_ID, Modell_ID, Preis, Baujahr,
+                            Kilometerstand, Leistung, Kraftstoff, Getriebe, Alarmanlage, Anhaengerkupplung,
+                            Bluetooth, Bordcomputer, HeadUP, Multilenk, Navi, Regensensor, Sitzheizung, Sound,
+                            Standheiz, StartStopp, Bilder.ID AS Bild_ID FROM Angebote, Bilder WHERE Bilder.Angebot_ID = Angebote.ID ORDER BY Angebote.ID DESC";
+}
 
 ?>
 
@@ -14,7 +20,7 @@ $databaseconnection = createConnection();
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Übersicht</title>
     <link rel="stylesheet" href="uebersicht.css">
     <?php require "../const/head.php" ?>
   </head>
@@ -30,7 +36,7 @@ $databaseconnection = createConnection();
 
     <?php
 
-    if (isset($_SESSION['statement']) && $resultset = $databaseconnection->query($_SESSION['statement'])) {
+    if ($resultset = $databaseconnection->query($_SESSION['statement'])) {
       if ($resultset->num_rows == 0) {
         $_SESSION['errorErgebnis'] = true;
         header("Location: ../suche");

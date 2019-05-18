@@ -16,7 +16,7 @@ if (!($statement = $databaseconnection->prepare($sql)) || !($statement->bind_par
     <div class="container">
       <fieldset class="mt-4 mx-auto box" >
         <div class="row mx-0 px-0 mb-3">
-          <a class="col-10 p-0" href="../uebersicht/angebot.php?id='.$row2['Angebot_ID'].'">
+          <a class="col-10 p-0" href="../uebersicht/angebot.php?id='.$row2['Angebot_ID'].'&loc=2">
             <div class="row m-0 p-0">
               <legend style="padding: 0px 0px 0px 17px">'.$row2['Titel'].'</legend>
               <div class="mr-2">

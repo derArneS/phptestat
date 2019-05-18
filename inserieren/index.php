@@ -41,7 +41,7 @@ if (isset($_SESSION['cache'])) {
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Inserieren</title>
   <?php require "../const/head.php" ?>
   <link rel="stylesheet" href="insert.css">
 </head>

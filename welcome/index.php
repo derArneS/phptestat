@@ -19,7 +19,7 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Auto25</title>
   <?php require "../const/head.php" ?>
   <link rel="stylesheet" href="welcome.css">
   <link rel="stylesheet" href="../css/carousel.css">
