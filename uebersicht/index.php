@@ -67,10 +67,12 @@ if (!isset($_SESSION['statement'])) {
                 <h2>'.$row['Preis'].' €</h2>
               </div>
               </div>
-            </a>
+            </a>';
+            if ($row['Benutzer_ID'] != $_SESSION['id']) echo '
             <div class="col-2 pr-4" style="padding: 0!important">
               <a href="../profil/favoritenAction.php?id='.$row['Angebot_ID'].'" class="btn btn-primary" style="float: right">Favorit</a>
-            </div>
+            </div>';
+            echo '
           </div>
         </fieldset>
       </div>

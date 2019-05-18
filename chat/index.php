@@ -34,6 +34,8 @@ if (($statement3 = $databaseconnection->prepare("UPDATE Nachrichten SET Gelesen 
   </head>
   <body>
     <?php require '../const/navbar.php'; ?>
+
+    <?php if ($resultset->num_rows != 0) { ?>
     <div class="container mt-3 mb-5">
       <div class="row" id="test">
         <div class="col-4">
@@ -47,7 +49,7 @@ if (($statement3 = $databaseconnection->prepare("UPDATE Nachrichten SET Gelesen 
           <div class="tab-content" id="nav-tabContent">
             <?php while($row = $resultset->fetch_assoc()) { ?>
             <div class="tab-pane fade show active" id="list-<?= $row['Benutzername'] ?>" role="tabpanel" aria-labelledby="list-<?= $row['Benutzername'] ?>-list">
-              <div class="container" style="overflow-y: auto;">
+              <div class="container mb-3" style="height: 80vh; overflow-y: auto;">
                 <div class="row">
                   <?php
                   if (($statement2 = $databaseconnection->prepare("SELECT * FROM Nachrichten, Benutzer AS Sender, Benutzer AS Empfaenger WHERE ((Sender.ID = ? AND Empfaenger.ID = ?) OR (Sender.ID = ? AND Empfaenger.ID = ?))  AND Nachrichten.Sender = Sender.ID AND Nachrichten.Empfaenger = Empfaenger.ID"))
@@ -93,6 +95,10 @@ if (($statement3 = $databaseconnection->prepare("UPDATE Nachrichten SET Gelesen 
         </div>
       </div>
     </div>
+
+  <?php } else {
+    echo "Du musst erst jemanden anschreiben, bevor hier Nachrichten angezeigt werden können.";
+  } ?>
 
 
     <?php require "../const/footer.php" ?>

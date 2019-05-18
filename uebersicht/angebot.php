@@ -37,15 +37,33 @@ require "../const/cookie.php";
       <div class="container col-12 mx-0 px-0">
 
         <div class="mb-3 mx-auto">
-          <?php
+          <div class="row">
+            <div class="col-10">
+              <?php
 
-          if (isset($_GET['loc'])) {
-            echo '<a href="../profil/index.php?tab='.$_GET['loc'].'">Zurück zum Profil</a>';
-          } else {
-            echo '<a href="index.php">Zurück zu den Ergebnissen</a>';
-          }
+              if (isset($_GET['loc'])) {
+                echo '<a href="../profil/index.php?tab='.$_GET['loc'].'">Zurück zum Profil</a>';
+              } else {
+                echo '<a href="index.php">Zurück zu den Ergebnissen</a>';
+              }
 
-          ?>
+              ?>
+            </div>
+
+            <?php if ($row['Benutzer_ID'] != $_SESSION['id']) { ?>
+            <div class="col-2">
+              <div class="pr-4" style="padding: 0!important">
+                <a href="../profil/favoritenAction.php?id=<?= $row['Angebot_ID'] ?>" class="btn btn-primary" style="float: right">Favorit</a>
+              </div>
+            </div>
+          <?php } else { ?>
+            <div class="col-2">
+              <div class="pr-4" style="padding: 0!important">
+                <button type="button" class="btn btn-danger" style="float: right" data-toggle="modal" data-target="#exampleModalCenter">Löschen</button>
+              </div>
+            </div>
+          <?php } ?>
+          </div>
         </div>
 
         <fieldset class="box mb-4">
@@ -216,6 +234,27 @@ require "../const/cookie.php";
 
           </div>
         </fieldset>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Löschen</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <h2>Achtung!</h2>
+        <h4>Wollen Sie dieses Angebot wirklich löschen?</h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="deleteAngebot.php?id=<?= $row['Angebot_ID'] ?>" class="btn btn-danger">Löschen</a>
+        </div>
       </div>
     </div>
   </div>

@@ -5,6 +5,8 @@
     echo "Du hast scheinbar noch keine Angebote...";
   }
 
+  print_r($angebotrow);
+
   //Die eigenen Angebote werden nacheinander ausgegeben. Inklusive der Option das eigene Angebot wieder zu entfernen.
   while ($angebotrow = $resultset3->fetch_assoc()) {
     echo'
@@ -32,13 +34,36 @@
             </div>
           </a>
           <div class="col-1 pl-0">
-            <a href="deleteAngebot.php?id='.$angebotrow['Angebot_ID'].'" class="btn btn-primary">Löschen</a>
+            <button type="button" class="btn btn-danger" style="float: right" data-toggle="modal" data-target="#AngebotModal'.$angebotrow['Angebot_ID'].'">Löschen</button>
+
+            <div class="modal fade" id="AngebotModal'.$angebotrow['Angebot_ID'].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Löschen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                  <h2>Achtung!</h2>
+                  <h4>Wollen Sie dieses Angebot wirklich löschen?</h4>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a href="deleteAngebot.php?id='.$angebotrow['Angebot_ID'].'" class="btn btn-danger">Löschen</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </fieldset>
     </div>
     ';
   }
-
    ?>
+
+
+
 </div>
