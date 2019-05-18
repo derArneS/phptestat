@@ -9,6 +9,16 @@ if ($_POST['button'] == "pic") {
     $img = addslashes(file_get_contents($_FILES['datei']['tmp_name']));
     $img_type = getimagesize($_FILES['datei']['tmp_name']);
 
+    $file_type = $_FILES['datei']['type']; //returns the mimetype
+
+    $allowed = array("image/jpeg", "image/png");
+    if(!in_array($file_type, $allowed)) {
+      $_SESSION['errorEingabe'] = true;
+      header("Location: index.php");
+      closeConnection($databaseconnection);
+      die();
+    }
+
     $statement = "INSERT INTO Bilder (Bild, Typ) VALUES ('{$img}', '{$img_type['mime']}')";
     $databaseconnection->query($statement);
 
@@ -27,6 +37,16 @@ if ($_POST['button'] == "pic") {
   if ($_FILES['datei']['error'] == 0 && is_uploaded_file($_FILES['datei']['tmp_name'])) {
     $img = addslashes(file_get_contents($_FILES['datei']['tmp_name']));
     $img_type = getimagesize($_FILES['datei']['tmp_name']);
+
+    $file_type = $_FILES['datei']['type']; //returns the mimetype
+
+    $allowed = array("image/jpeg", "image/png");
+    if(!in_array($file_type, $allowed)) {
+      $_SESSION['errorEingabe'] = true;
+      header("Location: index.php");
+      closeConnection($databaseconnection);
+      die();
+    }
 
     $statement = "INSERT INTO Bilder (Bild, Typ) VALUES ('{$img}', '{$img_type['mime']}')";
     $databaseconnection->query($statement);
