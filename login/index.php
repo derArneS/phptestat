@@ -27,7 +27,6 @@ $databaseconnection = createConnection();
 </head>
 <body>
   <?php require "../const/navbar.php" ?>
-  <?php print_r($_SESSION); ?>
 
   <div class="container-fluid">
     <div class="row no-gutter">

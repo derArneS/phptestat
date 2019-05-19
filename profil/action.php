@@ -158,16 +158,30 @@ if (isset($_POST['stadt-neu']) && isset($_POST['stadt-bestätigen']) && $_POST['
 }
 
 //PHP-Code Passwort ändern
-if(isset($_POST['passwort-neu']) && isset($_POST['passwort-bestätigen']) && $_POST['passwort-bestätigen'] == $_POST['passwort-neu']){
-  //Das neue Passwort wird gehasht und in die Datenbank eingefügt
-  $passwordHash = password_hash($_POST['passwort-neu'], PASSWORD_BCRYPT);
-  if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Passwort=? WHERE ID=?"))
-  && ($statement->bind_param('si', $passwordHash, $_SESSION['id']))
+if(isset($_POST['passwort-alt']) && isset($_POST['passwort-neu']) && isset($_POST['passwort-bestätigen']) && $_POST['passwort-bestätigen'] == $_POST['passwort-neu']){
+
+  if (($statement = $databaseconnection->prepare("SELECT Passwort FROM Benutzer WHERE ID=?"))
+  && ($statement->bind_param('i', $_SESSION['id']))
   && ($statement->execute())){
-    header('Location: index.php?tab=3');
-    closeConnection($databaseconnection);
-    die();
+    $resultset = $statement->get_result();
+    $row = $resultset->fetch_assoc();
+    //Überprüfung ob das Passwort "Altes Passwort" mit dem aktuellen Passwort in der Datenbank übereinstimmt
+    if(password_verify($_POST['passwort-alt'], $row['Passwort'])){
+      //Das neue Passwort wird gehasht
+      $passwordHash = password_hash($_POST['passwort-neu'], PASSWORD_BCRYPT);
+      //Das gehashte Passwort wird in die Datenbank eingefügt
+      if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Passwort=? WHERE ID=?"))
+      && ($statement->bind_param('si', $passwordHash, $_SESSION['id']))
+      && ($statement->execute())){
+        header('Location: index.php?tab=3');
+        closeConnection($databaseconnection);
+        die();
+      }
+    } else {
+      $_SESSION['passwort'] = true;
+    }
   }
+
 }
 
 //Wenn ein Fehler auftritt, wird die profil/index.php Datei wieder eingeblendet und die Datenbankconnection geschlossen

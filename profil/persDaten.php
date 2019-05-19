@@ -3,6 +3,8 @@
     <?php if (isset($_SESSION['errorBenutzername']) && $_SESSION['errorBenutzername']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">Der angegebene Benutzername ist leider schon vorhanden. </div> <?php } ?>
     <?php if (isset($_SESSION['test']) && $_SESSION['test']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">test</div> <?php } ?>
     <?php if (isset($_SESSION['errorPlz']) && $_SESSION['errorPlz']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">Fehlerhafte Eingabe. Bitte die Postleitzahl erneut eingeben.</div> <?php } ?>
+    <?php if (isset($_SESSION['passwort']) && $_SESSION['passwort']) { ?> <div class="alert alert-danger alert-round text-center" role="alert">Das eingegebne Passwort stimmt nicht mit dem aktuellem überein.</div> <?php } ?>
+
 
 <!--
 Anzeige der persönlichen Daten im Profil. Dabei ist jede Reihe gleich aufgebaut. Bestehend aus Input Feldern und Buttons.
@@ -340,6 +342,10 @@ Bei betätigen des Buttons öffnet sich ein Modal und fordert die Eingaben die f
             <div class="modal-body">
               <form method="post" action="action.php">
                 <div class="form-group">
+                  <label for="passwort-alt" class="col-form-label">Altes Passwort</label>
+                  <input type="password" class="form-control" name="passwort-alt" id="passwort-alt">
+                </div>
+                <div class="form-group">
                   <label for="passwort-neu" class="col-form-label">Neues Passwort</label>
                   <input type="password" class="form-control" name="passwort-neu" id="passwort-neu">
                 </div>
@@ -362,6 +368,7 @@ Bei betätigen des Buttons öffnet sich ein Modal und fordert die Eingaben die f
       unset($_SESSION['errorBenutzername']);
       unset($_SESSION['test']);
       unset($_SESSION['errorPlz']);
+      unset($_SESSION['passwort']);
     ?>
 
   </div>
