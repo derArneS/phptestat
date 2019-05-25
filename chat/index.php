@@ -9,12 +9,22 @@ require "../const/private.php"; isPrivate(true, "/chat");
 
 $databaseconnection = createConnection();
 
-if (($statement = $databaseconnection->prepare("SELECT Empfaenger, Benutzername FROM Nachrichten, Benutzer WHERE Sender = ? AND Nachrichten.Empfaenger = Benutzer.ID GROUP BY Empfaenger"))
-&& ($statement->bind_param('i', $_SESSION['id']))
+if (($statement = $databaseconnection->prepare("SELECT Sender, Empfaenger, Sender.Benutzername AS Sendername, Empfaenger.Benutzername AS Empfaengername
+                                                FROM Nachrichten, Benutzer AS Sender, Benutzer AS Empfaenger
+                                                WHERE (Sender = ? OR Empfaenger = ?) AND Nachrichten.Sender = Sender.ID AND Nachrichten.Empfaenger = Empfaenger.ID
+                                                GROUP BY Empfaenger"))
+&& ($statement->bind_param('ii', $_SESSION['id'], $_SESSION['id']))
 && ($statement->execute())
 && ($resultset = $statement->get_result())) {
-
+  while ($row = $resultset->fetch_assoc()) {
+    if ($row['Empfaenger'] == $_SESSION['id']) {
+      $empfaenger[$row['Sender']] = $row['Sender'];
+    } else {
+      $empfaenger[$row['Empfaenger']] = $row['Empfaenger'];    }
+  }
 }
+
+$resultset->data_seek(0);
 
 if (($statement3 = $databaseconnection->prepare("UPDATE Nachrichten SET Gelesen = 1 WHERE Empfaenger = ?"))
 && ($statement3->bind_param('i', $_SESSION['id']))
@@ -40,20 +50,30 @@ if (($statement3 = $databaseconnection->prepare("UPDATE Nachrichten SET Gelesen 
       <div class="row" id="test">
         <div class="col-4">
           <div class="list-group" id="list-tab" role="tablist">
-            <?php while ($row = $resultset->fetch_assoc()) { ?>
-              <a class="list-group-item list-group-item-action text-center <?php if (isset($_GET['tab']) && $_GET['tab'] == $row['Empfaenger'] ) echo "active"; ?>" id="list-<?= $row['Benutzername'] ?>-list" data-toggle="list" href="#list-<?= $row['Benutzername'] ?>" role="tab" aria-controls="<?= $row['Benutzername'] ?>"><?= $row['Benutzername'] ?></a>
+            <?php foreach ($empfaenger as $empf) {
+              if (($statement4 = $databaseconnection->prepare("SELECT Benutzername FROM Benutzer WHERE ID = ?"))
+              && ($statement4->bind_param('i', $empf))
+              && ($statement4->execute())
+              && ($resultset4 = $statement4->get_result())
+              && ($row4 = $resultset4->fetch_assoc())) {
+
+              }
+
+              ?>
+              <a class="list-group-item list-group-item-action text-center <?php if (isset($_GET['tab']) && $_GET['tab'] == $empf ) echo "active"; ?>"
+                id="list-<?= $empf ?>-list" data-toggle="list" href="#list-<?= $empf ?>" role="tab" aria-controls="<?= $empf ?>"><?= $row4['Benutzername'] ?></a>
             <?php } $resultset->data_seek(0);?>
           </div>
         </div>
         <div class="col-8">
           <div class="tab-content" id="nav-tabContent">
-            <?php while($row = $resultset->fetch_assoc()) { ?>
-            <div class="tab-pane fade <?php if (isset($_GET['tab']) && $_GET['tab'] == $row['Empfaenger'] ) echo "show active"; ?>" id="list-<?= $row['Benutzername'] ?>" role="tabpanel" aria-labelledby="list-<?= $row['Benutzername'] ?>-list">
+            <?php foreach ($empfaenger as $empf) { ?>
+            <div class="tab-pane fade <?php if (isset($_GET['tab']) && $_GET['tab'] == $empf ) echo "show active"; ?>" id="list-<?= $empf ?>" role="tabpanel" aria-labelledby="list-<?= $empf ?>-list">
               <div class="container mb-3" style="height: 80vh; overflow-y: auto;">
                 <div class="row">
                   <?php
                   if (($statement2 = $databaseconnection->prepare("SELECT * FROM Nachrichten, Benutzer AS Sender, Benutzer AS Empfaenger WHERE ((Sender.ID = ? AND Empfaenger.ID = ?) OR (Sender.ID = ? AND Empfaenger.ID = ?))  AND Nachrichten.Sender = Sender.ID AND Nachrichten.Empfaenger = Empfaenger.ID"))
-                  && ($statement2->bind_param('iiii', $_SESSION['id'], $row['Empfaenger'], $row['Empfaenger'], $_SESSION['id']))
+                  && ($statement2->bind_param('iiii', $_SESSION['id'], $empf, $empf, $_SESSION['id']))
                   && ($statement2->execute())
                   && ($resultset2 = $statement2->get_result())) {
                     while ($row2 = $resultset2->fetch_assoc()) { ?>
@@ -81,7 +101,7 @@ if (($statement3 = $databaseconnection->prepare("UPDATE Nachrichten SET Gelesen 
                  <div class="row">
                    <div class="col-10">
                       <input type="text" class="form-control" name="text" value="" required>
-                      <input type="hidden" name="empfaenger" value="<?= $row['Empfaenger'] ?>">
+                      <input type="hidden" name="empfaenger" value="<?= $empf ?>">
                    </div>
                    <div class="col-2">
                      <input type="submit" class="btn btn-primary" name="" value="Senden">

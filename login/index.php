@@ -60,7 +60,7 @@ $databaseconnection = createConnection();
 
                   <div class="row">
                     <div class="col-6 text-center">
-                        <a class="small" href="#">Forgot password?</a>
+                        <a class="small" href="#">Passwort vergessen?</a>
                     </div>
                     <div class="col-6 text-center">
                         <a class="small" href="../register">Noch kein Konto?</a>
