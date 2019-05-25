@@ -9,6 +9,7 @@ require "../const/private.php"; isPrivate(true, "/profil");
 <?php
 $databaseconnection = createConnection();
 
+//Datenbankabfrage: Selektion aller Einträge des eingeloggten Benutzers aus der Tabelle Benutzer
 if (!($statement = $databaseconnection->prepare("SELECT * FROM Benutzer WHERE Benutzername = ?"))
 || !($statement->bind_param('s', $_SESSION['benutzername']))
 || !($statement->execute())
@@ -17,6 +18,7 @@ if (!($statement = $databaseconnection->prepare("SELECT * FROM Benutzer WHERE Be
 }
 $row = $resultset->fetch_assoc();
 
+//Datenbankabfrage: Selektion aller Einträge des eingeloggten Benutzers aus der Tabelle Adressen
 if (!($statement = $databaseconnection->prepare("SELECT * FROM Adressen WHERE ID=?"))
 || !($statement->bind_param('i', $row['Adress_ID']))
 || !($statement->execute())
@@ -36,10 +38,7 @@ if (!($statement3 = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_
 || !($resultset3 = $statement3->get_result())) {
 
 }
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">

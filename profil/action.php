@@ -13,24 +13,26 @@ $databaseconnection = createConnection();
 
 // PHP-Code Benutzername prüfen
 if (isset($_POST['benutzername-neu']) && isset($_POST['benutzername-bestätigen']) && $_POST['benutzername-bestätigen'] == $_POST['benutzername-neu']) {
-  //Überprüfung ob der Benutzername bereits vorhanden ist
+  //Abfrage der Datenbank, ob der Benutzername in der Tabelle steht
   if (!($statement = $databaseconnection->prepare("SELECT Benutzername FROM Benutzer WHERE Benutzername=?"))
   || !($statement->bind_param('s', $_POST['benutzername-neu']))
   || !($statement->execute())) {
     $_SESSION['errorBenutzer'] = true;
     goto err;
+    //Überprüfung ob das Resultset nicht leer ist
   } else if (!($resultset = $statement->get_result()) || !($resultset->num_rows === 0)) {
     if ($row = $resultset->fetch_assoc()) {
       $_SESSION['errorBenutzername'] = true;
       goto err;
     }
   }
-  //Falls der Benutzername noch nicht vergeben wurde, wird dieser in der Tabelle geupdatet
+  //Falls der Benutzername noch nicht vergeben wurde, wird dieser in der Tabelle Benutzer geupdatet
   if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Benutzername=? WHERE ID=?"))
   && ($statement->bind_param('si', $_POST['benutzername-neu'], $_SESSION['id']))
   && ($statement->execute())){
     //Der neue Benutzername wird ausßerdem in der Session überschrieben
     $_SESSION['benutzername'] = $_POST['benutzername-neu'];
+    //Das Profil wird wieder angezeigt mit dem aktiven Tab Persönliche Daten, danach wird die Datenbankconnection geschlossen
     header('Location: index.php?tab=3');
     closeConnection($databaseconnection);
     die();
@@ -43,7 +45,9 @@ if(isset($_POST['vorname-neu']) && isset($_POST['vorname-bestätigen']) && $_POS
   if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Vorname=? WHERE ID=?"))
   && ($statement->bind_param('si', $_POST['vorname-neu'], $_SESSION['id']))
   && ($statement->execute())){
+    //Der Vorname wird in die Session eingefügt/überschrieben
     $_SESSION['vorname'] = $_POST['vorname-neu'];
+    //Das Profil wird wieder angezeigt mit dem aktiven Tab Persönliche Daten, danach wird die Datenbankconnection geschlossen
     header('Location: index.php?tab=3');
     closeConnection($databaseconnection);
     die();
@@ -56,7 +60,9 @@ if(isset($_POST['nachname-neu']) && isset($_POST['nachname-bestätigen']) && $_P
   if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Nachname=? WHERE ID=?"))
   && ($statement->bind_param('si', $_POST['nachname-neu'], $_SESSION['id']))
   && ($statement->execute())){
+    //Der Nachname wird in die Session eingefügt/überschrieben
     $_SESSION['nachname'] = $_POST['nachname-neu'];
+    //Das Profil wird wieder angezeigt mit dem aktiven Tab Persönliche Daten, danach wird die Datenbankconnection geschlossen
     header('Location: index.php?tab=3');
     closeConnection($databaseconnection);
     die();
@@ -71,16 +77,18 @@ if (isset($_POST['email-neu']) && isset($_POST['email-bestätigen']) && $_POST['
   || !($statement->execute())) {
     $_SESSION['errorEmail'] = true;
     goto err;
+    //Überprüfung ob das Resultset nicht leer ist
   } else if (!($resultset = $statement->get_result()) || !($resultset->num_rows === 0)) {
     if ($row = $resultset->fetch_assoc()) {
       $_SESSION['errorEmail'] = true;
       goto err;
     }
   }
-
+  //Falls die E-Mail noch nicht von einem anderen Benutzer registriert ist, wird die E-Mail in der Tabelle Benutzer geupdatet
   if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Email=? WHERE ID=?"))
   && ($statement->bind_param('si', $_POST['email-neu'], $_SESSION['id']))
   && ($statement->execute())){
+    //Das Profil wird wieder angezeigt mit dem aktiven Tab Persönliche Daten, danach wird die Datenbankconnection geschlossen
     header('Location: index.php?tab=3');
     closeConnection($databaseconnection);
     die();
@@ -95,12 +103,16 @@ if (isset($_POST['strasse-neu']) && isset($_POST['strasse-bestätigen']) && $_PO
   || !($statement->execute())) {
     $_SESSION['errorBenutzer'] = true;
     goto err;
+    //Das Ergebnis aus der Abfrage wird in die $row geschrieben
   } else if (($resultset = $statement->get_result()) && !($resultset->num_rows == 0) && ($row = $resultset->fetch_assoc())) {
-    //Die Strasse wird nach Auffoderung geändert
+    //Die Strasse wird in der Tabelle Benutzer geupdatet
+    //Es wird auf die Tabelle Adressen zugegriffen die die AdressID vom vorher selektierten Benutzer hat
     if (($statement = $databaseconnection->prepare("UPDATE Adressen SET Strasse=? WHERE ID=?"))
     && ($statement->bind_param('si', $_POST['strasse-neu'], $row['Adress_ID']))
     && ($statement->execute())){
+      //Die Strasse wird in die Session eingefügt/überschrieben
       $_SESSION['strasse'] = $_POST['strasse-neu'];
+      //Das Profil wird wieder angezeigt mit dem aktiven Tab Persönliche Daten, danach wird die Datenbankconnection geschlossen
       header('Location: index.php?tab=3');
       closeConnection($databaseconnection);
       die();
@@ -118,12 +130,16 @@ if (isset($_POST['plz-neu']) && isset($_POST['plz-bestätigen']) && $_POST['plz-
   || !($statement->execute())) {
     $_SESSION['errorBenutzer'] = true;
     goto err;
+    //Das Ergebnis aus der Abfrage wird in die $row geschrieben
   } else if (($resultset = $statement->get_result()) && !($resultset->num_rows == 0) && ($row = $resultset->fetch_assoc())) {
-    //Die Postleitzahl wird nach Auffoderung geändert
+    //Die Postleitzahl wird in der Tabelle Benutzer geupdatet
+    //Es wird auf die Tabelle Adressen zugegriffen die die AdressID vom vorher selektierten Benutzer hat
     if (($statement = $databaseconnection->prepare("UPDATE Adressen SET Postleitzahl=? WHERE ID=?"))
     && ($statement->bind_param('si', $_POST['plz-neu'], $row['Adress_ID']))
     && ($statement->execute())){
+      //Die Postleitzahl wird in die Session eingefügt/überschrieben
       $_SESSION['postleitzahl'] = $_POST['plz-neu'];
+      //Das Profil wird wieder angezeigt mit dem aktiven Tab Persönliche Daten, danach wird die Datenbankconnection geschlossen
       header('Location: index.php?tab=3');
       closeConnection($databaseconnection);
       die();
@@ -142,12 +158,16 @@ if (isset($_POST['stadt-neu']) && isset($_POST['stadt-bestätigen']) && $_POST['
   || !($statement->execute())) {
     $_SESSION['errorBenutzer'] = true;
     goto err;
+    //Das Ergebnis aus der Abfrage wird in die $row geschrieben
   } else if (($resultset = $statement->get_result()) && !($resultset->num_rows == 0) && ($row = $resultset->fetch_assoc())) {
-    //Der Wohnort wird nach Auffoderung geändert
+    //Die Stadt wird in der Tabelle Benutzer geupdatet
+    //Es wird auf die Tabelle Adressen zugegriffen die die AdressID vom vorher selektierten Benutzer hat
     if (($statement = $databaseconnection->prepare("UPDATE Adressen SET Ort=? WHERE ID=?"))
     && ($statement->bind_param('si', $_POST['stadt-neu'], $row['Adress_ID']))
     && ($statement->execute())){
+      //Die Stadt wird in die Session eingefügt/überschrieben
       $_SESSION['stadt'] = $_POST['stadt-neu'];
+      //Das Profil wird wieder angezeigt mit dem aktiven Tab Persönliche Daten, danach wird die Datenbankconnection geschlossen
       header('Location: index.php?tab=3');
       closeConnection($databaseconnection);
       die();
@@ -159,7 +179,7 @@ if (isset($_POST['stadt-neu']) && isset($_POST['stadt-bestätigen']) && $_POST['
 
 //PHP-Code Passwort ändern
 if(isset($_POST['passwort-alt']) && isset($_POST['passwort-neu']) && isset($_POST['passwort-bestätigen']) && $_POST['passwort-bestätigen'] == $_POST['passwort-neu']){
-
+  //Das aktuelle Passwort wird selektiert und in die $row geschrieben
   if (($statement = $databaseconnection->prepare("SELECT Passwort FROM Benutzer WHERE ID=?"))
   && ($statement->bind_param('i', $_SESSION['id']))
   && ($statement->execute())){
@@ -174,6 +194,7 @@ if(isset($_POST['passwort-alt']) && isset($_POST['passwort-neu']) && isset($_POS
       && ($statement->bind_param('si', $passwordHash, $_SESSION['id']))
       && ($statement->execute())){
         header('Location: index.php?tab=3');
+        //Das Profil wird wieder angezeigt mit dem aktiven Tab Persönliche Daten, danach wird die Datenbankconnection geschlossen
         closeConnection($databaseconnection);
         die();
       }

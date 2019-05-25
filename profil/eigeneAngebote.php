@@ -1,11 +1,16 @@
 <div class="tab-pane fade <?php if(isset($_GET['tab']) && $_GET['tab'] == 1) echo "show active"; if(!isset($_GET['tab'])) echo "show active";?>" id="nav-angebote" role="tabpanel" aria-labelledby="nav-home-tab">
   <?php
 
+  //Anzeige falls noch keine eigenen Angebote hinzugefügt wurden
   if ($resultset3->num_rows == 0) {
     echo "Du hast scheinbar noch keine Angebote...";
   }
 
-  //Die eigenen Angebote werden nacheinander ausgegeben. Inklusive der Option das eigene Angebot wieder zu entfernen.
+  /*
+     Die eigenen Angebote werden nacheinander ausgegeben. Inklusive der Option das eigene Angebot wieder zu entfernen.
+     "loc=1" wird gesetzt, damit man wieder im Tab 1 landet. Die Bilder werden über loadPic geladen.
+     Alle Daten des Angebots werden aus der $angebotrow geholt. Es besteht ebenfalls die Option das Angebot zu löschen.
+  */
   while ($angebotrow = $resultset3->fetch_assoc()) {
     echo'
     <div class="container">

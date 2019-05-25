@@ -4,11 +4,14 @@
 $databaseconnection = createConnection();
 
 //SQL-Statement, welches für den angemeldeteten Benutzer die Favoriten ausgibt
+//Beinhaltet alle benötigten Daten für die Ansicht des Angebots. Es werden mehrere Tabellen mit Joins verknüpft.
 $sql = "SELECT Angebote.ID AS Angebot_ID, Favoriten.Benutzer_ID, Titel, Marken_ID, Modell_ID, Preis, Baujahr, Kilometerstand, Leistung, Kraftstoff,
 Getriebe, Alarmanlage, Anhaengerkupplung, Bluetooth, Bordcomputer, HeadUP, Multilenk, Navi, Regensensor, Sitzheizung, Sound, Standheiz, StartStopp,
 Bilder.ID AS Bild_ID FROM Angebote INNER JOIN Bilder ON Angebote.ID=Bilder.Angebot_ID INNER JOIN Favoriten ON Angebote.ID=Favoriten.Angebot_ID AND Favoriten.Benutzer_ID = ?";
+//Das Statement $sql wird ausgeführt
 if (!($statement = $databaseconnection->prepare($sql)) || !($statement->bind_param('i', $_SESSION['id'])) || !($statement->execute())) {
 
+  //Das Ergebnis wird in das Resultset geschrieben
 } else if (($resultset4 = $statement->get_result()) && ($resultset4->num_rows > 0)) {
   //Die Favoriten werden nacheinander ausgegeben
   while($row2 = $resultset4->fetch_assoc()){
@@ -48,8 +51,5 @@ if (!($statement = $databaseconnection->prepare($sql)) || !($statement->bind_par
   echo 'Du hast noch keine Favoriten hinzugefügt.';
 }
 ?>
-
-
-
 
 </div>
