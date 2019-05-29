@@ -66,6 +66,7 @@ if (isset($_POST['marke']) && isset($_POST['modell'])) {
     header("Location: ../uebersicht");
     die();
     //Wenn weder Marke noch Modell gesetzt sind, werden alle Angebote gesucht
+    //Muss gemacht werden, da bei POST die Variablen gesetzt sind, auch wenn sie leer sind
   } else {
     $_SESSION['statement'] = "SELECT Angebote.ID AS Angebot_ID, Benutzer_ID, Titel, Marken_ID, Modell_ID, Preis, Baujahr,
                               Kilometerstand, Leistung, Kraftstoff, Getriebe, Alarmanlage, Anhaengerkupplung,

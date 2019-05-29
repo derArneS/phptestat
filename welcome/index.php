@@ -28,6 +28,7 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
 <body>
   <script type="text/javascript">
   //Ajax Zugriff auf ajaxData.php zum Laden der Modelle zu der ausgewählten Marke
+  //Hier wird einfach die ajaxData.php von der Suche wiederverwendet
   function ajax(){
       //ausgewählte Marke
       var marke = $('#marke').val();
@@ -51,9 +52,10 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
     };
 
     //wenn das Document fertig geladen ist, wird das AJAX einmal ausgeführt, damit, falls über die Session schon Such-Suchparameter
-    //bereitgestellt wurde, die Modelle eingetragen
+    //bereitgestellt wurden, die Modelle eingetragen werden
     document.onload = ajax();
   </script>
+  
   <?php require '../const/navbar.php'; ?>
   <!--Slider mit drei Bildern, welche bei Auswahl auf eine vordefinierte Suche verweisen -->
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">

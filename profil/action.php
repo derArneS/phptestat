@@ -179,7 +179,7 @@ if (isset($_POST['stadt-neu']) && isset($_POST['stadt-bestätigen']) && $_POST['
 
 //PHP-Code Passwort ändern
 if(isset($_POST['passwort-alt']) && isset($_POST['passwort-neu']) && isset($_POST['passwort-bestätigen']) && $_POST['passwort-bestätigen'] == $_POST['passwort-neu']){
-  //Das aktuelle Passwort wird selektiert und in die $row geschrieben
+  //Der aktuelle Passwort-Hash wird selektiert und in die $row geschrieben
   if (($statement = $databaseconnection->prepare("SELECT Passwort FROM Benutzer WHERE ID=?"))
   && ($statement->bind_param('i', $_SESSION['id']))
   && ($statement->execute())){

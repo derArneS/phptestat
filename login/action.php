@@ -60,7 +60,7 @@
   die();
 
   noerr:
-  //Wenn die Checkbox "Passwort speichern" aktiviert wurde wird der Benutzername und das Passwort in Cookies abgelegt
+  //Wenn die Checkbox "Passwort speichern" aktiviert wurde wird der Benutzername und das Passwort als Hash in Cookies abgelegt
   if (isset($_POST['inputRememberPassword']) && $_POST["inputRememberPassword"] == "cookie") {
     setcookie("benutzername", $row['Benutzername'], time() + 60 * 60 * 24, "/");
     setcookie("passwort", $row['Passwort'], time() + 60 * 60 * 24, "/");

@@ -3,13 +3,27 @@ session_start();
 require "../database/database.php";
 //es wird überprüft, ob ein Cookie gesetzt ist, der einen einloggt
 require "../const/cookie.php";
+
+//es werden alle Daten und das Bild zu der mit GET-Methode übergebenen Angebots-ID aus der Datenbank geladen
+if (!($statement = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_ID, Benutzer_ID, Titel, Angebote.Marken_ID AS Angebot_Marke_ID, Angebote.Modell_ID AS Angebote_Modell_ID, Preis, Baujahr, Kilometerstand, Leistung, Kraftstoff, Getriebe,
+                                                        Alarmanlage, Anhaengerkupplung, Bluetooth, Bordcomputer, HeadUP, Multilenk, Navi, Regensensor, Sitzheizung,
+                                                        Sound, Standheiz, StartStopp, Bilder.Angebot_ID AS Bilder_Angebot_ID, Bilder.ID AS Bild_ID, Marken.ID AS Marke_ID, Marken.Name AS Marke_Marke, Modelle.Marken_ID AS Modell_Marke_ID,
+                                                        Modelle.Name AS Modell_Name
+                                                        FROM Angebote, Bilder, Marken, Modelle WHERE Angebote.ID = ? AND Angebote.ID = Bilder.Angebot_ID AND Angebote.Marken_ID = Marken.ID AND Angebote.Modell_ID = Modelle.ID"))
+|| !($statement->bind_param('i', $_GET['id']))
+|| !($statement->execute())
+|| !($resultset = $statement->get_result())
+|| !($row = $resultset->fetch_assoc())) {
+  die();
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <!-- Der Titel wird aus der $row gelesen und in den Titel für den Tab gesetzt -->
+  <title><?= $row['Titel'] ?></title>
   <?php require "../const/head.php" ?>
   <link rel="stylesheet" href="uebersicht.css">
 </head>
@@ -17,22 +31,6 @@ require "../const/cookie.php";
   <?php $databaseconnection = createConnection(); ?>
   <?php require "../const/navbar.php"; ?>
 
-  <?php
-
-  //es werden alle Daten und das Bild zu der mit GET-Methode übergebenen Angebots-ID aus der Datenbank geladen
-  if (!($statement = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_ID, Benutzer_ID, Titel, Angebote.Marken_ID AS Angebot_Marke_ID, Angebote.Modell_ID AS Angebote_Modell_ID, Preis, Baujahr, Kilometerstand, Leistung, Kraftstoff, Getriebe,
-                                                          Alarmanlage, Anhaengerkupplung, Bluetooth, Bordcomputer, HeadUP, Multilenk, Navi, Regensensor, Sitzheizung,
-                                                          Sound, Standheiz, StartStopp, Bilder.Angebot_ID AS Bilder_Angebot_ID, Bilder.ID AS Bild_ID, Marken.ID AS Marke_ID, Marken.Name AS Marke_Marke, Modelle.Marken_ID AS Modell_Marke_ID,
-                                                          Modelle.Name AS Modell_Name
-                                                          FROM Angebote, Bilder, Marken, Modelle WHERE Angebote.ID = ? AND Angebote.ID = Bilder.Angebot_ID AND Angebote.Marken_ID = Marken.ID AND Angebote.Modell_ID = Modelle.ID"))
-  || !($statement->bind_param('i', $_GET['id']))
-  || !($statement->execute())
-  || !($resultset = $statement->get_result())
-  || !($row = $resultset->fetch_assoc())) {
-    die();
-  }
-
-  ?>
   <div class="container col-7 mt-4">
     <div class="row mx-0 px-0">
       <div class="container col-12 mx-0 px-0">
@@ -41,10 +39,11 @@ require "../const/cookie.php";
           <div class="row">
             <div class="col-8">
               <?php
-              //wenn über die GET-Methode auch die Location (loc) übergeben wird, leitet ein anderer Link einen zurück zum profil
+              //wenn über die GET-Methode auch die Location (loc) übergeben wird, leitet ein anderer Link einen zurück zum Profil
               //und zwar zu dem Tab, der in Loc gespeichert ist
               if (isset($_GET['loc'])) {
                 echo '<a href="../profil/index.php?tab='.$_GET['loc'].'">Zurück zum Profil</a>';
+              //sonst kommt man wieder zurück zur Übersichtsseite
               } else {
                 echo '<a href="index.php">Zurück zu den Ergebnissen</a>';
               }
@@ -94,6 +93,7 @@ require "../const/cookie.php";
         </fieldset>
 
         <!-- Anzeigen der Daten zu dem Angebot -->
+        <!-- Die Values werden aus der $row genommen -->
         <fieldset class="box mb-4">
           <div class="row mx-0 px-0">
             <legend style="padding: 0px 0px 0px 17px">Modell</legend>
@@ -109,6 +109,7 @@ require "../const/cookie.php";
         </fieldset>
 
         <!-- Anzeigen der Daten zu dem Angebot -->
+        <!-- Die Values werden aus der $row genommen -->
         <fieldset class="box my-4">
           <div class="row mx-0 px-0 my-3">
             <legend style="padding: 0px 0px 0px 17px">Daten</legend>
@@ -303,6 +304,7 @@ require "../const/cookie.php";
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <!-- Weiterleitung an die action.php des Chats, in dieser wird die Nachricht dann verarbeitet und gesendet -->
         <form class="" action="../chat/action.php" method="post">
           <div class="modal-body">
             <textarea name="text" class="form-control" rows="3" cols="80" required></textarea>
@@ -317,6 +319,7 @@ require "../const/cookie.php";
     </div>
   </div>
 
+  <!-- Modal, welches einen zum einloggen auffordert -->
   <div class="modal fade" id="ModalKontaktNoLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -329,6 +332,7 @@ require "../const/cookie.php";
         <div class="modal-body">
           <div class="text-center">
             <h3>Bitte erst einloggen</h3>
+            <!-- Wenn man nicht eingeloggt ist, wird die URL des Angebots in die Session als redirect-Link geschrieben, damit man nach dem einloggen oder registrieren wieder zum Angebot gelangt -->
             <?php if (!isset($_SESSION['id'])) {
               $_SESSION['redirect'] = "/uebersicht/angebot.php?id=".$row['Angebot_ID'];
             } ?>
@@ -342,6 +346,7 @@ require "../const/cookie.php";
     </div>
   </div>
 
+  <!-- Die Datenbankconnection wird wieder geschlossen -->
   <?php closeConnection($databaseconnection);?>
   <?php require "../const/footer.php" ?>
 </body>

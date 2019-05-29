@@ -1,5 +1,6 @@
 <?php session_start(); require "../database/database.php";
 
+//Die Daten aus $_POST werden gesichert, falls ein Fehler auftritt. Dann wird man wieder zur inserieren-Seite geleitet und die Daten sind dann wieder eingetragen
 $_SESSION['cache']['insert'] = $_POST;
 
 if ($_POST['button'] == "pic") {

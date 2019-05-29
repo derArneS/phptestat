@@ -3,10 +3,13 @@
 session_start();
 
 require "../database/database.php";
+//Es wird die Cookie-Methode benutzt, die schaut, ob Cookies gesetzt sind, die einen einloggen können
 require "../const/cookie.php";
 
+//Datenbankconnection wird geöffnet
 $databaseconnection = createConnection();
 
+//Wenn kein Statment für die Suche in der Session steht, wird die Standardssuche als Statement in die Session geschrieben. Hierbei wird nicht gefiltert, sondern alle Autos angezeigt
 if (!isset($_SESSION['statement'])) {
   $_SESSION['statement'] = "SELECT Angebote.ID AS Angebot_ID, Benutzer_ID, Titel, Marken_ID, Modell_ID, Preis, Baujahr,
                             Kilometerstand, Leistung, Kraftstoff, Getriebe, Alarmanlage, Anhaengerkupplung,
@@ -31,18 +34,22 @@ if (!isset($_SESSION['statement'])) {
     ?>
     <div class="container">
       <div class="my-3 pl-3">
+        <!-- Link zurück zur Suchen-Seite -->
         <a href="../suche/index.php">Suche verändern</a>
       </div>
 
     <?php
 
+    //Es wird das Statement aus der Session ausgeführt, also entweder die definierte Suche oder die eben in die Session geschriebene Standardssuche
     if ($resultset = $databaseconnection->query($_SESSION['statement'])) {
+      //Wenn keine Angebote zu dem Statement passen, es also kein Suchergebnis gibt, wird man zurück zur Such-Seite geleitet, damit man die Suche überarbeiten kann
       if ($resultset->num_rows == 0) {
         $_SESSION['errorErgebnis'] = true;
         header("Location: ../suche");
         die();
       }
 
+      //Es werden solange Anzeigeelemente erschaffen, wie es Autos in dem Suchergebnis gibt
       while ($row = $resultset->fetch_assoc()) {
       echo'
       <div class="container">
@@ -51,9 +58,13 @@ if (!isset($_SESSION['statement'])) {
           <div class="col-10">
             <a href="../uebersicht/angebot.php?id='.$row['Angebot_ID'].'"><h3 style="padding: 0px 0px 0px 17px">'.$row['Titel'].'</h3></a>
           </div>';
+          //Wenn der eingeloggte User nicht der Urheber ist, kann er das Angebot zu seinen Favoviten hinzufügen
+          //Wenn man hier drauf klickt, und nicht angemeldet ist, wird man zum Login weitergeleitet, da dieser Bereich privat ist
           if ($row['Benutzer_ID'] != $_SESSION['id']) { echo '
             <div class="col-2 pr-4 mb-3" style="padding: 0!important">
               <a href="../profil/favoritenAction.php?id='.$row['Angebot_ID'].'" class="btn btn-primary">Favorit</a>';
+            //Wenn man nicht eingeloggt ist, wird einem zwar der Kontakt-Button angezeigt, es wird aber ein Modal angezeigt, welches einen zum einloggen auffordert
+            //Wenn man akzeptiert, wird man zum Login weitergeleitet. Dies findet mit dem redirect-Link zur der FavoritenAction statt. Wenn man sich nun einloggt, wird das vorher ausgewählte Auto favorisiert
             if(!isset($_SESSION['id'])) {
               echo '
                 <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#ModalKontaktNoLogin'.$row['Angebot_ID'].'">Kontakt</button>
@@ -80,6 +91,8 @@ if (!isset($_SESSION['statement'])) {
                 </div>
               </div>
                     ';
+            //Wenn man eingeloggt ist, aber nicht der Urheber ist, kann man den Urheber kontaktieren. Es öffnet sich ein Modal, in welches man eine Nachricht eingeben kann. Mit dem drücken auf Senden wird man zu der action.php
+            //vom Chat weitergeleitet. Hier wird die Nachricht verarbeitet und gesendet
             } else if ($row['Benutzer_ID'] != $_SESSION['id']) {
               echo '
                 <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#ModalKontakt'.$row['Angebot_ID'].'">Kontakt</button>
@@ -109,6 +122,7 @@ if (!isset($_SESSION['statement'])) {
                   ';
             }
           }
+          //Die eigentliche Darstellung des Angebots in der Suchübersicht. Hier werden die Daten aus der aktuellen $row genommen. Das Bild wird über $row['Bild_ID'] mit der Funktion loadPic geladen
           echo '
         </div>
           <div class="row mx-0 px-0 mb-3">
@@ -146,8 +160,6 @@ if (!isset($_SESSION['statement'])) {
 
     </div>
 
-<a href="#"></a>
-
     <div class="mb-3">
       <br>
     </div>
@@ -161,5 +173,5 @@ if (!isset($_SESSION['statement'])) {
 
   </body>
 </html>
-
+<!-- Die Datenbankconnection wird wieder geschlossen -->
 <?php closeConnection($databaseconnection); ?>
