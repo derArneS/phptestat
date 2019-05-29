@@ -172,7 +172,7 @@ if(isset($_POST['passwort-neu']) && isset($_POST['passwort-bestätigen']) && $_P
 
 //Wenn ein Fehler auftritt, wird die profil/index.php Datei wieder eingeblendet und die Datenbankconnection geschlossen
 err:
-#header("Location: index.php?tab=1");
+header("Location: index.php?tab=1");
 closeConnection($databaseconnection);
 die();
 

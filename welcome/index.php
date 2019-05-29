@@ -7,6 +7,7 @@ require '../const/deletecache.php';
 
 $databaseconnection = createConnection();
 
+//Alle Marken aus der Datenbank lesen
 if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Name ASC"))
 && ($statement->execute())
 && ($resultset = $statement->get_result())) {
@@ -26,8 +27,11 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
 </head>
 <body>
   <script type="text/javascript">
+  //Ajax Zugriff auf ajaxData.php zum Laden der Modelle zu der ausgewählten Marke
   function ajax(){
+      //ausgewählte Marke
       var marke = $('#marke').val();
+      //Wenn in der Session schon das Modell hinterlegt ist, wird das Modell eingetragen
         <?php echo ("var modell = ".(isset($_SESSION['cache']['suche']['modell']) && $_SESSION['cache']['suche']['modell'] != ""?$_SESSION['cache']['suche']['modell'].";":"0;")) ?>
       var ajaxString = 'marke='+ encodeURIComponent(marke) + '&modell='+ encodeURIComponent(modell);
       if(marke){
@@ -36,14 +40,18 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
           url:'../suche/ajaxData.php',
           data: ajaxString,
           success:function(html){
+            //bei Success wird die Rückgabe von ajaxData.php in das Dropdown eingetragen
             $('#modell').html(html);
           }
         });
       }else{
+        //Wenn keine Marke ausgewählt wurde, gibt es nur die Auswahl Modell als Platzhalter
         $('#modell').html('<option value="">Modell</option>');
       }
     };
 
+    //wenn das Document fertig geladen ist, wird das AJAX einmal ausgeführt, damit, falls über die Session schon Such-Suchparameter
+    //bereitgestellt wurde, die Modelle eingetragen
     document.onload = ajax();
   </script>
   <?php require '../const/navbar.php'; ?>
@@ -56,6 +64,8 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
+        <!-- Das erste Element des Carousels verlinkt auf die Action.php mit einer gesetzten Marke (1), damit werden alle BMWs aus der
+      Datenbank geladen  -->
         <a href="../welcome/action.php?marke=1">
           <img class="d-block w-100"src="../pics/car1.jpg" alt="First slide">
         </a>
@@ -64,6 +74,8 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
         </div>
       </div>
       <div class="carousel-item">
+        <!-- Das zweite Element des Carousels verlinkt auf die Action.php mit einer gesetzten Marke (2), damit werden alle Audis aus der
+      Datenbank geladen -->
         <a href="../welcome/action.php?marke=2">
           <img class="d-block w-100" src="../pics/car2.jpg" alt="Second slide">
         </a>
@@ -72,6 +84,8 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
         </div>
       </div>
       <div class="carousel-item">
+        <!-- Das dritte Element des Carousels verlinkt auf die Action.php mit einer gesetzten Marke (7), damit werden alle Porsches aus der
+      Datenbank geladen -->
         <a href="../welcome/action.php?marke=7">
           <img class="d-block w-100" src="../pics/car3.jpg" alt="Third slide">
         </a>
@@ -90,6 +104,8 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
     </a>
   </div>
 
+  <!-- Schnellsuche, nur Marken und Modelle
+       Form die auf action.php verweist-->
   <form action="action.php" method="post">
     <div class="container mt-4">
       <div class="row mx-0 px-0">
@@ -99,13 +115,19 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
               <div class="row mx-0 px-0">
                 <legend style="padding: 0px 0px 0px 17px">Schnellsuche</legend>
                 <div class="col-5 form-label-group">
+                  <!-- Wenn sich die Auswahl im Dropdown verändert wird, wird der Ajax-Aufruf benutzt, um die
+                       Modelle aus der Datenbank zu laden-->
                   <select class="form-control" id="marke" name="marke" onchange="ajax()">
                     <option value="">Beliebig</option>
                     <?php
+                    //Die Schleife wird nur ausgeführt, wenn es Marken in der Datenbank gibt
                     if($rowCount > 0){
+                      //Die Schleife wird so oft ausgeführt, wie es Marken in der Datenbank gibt
                       while($row = $resultset->fetch_assoc()){
+                        //Auswahlmöglichkeiten für das Marken-Dropdown; wenn die Marke mit der Marke aus dem Cache in der Session übereinstimmt, wird diese Auswahl selektiert
                         echo '<option '.((isset($_SESSION['cache']['suche']['marke']) && $_SESSION['cache']['suche']['marke'] == $row['ID'])?'selected="selected"':' ').'value="'.$row['ID'].'">'.$row['Name'].'</option>';
                       }
+                      //sonst wird Keine Marken als Platzhalter angezeigt
                     }else{
                       echo '<option value="">Keine Marken</option>';
                     }
@@ -142,6 +164,8 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
 
   <?php
 
+  //Alle Angebote aus der Datenbank holen, nach ID absteigend (also jüngste Angebote zuerst) sortieren und nur die 3 obersten selektieren
+  //So werden die 3 neusten Angebote auf der Übersichtsseite gezeigt
   if (($statement = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_ID, Benutzer_ID, Titel, Angebote.Marken_ID AS Angebot_Marke_ID, Angebote.Modell_ID AS Angebote_Modell_ID, Preis, Baujahr, Kilometerstand, Leistung, Kraftstoff, Getriebe,
                                                           Alarmanlage, Anhaengerkupplung, Bluetooth, Bordcomputer, HeadUP, Multilenk, Navi, Regensensor, Sitzheizung,
                                                           Sound, Standheiz, StartStopp, Bilder.Angebot_ID AS Bilder_Angebot_ID, Bilder.ID AS Bild_ID, Marken.ID AS Marke_ID, Marken.Name AS Marke_Marke, Modelle.Marken_ID AS Modell_Marke_ID,
@@ -149,7 +173,9 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
                                                           FROM Angebote, Bilder, Marken, Modelle WHERE Angebote.ID = Bilder.Angebot_ID AND Angebote.Marken_ID = Marken.ID AND Angebote.Modell_ID = Modelle.ID ORDER BY Angebote.ID DESC LIMIT 3"))
   && ($statement->execute())
   && ($resultset = $statement->get_result())) {
+    //wenn nicht kein Angebot gefunden wird, wird dieses angezeigt
     if ($resultset->num_rows != 0) {
+      //kleine Übersicht, die zu der normalen Übersicht des Angebots verlinkt
       if ($row = $resultset->fetch_assoc()) {
         echo '
           <div class="col-4">
@@ -165,6 +191,7 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
           </div>
         ';
       }
+      //wenn 2 Angebote gefunden wurden, wieder eine kleine Übersicht, die zu der normalen Übersicht des Angebots verlinkt
       if ($row = $resultset->fetch_assoc()) {
         echo '
           <div class="col-4">
@@ -180,6 +207,7 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
           </div>
         ';
       }
+      //wenn ein drittes Angebot gefunden wurde, wieder eine kleine Übersicht, die zu der normalen Übersicht des Angebots verlinkt
       if ($row = $resultset->fetch_assoc()) {
         echo '
           <div class="col-4">
