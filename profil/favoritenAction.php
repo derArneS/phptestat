@@ -13,6 +13,7 @@ if(isset($_GET['id'])){
   && ($statement->execute())
   && ($resultset = $statement->get_result())
   && ($row = $resultset->fetch_assoc())){
+    //Überprüfung ob das Angebot, das als Favorit hinzugefügt werden soll nicht ein eigenes eingestelltes Angebot ist
     if ($_SESSION['id'] != $row['Benutzer_ID']) {
       //Überprüfung ob der Benutzer das Angebot bereits als Favorit hinzugefügt hat
       if (!($statement = $databaseconnection->prepare("SELECT * FROM Favoriten WHERE Benutzer_ID = ? AND Angebot_ID = ?"))
@@ -25,7 +26,7 @@ if(isset($_GET['id'])){
         }
       }
 
-      //Hinzufügen ausgewählten Angebots zu den Favoriten
+      //Hinzufügen des ausgewählten Angebots zu den Favoriten
       if (($statement = $databaseconnection->prepare("INSERT INTO Favoriten (Benutzer_ID, Angebot_ID) VALUES (?,?)"))
       && ($statement->bind_param('ii', $_SESSION['id'], $_GET['id']))
       && ($statement->execute())){
