@@ -28,9 +28,16 @@ if (isset($_GET['id'])) {
       && ($statement->execute())) {
 
       }
+
+      //Wenn ein Benutzer dieses Angebot favoritisiert hatte, wird der Eintrag auch gelöscht
+      if (($statement = $databaseconnection->prepare("DELETE FROM Favoriten WHERE Angebot_ID=?"))
+      && ($statement->bind_param('i', $_GET['id']))
+      && ($statement->execute())) {
+
+      }
     }
   }
-  
+
   closeConnection($databaseconnection);
   header('Location: index.php');
 }

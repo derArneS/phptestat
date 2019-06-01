@@ -4,6 +4,8 @@ require "../database/database.php";
 //es wird überprüft, ob ein Cookie gesetzt ist, der einen einloggt
 require "../const/cookie.php";
 
+$databaseconnection = createConnection();
+
 //es werden alle Daten und das Bild zu der mit GET-Methode übergebenen Angebots-ID aus der Datenbank geladen
 if (!($statement = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_ID, Benutzer_ID, Titel, Angebote.Marken_ID AS Angebot_Marke_ID, Angebote.Modell_ID AS Angebote_Modell_ID, Preis, Baujahr, Kilometerstand, Leistung, Kraftstoff, Getriebe,
                                                         Alarmanlage, Anhaengerkupplung, Bluetooth, Bordcomputer, HeadUP, Multilenk, Navi, Regensensor, Sitzheizung,
@@ -14,6 +16,15 @@ if (!($statement = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_I
 || !($statement->execute())
 || !($resultset = $statement->get_result())
 || !($row = $resultset->fetch_assoc())) {
+  die();
+}
+
+//Es werden die Kontaktdaten des Erstellers aus der Datenbank geladen
+if (!($statement2 = $databaseconnection->prepare("SELECT Vorname, Nachname, Email, Benutzername, Postleitzahl, Ort, Strasse FROM Benutzer, Adressen WHERE Adressen.ID = Benutzer.Adress_ID AND Benutzer.ID = ?"))
+|| !($statement2->bind_param('i', $row['Benutzer_ID']))
+|| !($statement2->execute())
+|| !($resultset2 = $statement2->get_result())
+|| !($row2 = $resultset2->fetch_assoc())) {
   die();
 }
 ?>
@@ -27,8 +38,7 @@ if (!($statement = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_I
   <?php require "../const/head.php" ?>
   <link rel="stylesheet" href="uebersicht.css">
 </head>
-<body style="padding-bottom: 80px">
-  <?php $databaseconnection = createConnection(); ?>
+<body style="padding-bottom: 40px">
   <?php require "../const/navbar.php"; ?>
 
   <div class="container col-7 mt-4">
@@ -57,7 +67,7 @@ if (!($statement = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_I
                 <!-- öffnet ein Modal, weil man sich erst anmelden muss, um einen anderen zu kontaktieren -->
                 <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#ModalKontaktNoLogin">Kontakt</button>
                 <!-- leitet an die Action zum favorisieren weiter -->
-                <a href="../profil/favoritenAction.php?id=<?= $row['Angebot_ID'] ?>" class="btn btn-primary mx-3" style="float: right">Favorit</a>
+                <a href="../profil/favoritenAction.php?id=<?php echo $row['Angebot_ID'] ?>&re=../uebersicht/angebot.php?id=<?php echo $row['Angebot_ID'] ?>" class="btn btn-primary mx-3" style="float: right">Favorit</a>
               </div>
             </div>
             <!-- Wenn man eingeloggt ist, und nicht Urheber des Angebots ist -->
@@ -67,7 +77,17 @@ if (!($statement = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_I
                 <!-- Button öffnet den Modal zum kontaktieren -->
                 <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#ModalKontakt">Kontakt</button>
                 <!-- leitet an die Action zum favorisieren weiter -->
-                <a href="../profil/favoritenAction.php?id=<?= $row['Angebot_ID'] ?>" class="btn btn-primary mx-3" style="float: right">Favorit</a>
+
+                <?php
+                if (!($statement3 = $databaseconnection->prepare("SELECT * FROM Favoriten WHERE Benutzer_ID=? AND Angebot_ID=?"))
+                || !($statement3->bind_param("ii", $_SESSION['id'], $row['Angebot_ID']))
+                || !($statement3->execute())
+                || !($resultset3 = $statement3->get_result())
+                || !($resultset3->fetch_assoc())) {
+                  echo '<a href="../profil/favoritenAction.php?id='.$row['Angebot_ID'].'&re=../uebersicht/angebot.php?id='.$row['Angebot_ID'].'" class="btn btn-primary mx-3" style="float: right">Favorit</a>';
+                }
+                ?>
+
               </div>
             </div>
             <!-- wenn man eingeloggt ist und Urheber des Angebots sind -->
@@ -111,7 +131,7 @@ if (!($statement = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_I
         <!-- Anzeigen der Daten zu dem Angebot -->
         <!-- Die Values werden aus der $row genommen -->
         <fieldset class="box my-4">
-          <div class="row mx-0 px-0 my-3">
+          <div class="row mx-0 px-0">
             <legend style="padding: 0px 0px 0px 17px">Daten</legend>
             <div class="col-4 form-label-group">
               <input disabled type="text" name="preis" id="preis" class="form-control" placeholder="Preis" value="<?= $row['Preis'] . '€' ?>">
@@ -265,6 +285,21 @@ if (!($statement = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_I
             </div>
             ' ?>
 
+          </div>
+        </fieldset>
+
+        <!-- Kontaktdatenübersicht -->
+        <fieldset class="box my-4">
+          <div class="row mx-0 px-0 my-3">
+            <legend style="padding: 0px 0px 0px 17px">Standort</legend>
+            <div class="col-6 mb-0 form-label-group">
+              <h6><?php echo $row2['Vorname'] . " " . $row2['Nachname'] . " / " . $row2['Benutzername']; ?></h6>
+              <p>Email: <?= $row2['Email'] ?></p>
+            </div>
+            <div class="col-6 mb-0 form-label-group">
+              <p class="mb-0"><?php echo $row2['Strasse']; ?></p>
+              <p class="mb-0"><?php echo $row2['Postleitzahl'] . " " . $row2['Ort']; ?></p>
+            </div>
           </div>
         </fieldset>
       </div>

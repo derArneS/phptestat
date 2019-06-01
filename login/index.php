@@ -65,15 +65,35 @@ $databaseconnection = createConnection();
 
                   <div class="row">
                     <div class="col-6 text-center">
-                        <a class="small" href="#">Passwort vergessen?</a>
+                        <a class="small" href="#vergessen" data-toggle="modal" data-target="#vergessen">Passwort vergessen?</a>
                     </div>
                     <div class="col-6 text-center">
                         <a class="small" href="../register">Noch kein Konto?</a>
                     </div>
                   </div>
-
-
                   </form>
+
+                  <div class="modal fade" id="vergessen" tabindex="-1" role="dialog" aria-labelledby="vergessenTitel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="vergessenTitel">Passwort vergessen?</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <form class="" action="passwortvergessen.php" method="post">
+                          <div class="modal-body">
+                            <input type="text" name="inputEmailvergessen" id="inputEmailvergessen" class="form-control" placeholder="Email" required>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                            <button class="btn btn-primary" type="submit" name="vergessenbtn" value="vergessen">Senden</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
 
 
                   <?php

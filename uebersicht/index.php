@@ -44,7 +44,7 @@ if (!isset($_SESSION['statement'])) {
     if ($resultset = $databaseconnection->query($_SESSION['statement'])) {
       //Wenn keine Angebote zu dem Statement passen, es also kein Suchergebnis gibt, wird man zurück zur Such-Seite geleitet, damit man die Suche überarbeiten kann
       if ($resultset->num_rows == 0) {
-        $_SESSION['errorErgebnis'] = true;
+        $_SESSION['error']['ergebnis'] = true;
         header("Location: ../suche");
         die();
       }
@@ -60,9 +60,20 @@ if (!isset($_SESSION['statement'])) {
           </div>';
           //Wenn der eingeloggte User nicht der Urheber ist, kann er das Angebot zu seinen Favoviten hinzufügen
           //Wenn man hier drauf klickt, und nicht angemeldet ist, wird man zum Login weitergeleitet, da dieser Bereich privat ist
-          if ($row['Benutzer_ID'] != $_SESSION['id']) { echo '
-            <div class="col-2 pr-4 mb-3" style="padding: 0!important">
-              <a href="../profil/favoritenAction.php?id='.$row['Angebot_ID'].'" class="btn btn-primary">Favorit</a>';
+          if ($row['Benutzer_ID'] != $_SESSION['id']) {
+
+            echo '
+            <div class="col-2 pr-4 mb-3" style="padding: 0!important">';
+
+            //Wenn man dieses Angebot schon favorisiert hat, wird einem der Favoritenbutton nicht mehr angezeigt
+            if (!(isset($_SESSION['id']))
+            || !($statement2 = $databaseconnection->prepare("SELECT * FROM Favoriten WHERE Benutzer_ID=? AND Angebot_ID=?"))
+            || !($statement2->bind_param("ii", $_SESSION['id'], $row['Angebot_ID']))
+            || !($statement2->execute())
+            || !($resultset2 = $statement2->get_result())
+            || !($resultset2->fetch_assoc())) {
+              echo '<a href="../profil/favoritenAction.php?id='.$row['Angebot_ID'].'" class="btn btn-primary">Favorit</a>';
+            }
             //Wenn man nicht eingeloggt ist, wird einem zwar der Kontakt-Button angezeigt, es wird aber ein Modal angezeigt, welches einen zum einloggen auffordert
             //Wenn man akzeptiert, wird man zum Login weitergeleitet. Dies findet mit dem redirect-Link zur der FavoritenAction statt. Wenn man sich nun einloggt, wird das vorher ausgewählte Auto favorisiert
             if(!isset($_SESSION['id'])) {

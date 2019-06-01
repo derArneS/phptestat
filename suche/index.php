@@ -71,7 +71,11 @@ if (isset($_SESSION['cache']['insert'])) {
           <a href="reset.php">Suche zurücksetzen</a>
         </div>
         <!-- Wenn eine Fehlermeldung gesetzt ist, wird der entsprechende Fehler angezeigt -->
-        <?php if (isset($_SESSION['errorErgebnis']) && $_SESSION['errorErgebnis']) { ?> <div class="alert alert-danger alert-round" role="alert">Leider keine Inserate gefunden...</div> <?php } ?>
+        <?php if (isset($_SESSION['error']['ergebnis']) && $_SESSION['error']['ergebnis']) { ?> <div class="alert alert-danger alert-round" role="alert">Leider keine Inserate gefunden...</div> <?php } ?>
+        <?php if (isset($_SESSION['error']['preis']) && $_SESSION['error']['preis']) { ?> <div class="alert alert-danger alert-round" role="alert">Fehlerhafte Eingegabe beim Preis!</div> <?php } ?>
+        <?php if (isset($_SESSION['error']['baujahr']) && $_SESSION['error']['baujahr']) { ?> <div class="alert alert-danger alert-round" role="alert">Fehlerhafte Eingegabe beim Baujahr!</div> <?php } ?>
+        <?php if (isset($_SESSION['error']['km']) && $_SESSION['error']['km']) { ?> <div class="alert alert-danger alert-round" role="alert">Fehlerhafte Eingegabe beim Kilometerstand!</div> <?php } ?>
+        <?php if (isset($_SESSION['error']['leistung']) && $_SESSION['error']['leistung']) { ?> <div class="alert alert-danger alert-round" role="alert">Fehlerhafte Eingegabe bei der Leistung!</div> <?php } ?>
 
         <fieldset class="box mb-4">
           <div class="row mx-0 px-0">

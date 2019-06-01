@@ -143,8 +143,6 @@ if (isset($_POST['plz-neu']) && isset($_POST['plz-bestätigen']) && $_POST['plz-
       header('Location: index.php?tab=3');
       closeConnection($databaseconnection);
       die();
-    } else {
-      $_SESSION['test'] = true;
     }
   }
 }
@@ -171,8 +169,6 @@ if (isset($_POST['stadt-neu']) && isset($_POST['stadt-bestätigen']) && $_POST['
       header('Location: index.php?tab=3');
       closeConnection($databaseconnection);
       die();
-    } else {
-      $_SESSION['test'] = true;
     }
   }
 }
@@ -198,11 +194,8 @@ if(isset($_POST['passwort-alt']) && isset($_POST['passwort-neu']) && isset($_POS
         closeConnection($databaseconnection);
         die();
       }
-    } else {
-      $_SESSION['passwort'] = true;
     }
   }
-
 }
 
 //Wenn ein Fehler auftritt, wird die profil/index.php Datei wieder eingeblendet und die Datenbankconnection geschlossen

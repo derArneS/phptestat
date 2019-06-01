@@ -30,7 +30,12 @@ if(isset($_GET['id'])){
       if (($statement = $databaseconnection->prepare("INSERT INTO Favoriten (Benutzer_ID, Angebot_ID) VALUES (?,?)"))
       && ($statement->bind_param('ii', $_SESSION['id'], $_GET['id']))
       && ($statement->execute())){
-        header("Location: ../uebersicht/index.php");
+        //Entweder zurück zur Übersicht oder zum Angebot
+        if (isset($_GET['re'])) {
+          header("Location: " . $_GET['re']);
+        } else {
+          header("Location: ../uebersicht/index.php");
+        }
         closeConnection($databaseconnection);
         die();
       }
@@ -38,8 +43,13 @@ if(isset($_GET['id'])){
   }
 }
 
+//Entweder zurück zur Übersicht oder zum Angebot
 err:
-header("Location: ../uebersicht/index.php");
+if (isset($_GET['re'])) {
+  header("Location: " . $_GET['re']);
+} else {
+  header("Location: ../uebersicht/index.php");
+}
 closeConnection($databaseconnection);
 die();
 

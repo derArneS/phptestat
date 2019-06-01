@@ -364,6 +364,37 @@ Bei betätigen des Buttons öffnet sich ein Modal und fordert die Eingaben die f
         </div>
       </div>
 
+      <!-- Öffnet das Modal zum löschen des Profils -->
+      <div class="input-group mb-3 mx-auto col-6">
+        <button type="button" class="btn btn-danger mx-auto" data-toggle="modal" data-target="#loeschen">Konto löschen</button>
+      </div>
+
+      <!-- Öffnet das Modal zum löschen -->
+      <div class="modal fade" id="loeschen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">Konto löschen</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="text-center">
+                <h3>Soll das Konto wirklich gelöscht werden?</h3>
+                <h5>Dies ist nicht wiederruflich!</h5>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+              <form class="" action="deleteProfile.php" method="post">
+                <button class="btn btn-danger" type="submit" name="deleteBtn" value="delete">Konto löschen</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <?php
       unset($_SESSION['errorBenutzername']);
