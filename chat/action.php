@@ -6,10 +6,13 @@ require '../database/database.php';
 require "../const/cookie.php";
 require '../const/deletecache.php';
 
+
 $databaseconnection = createConnection();
 if (isset($_POST['text']) && isset($_SESSION['id']) && isset($_POST['empfaenger'])) {
+  $text = htmlspecialchars(stripslashes($_POST['text']));
+  $empfaenger = htmlspecialchars(stripslashes($_POST['empfaenger']));
   if (($statement = $databaseconnection->prepare("INSERT INTO Nachrichten (Text, Sender, Empfaenger) VALUES (?,?,?)"))
-  && ($statement->bind_param('sii',$_POST['text'], $_SESSION['id'], $_POST['empfaenger']))
+  && ($statement->bind_param('sii', $text, $_SESSION['id'], $empfaenger))
   && ($statement->execute())) {
 
   }

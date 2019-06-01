@@ -52,8 +52,10 @@
     //Adress ID für den Benutzer
     $adressid = $databaseconnection->insert_id;
     //Der Benutzer wird angelegt indem in der Tabelle Benutzer der Benutzername, Email, Passwort und die AdressID für den Verweis auf die Tabelle Adressen
+    $inputBenutzername = htmlspecialchars(stripslashes($_POST['inputBenutzername']));
+    $inputEmail = htmlspecialchars(stripslashes($_POST['inputEmail']));
     if (!($statement = $databaseconnection->prepare("INSERT INTO Benutzer (Benutzername, Email, Passwort, Adress_ID) VALUES (?, ?, ?, ?)"))
-    || !($statement->bind_param('sssi', $_POST['inputBenutzername'], $_POST['inputEmail'], $passwordHash, $adressid))
+    || !($statement->bind_param('sssi', $inputBenutzername, $inputEmail, $passwordHash, $adressid))
     || !($statement->execute())) {
       $_SESSION['errorRegister'] = true;
       goto err;

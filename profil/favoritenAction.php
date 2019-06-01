@@ -27,8 +27,9 @@ if(isset($_GET['id'])){
       }
 
       //Hinzufügen des ausgewählten Angebots zu den Favoriten
+      $angebotsid = htmlspecialchars(stripslashes($_GET['id']));
       if (($statement = $databaseconnection->prepare("INSERT INTO Favoriten (Benutzer_ID, Angebot_ID) VALUES (?,?)"))
-      && ($statement->bind_param('ii', $_SESSION['id'], $_GET['id']))
+      && ($statement->bind_param('ii', $_SESSION['id'], $angebotsid))
       && ($statement->execute())){
         //Entweder zurück zur Übersicht oder zum Angebot
         if (isset($_GET['re'])) {

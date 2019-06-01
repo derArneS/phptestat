@@ -27,8 +27,9 @@ if (isset($_POST['benutzername-neu']) && isset($_POST['benutzername-bestätigen'
     }
   }
   //Falls der Benutzername noch nicht vergeben wurde, wird dieser in der Tabelle Benutzer geupdatet
+  $benutzernameneu = htmlspecialchars(stripslashes($_POST['benutzername-neu']));
   if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Benutzername=? WHERE ID=?"))
-  && ($statement->bind_param('si', $_POST['benutzername-neu'], $_SESSION['id']))
+  && ($statement->bind_param('si', $benutzernameneu, $_SESSION['id']))
   && ($statement->execute())){
     //Der neue Benutzername wird ausßerdem in der Session überschrieben
     $_SESSION['benutzername'] = $_POST['benutzername-neu'];
@@ -42,8 +43,9 @@ if (isset($_POST['benutzername-neu']) && isset($_POST['benutzername-bestätigen'
 //PHP-Code Vorname einfügen/ändern
 if(isset($_POST['vorname-neu']) && isset($_POST['vorname-bestätigen']) && $_POST['vorname-bestätigen'] == $_POST['vorname-neu']){
   //Der Vorname wird in der Tabelle Benutzer geupdatet
+  $vornameneu = htmlspecialchars(stripslashes($_POST['vorname-neu']));
   if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Vorname=? WHERE ID=?"))
-  && ($statement->bind_param('si', $_POST['vorname-neu'], $_SESSION['id']))
+  && ($statement->bind_param('si', $vornameneu, $_SESSION['id']))
   && ($statement->execute())){
     //Der Vorname wird in die Session eingefügt/überschrieben
     $_SESSION['vorname'] = $_POST['vorname-neu'];
@@ -57,8 +59,9 @@ if(isset($_POST['vorname-neu']) && isset($_POST['vorname-bestätigen']) && $_POS
 //PHP-Code Nachname einfügen/ändern
 if(isset($_POST['nachname-neu']) && isset($_POST['nachname-bestätigen']) && $_POST['nachname-bestätigen'] == $_POST['nachname-neu']){
   //Der Nachname wird in der Tabelle Benutzer geupdatet
+  $nachnameneu = htmlspecialchars(stripslashes($_POST['nachname-neu']));
   if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Nachname=? WHERE ID=?"))
-  && ($statement->bind_param('si', $_POST['nachname-neu'], $_SESSION['id']))
+  && ($statement->bind_param('si', $nachnameneu, $_SESSION['id']))
   && ($statement->execute())){
     //Der Nachname wird in die Session eingefügt/überschrieben
     $_SESSION['nachname'] = $_POST['nachname-neu'];
@@ -85,8 +88,9 @@ if (isset($_POST['email-neu']) && isset($_POST['email-bestätigen']) && $_POST['
     }
   }
   //Falls die E-Mail noch nicht von einem anderen Benutzer registriert ist, wird die E-Mail in der Tabelle Benutzer geupdatet
+  $emailneu = htmlspecialchars(stripslashes($_POST['email-neu']));
   if (($statement = $databaseconnection->prepare("UPDATE Benutzer SET Email=? WHERE ID=?"))
-  && ($statement->bind_param('si', $_POST['email-neu'], $_SESSION['id']))
+  && ($statement->bind_param('si', $emailneu, $_SESSION['id']))
   && ($statement->execute())){
     //Das Profil wird wieder angezeigt mit dem aktiven Tab Persönliche Daten, danach wird die Datenbankconnection geschlossen
     header('Location: index.php?tab=3');
@@ -107,8 +111,9 @@ if (isset($_POST['strasse-neu']) && isset($_POST['strasse-bestätigen']) && $_PO
   } else if (($resultset = $statement->get_result()) && !($resultset->num_rows == 0) && ($row = $resultset->fetch_assoc())) {
     //Die Strasse wird in der Tabelle Benutzer geupdatet
     //Es wird auf die Tabelle Adressen zugegriffen die die AdressID vom vorher selektierten Benutzer hat
+    $strasseneu = htmlspecialchars(stripslashes($_POST['strasse-neu']));
     if (($statement = $databaseconnection->prepare("UPDATE Adressen SET Strasse=? WHERE ID=?"))
-    && ($statement->bind_param('si', $_POST['strasse-neu'], $row['Adress_ID']))
+    && ($statement->bind_param('si', $strasseneu, $row['Adress_ID']))
     && ($statement->execute())){
       //Die Strasse wird in die Session eingefügt/überschrieben
       $_SESSION['strasse'] = $_POST['strasse-neu'];
@@ -134,8 +139,9 @@ if (isset($_POST['plz-neu']) && isset($_POST['plz-bestätigen']) && $_POST['plz-
   } else if (($resultset = $statement->get_result()) && !($resultset->num_rows == 0) && ($row = $resultset->fetch_assoc())) {
     //Die Postleitzahl wird in der Tabelle Benutzer geupdatet
     //Es wird auf die Tabelle Adressen zugegriffen die die AdressID vom vorher selektierten Benutzer hat
+    $plzneu = htmlspecialchars(stripslashes($_POST['plz-neu']));
     if (($statement = $databaseconnection->prepare("UPDATE Adressen SET Postleitzahl=? WHERE ID=?"))
-    && ($statement->bind_param('si', $_POST['plz-neu'], $row['Adress_ID']))
+    && ($statement->bind_param('si', $plzneu, $row['Adress_ID']))
     && ($statement->execute())){
       //Die Postleitzahl wird in die Session eingefügt/überschrieben
       $_SESSION['postleitzahl'] = $_POST['plz-neu'];
@@ -160,8 +166,9 @@ if (isset($_POST['stadt-neu']) && isset($_POST['stadt-bestätigen']) && $_POST['
   } else if (($resultset = $statement->get_result()) && !($resultset->num_rows == 0) && ($row = $resultset->fetch_assoc())) {
     //Die Stadt wird in der Tabelle Benutzer geupdatet
     //Es wird auf die Tabelle Adressen zugegriffen die die AdressID vom vorher selektierten Benutzer hat
+    $stadtneu = htmlspecialchars(stripslashes($_POST['stadt-neu']));
     if (($statement = $databaseconnection->prepare("UPDATE Adressen SET Ort=? WHERE ID=?"))
-    && ($statement->bind_param('si', $_POST['stadt-neu'], $row['Adress_ID']))
+    && ($statement->bind_param('si', $stadtneu, $row['Adress_ID']))
     && ($statement->execute())){
       //Die Stadt wird in die Session eingefügt/überschrieben
       $_SESSION['stadt'] = $_POST['stadt-neu'];

@@ -84,9 +84,19 @@ if ($_POST['button'] == "pic") {
   $standheizung = isset($_POST['standheizung']) && $_POST['standheizung'] == 'true' ? 1 : 0;
   $startStopp = isset($_POST['startStopp']) && $_POST['startStopp'] == 'true' ? 1 : 0;
 
+  $titel = htmlspecialchars(stripslashes($_POST['titel']));
+  $marke = htmlspecialchars(stripslashes($_POST['marke']));
+  $modell = htmlspecialchars(stripslashes($_POST['modell']));
+  $inputPreis = htmlspecialchars(stripslashes($_POST['inputPreis']));
+  $inputBJ = htmlspecialchars(stripslashes($_POST['inputBJ']));
+  $inputKM = htmlspecialchars(stripslashes($_POST['inputKM']));
+  $inputLeistung = htmlspecialchars(stripslashes($_POST['inputLeistung']));
+  $kraftstoff = htmlspecialchars(stripslashes($_POST['kraftstoff']));
+  $getriebe = htmlspecialchars(stripslashes($_POST['getriebe']));
+
   if (!($statement = $databaseconnection->prepare("INSERT INTO Angebote (Benutzer_ID, Titel, Marken_ID, Modell_ID, Preis, Baujahr, Kilometerstand, Leistung, kraftstoff, Getriebe, Alarmanlage, Anhaengerkupplung, Bluetooth, Bordcomputer, HeadUP, Multilenk, Navi, Regensensor, Sitzheizung, Sound, Standheiz, StartStopp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))
-  || !($statement->bind_param('isiiiiiiiiiiiiiiiiiiii',$_SESSION['id'], $_POST['titel'], $_POST['marke'], $_POST['modell'], $_POST['inputPreis'], $_POST['inputBJ'], $_POST['inputKM'],
-                                                       $_POST['inputLeistung'], $_POST['kraftstoff'], $_POST['getriebe'],
+  || !($statement->bind_param('isiiiiiiiiiiiiiiiiiiii',$_SESSION['id'], $titel, $marke, $modell, $inputPreis, $inputBJ, $inputKM,
+                                                       $inputLeistung, $kraftstoff, $getriebe,
                                                        $alarmanlage, $anhaengerkupplung, $bluetooth, $bordcomputer, $head, $multifunktionslenkrad, $navigationssystem,
                                                        $regensensor, $sitzheizung, $soundsystem, $standheizung, $startStopp))
   || !($statement->execute())) {
