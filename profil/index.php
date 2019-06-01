@@ -75,7 +75,7 @@ if (!($statement3 = $databaseconnection->prepare("SELECT Angebote.ID AS Angebot_
 
     </div>
   </div>
-
+<?php require "../const/footer.php" ?>
 </body>
 </html>
 

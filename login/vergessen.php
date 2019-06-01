@@ -48,5 +48,6 @@ $databaseconnection = createConnection();
         </div>
       </div>
     </div>
+    <?php require "../const/footer.php" ?>
   </body>
 </html>

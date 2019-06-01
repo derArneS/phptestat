@@ -54,7 +54,7 @@ $databaseconnection = createConnection();
                     <label for="inputPassword">Passwort</label>
                   </div>
 
-                  <div class="custom-control custom-checkbox mbCheckbox für die Speicherung des Passwort-3">
+                  <div class="custom-control custom-checkbox mb-3">
                     <!--Checkbox für die Speicherung des Passwort -->
                     <input type="checkbox" name="inputRememberPassword" class="custom-control-input" id="customCheck1" value="cookie">
                     <label class="custom-control-label" for="customCheck1">Passwort speichern</label>
@@ -110,5 +110,6 @@ $databaseconnection = createConnection();
         </div>
       </div>
     </div>
+    <?php require "../const/footer.php" ?>
   </body>
   </html>

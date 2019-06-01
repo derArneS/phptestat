@@ -2,10 +2,10 @@
 
 session_start();
 require '../database/database.php';
+$databaseconnection = createConnection();
 require "../const/cookie.php";
 require '../const/deletecache.php';
 
-$databaseconnection = createConnection();
 
 //Alle Marken aus der Datenbank lesen
 if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Name ASC"))
@@ -55,7 +55,7 @@ if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Na
     //bereitgestellt wurden, die Modelle eingetragen werden
     document.onload = ajax();
   </script>
-  
+
   <?php require '../const/navbar.php'; ?>
   <!--Slider mit drei Bildern, welche bei Auswahl auf eine vordefinierte Suche verweisen -->
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">

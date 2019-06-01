@@ -14,6 +14,7 @@ if(isset($_POST['email']) && isset($_POST['pwd']) && isset($_POST['inputPassword
     $resultset = $statement->get_result();
     $row = $resultset->fetch_assoc();
 
+    //Wenn der übermittelte und der ausgelesene Hash übereinstimmen
     if($row['Passwort'] == $_POST['pwd']) {
       //Das neue Passwort wird gehasht
       $passwordHash = password_hash($_POST['inputPassword2'], PASSWORD_BCRYPT);

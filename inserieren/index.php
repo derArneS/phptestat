@@ -4,11 +4,12 @@ require "../database/database.php";
 require "../const/cookie.php";
 require "../const/private.php"; isPrivate(true, "/inserieren");
 
+//Wenn Nutzereingaben in der Suche gemacht wurden, werden sie hier gelöscht
 if (isset($_SESSION['cache']['suche'])) {
   unset($_SESSION['cache']['suche']);
 }
 
-
+//Es wird geschaut, ob schon Nutzereingaben gemacht und in der Session gespeichert wurden. Wenn ja, so werden diese Daten schon im Vorraus eingetragen. Wenn nicht, wird null als Wert eingetragen
 if (isset($_SESSION['cache'])) {
   $titel = (isset($_SESSION['cache']['insert']['titel'])) ? $_SESSION['cache']['insert']['titel'] : null;
   $marke = (isset($_SESSION['cache']['insert']['marke'])) ? $_SESSION['cache']['insert']['marke'] : null;
@@ -46,13 +47,17 @@ if (isset($_SESSION['cache'])) {
   <link rel="stylesheet" href="insert.css">
 </head>
 <body onload="ajax()" style="padding-bottom: 80px">
+  <!-- Die Datenbankverbindung wird hergestellt -->
   <?php $databaseconnection = createConnection(); ?>
   <?php require "../const/navbar.php"; ?>
 
   <script type="text/javascript">
+  //Ajax Zugriff auf ajaxData.php zum Laden der Modelle zu der ausgewählten Marke
   function ajax(){
+      //ausgewählte Marke
       var marke = $('#marke').val();
-        <?php echo ("var modell = ".(isset($modell) && $modell != ""?$modell.";":"0;")) ?>
+      //Wenn in der Session schon das Modell hinterlegt ist, wird das Modell eingetragen
+      <?php echo ("var modell = ".(isset($modell) && $modell != ""?$modell.";":"0;")) ?>
       var ajaxString = 'marke='+ encodeURIComponent(marke) + '&modell='+ encodeURIComponent(modell);
       if(marke){
         $.ajax({
@@ -60,20 +65,25 @@ if (isset($_SESSION['cache'])) {
           url:'ajaxData.php',
           data: ajaxString,
           success:function(html){
-            $('#modell').html(html);
+            //bei Success wird die Rückgabe von ajaxData.php in das Dropdown eingetragen
+          $('#modell').html(html);
           }
         });
       }else{
-        $('#modell').html('<option value="">Modell</option>');
+        //Wenn keine Marke ausgewählt wurde, gibt es nur die Auswahl Modell als Platzhalter
+      $('#modell').html('<option value="">Modell</option>');
       }
     };
 
+    //wenn das Document fertig geladen ist, wird das AJAX einmal ausgeführt, damit, falls über die Session schon Such-Suchparameter
+    //bereitgestellt wurden, die Modelle eingetragen werden
     document.onload = ajax();
   </script>
 
   <?php
 
 
+  //Es werden alle Marken aus der Datenbank gelesen
   if (($statement = $databaseconnection->prepare("SELECT * FROM Marken ORDER BY Name ASC"))
   && ($statement->execute())
   && ($resultset = $statement->get_result())) {
@@ -85,6 +95,7 @@ if (isset($_SESSION['cache'])) {
   <div class="container mt-4">
     <div class="row mx-0 px-0">
       <div class="container col-12 mx-0 px-0">
+        <!-- Wenn eine Fehlermeldung gesetzt ist, wird der entsprechende Fehler angezeigt -->
         <?php if (isset($_SESSION['errorEingabe']) && $_SESSION['errorEingabe']) { ?> <div class="alert alert-danger alert-round" role="alert">Fehlerhafte Eingaben!</div> <?php } ?>
 
         <fieldset class="box mb-4">
@@ -104,11 +115,14 @@ if (isset($_SESSION['cache'])) {
               <select class="form-control" id="marke" name="marke" onchange="ajax()">
                 <option value="">Beliebig</option>
                 <?php
+                //Es wird das Resultset der Marken durchiteriert, wenn mindestens eine Marke gefunden wurde
                 if($rowCount > 0){
                   while($row = $resultset->fetch_assoc()){
+                    //Wenn eine Marke im Cache zwischengespeichert ist, wird diese als selectiert dargestellt
                     echo '<option '.((isset($marke) && $marke == $row['ID'])?'selected="selected"':' ').'value="'.$row['ID'].'">'.$row['Name'].'</option>';
                   }
                 }else{
+                  //Wenn keine Marke gefunden wurde, wird ein Platzhalter angezeigt, welcher wie Beliebig	wirkt
                   echo '<option value="">Keine Marken</option>';
                 }
                 ?>
@@ -126,6 +140,7 @@ if (isset($_SESSION['cache'])) {
           <div class="row mx-0 px-0 mb-3">
             <legend style="padding: 0px 0px 0px 17px">Bild</legend>
             <div class="col-6">
+              <!-- Das Bild, sofern vorhanden, wird mit der loadPic Methode geladen -->
               <img class="col-12" style="padding-left: 0px" src="../const/loadPic.php?id=<?php if(isset($img_id)) echo $img_id ?>" alt="">
             </div>
             <div class="col-6 form-label-group">
@@ -139,8 +154,11 @@ if (isset($_SESSION['cache'])) {
           </div>
         </fieldset>
 
+        <!-- Hier wird die ID des Bildes "zwischengespeichert", damit das bereits hochgeladenene Bild der Angebot zugeordnet werden kann -->
         <input type="hidden" name="img_id" value="<?= isset($img_id) ? $img_id : 0 ?>">
 
+        <!-- Es wird geschaut, ob die Felder, in denen Nutzereingaben stehen können, gefüllt sind. Wenn ja, wird dieser Wert voreingetragen -->
+        <!-- Hier werden die Daten zu dem Auto eingetragen -->
         <fieldset class="box my-4">
           <div class="row mx-0 px-0 mb-3">
             <legend style="padding: 0px 0px 0px 17px">Daten</legend>
@@ -183,6 +201,7 @@ if (isset($_SESSION['cache'])) {
           <div class="row mx-0 px-0 mb-3">
             <legend style="padding: 0px 0px 0px 17px">Ausstattung</legend>
 
+            <!-- Haken für die Ausstattung, wenn in dem Cache gespeichert ist, wird er beim laden der Seite schon gesetzt -->
             <div class="col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="alarmanlage" class="custom-control-input" id="alarmanlage" value="true" <?php if (isset($alarmanlage) && $alarmanlage == "true") echo "checked='checked'"; ?>>
@@ -190,6 +209,7 @@ if (isset($_SESSION['cache'])) {
               </div>
             </div>
 
+            <!-- Haken für die Ausstattung, wenn in dem Cache gespeichert ist, wird er beim laden der Seite schon gesetzt -->
             <div class="col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="anhaengerkupplung" class="custom-control-input" id="anhaengerkupplung" value="true" <?php if (isset($anhaengerkupplung) && $anhaengerkupplung == "true") echo "checked='checked'"; ?>>
@@ -197,6 +217,7 @@ if (isset($_SESSION['cache'])) {
               </div>
             </div>
 
+            <!-- Haken für die Ausstattung, wenn in dem Cache gespeichert ist, wird er beim laden der Seite schon gesetzt -->
             <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="bluetooth" class="custom-control-input" id="bluetooth" value="true" <?php if (isset($bluetooth) && $bluetooth == "true") echo "checked='checked'"; ?>>
@@ -204,6 +225,7 @@ if (isset($_SESSION['cache'])) {
               </div>
             </div>
 
+            <!-- Haken für die Ausstattung, wenn in dem Cache gespeichert ist, wird er beim laden der Seite schon gesetzt -->
             <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="bordcomputer" class="custom-control-input" id="bordcomputer" value="true" <?php if (isset($bordcomputer) && $bordcomputer == "true") echo "checked='checked'"; ?>>
@@ -211,6 +233,7 @@ if (isset($_SESSION['cache'])) {
               </div>
             </div>
 
+            <!-- Haken für die Ausstattung, wenn in dem Cache gespeichert ist, wird er beim laden der Seite schon gesetzt -->
             <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="head" class="custom-control-input" id="head" value="true" <?php if (isset($head) && $head == "true") echo "checked='checked'"; ?>>
@@ -218,6 +241,7 @@ if (isset($_SESSION['cache'])) {
               </div>
             </div>
 
+            <!-- Haken für die Ausstattung, wenn in dem Cache gespeichert ist, wird er beim laden der Seite schon gesetzt -->
             <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="multifunktionslenkrad" class="custom-control-input" id="multifunktionslenkrad" value="true" <?php if (isset($multifunktionslenkrad) && $multifunktionslenkrad == "true") echo "checked='checked'"; ?>>
@@ -225,6 +249,7 @@ if (isset($_SESSION['cache'])) {
               </div>
             </div>
 
+            <!-- Haken für die Ausstattung, wenn in dem Cache gespeichert ist, wird er beim laden der Seite schon gesetzt -->
             <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="navigationssystem" class="custom-control-input" id="navigationssystem" value="true" <?php if (isset($navigationssystem) && $navigationssystem == "true") echo "checked='checked'"; ?>>
@@ -232,6 +257,7 @@ if (isset($_SESSION['cache'])) {
               </div>
             </div>
 
+            <!-- Haken für die Ausstattung, wenn in dem Cache gespeichert ist, wird er beim laden der Seite schon gesetzt -->
             <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="regensensor" class="custom-control-input" id="regensensor" value="true" <?php if (isset($regensensor) && $regensensor == "true") echo "checked='checked'"; ?>>
@@ -239,6 +265,7 @@ if (isset($_SESSION['cache'])) {
               </div>
             </div>
 
+            <!-- Haken für die Ausstattung, wenn in dem Cache gespeichert ist, wird er beim laden der Seite schon gesetzt -->
             <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="sitzheizung" class="custom-control-input" id="sitzheizung" value="true" <?php if (isset($sitzheizung) && $sitzheizung == "true") echo "checked='checked'"; ?>>
@@ -246,6 +273,7 @@ if (isset($_SESSION['cache'])) {
               </div>
             </div>
 
+            <!-- Haken für die Ausstattung, wenn in dem Cache gespeichert ist, wird er beim laden der Seite schon gesetzt -->
             <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="soundsystem" class="custom-control-input" id="soundsystem" value="true" <?php if (isset($soundsystem) && $soundsystem == "true") echo "checked='checked'"; ?>>
@@ -253,6 +281,7 @@ if (isset($_SESSION['cache'])) {
               </div>
             </div>
 
+            <!-- Haken für die Ausstattung, wenn in dem Cache gespeichert ist, wird er beim laden der Seite schon gesetzt -->
             <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="standheizung" class="custom-control-input" id="standheizung" value="true" <?php if (isset($standheizung) && $standheizung == "true") echo "checked='checked'"; ?>>
@@ -260,6 +289,7 @@ if (isset($_SESSION['cache'])) {
               </div>
             </div>
 
+            <!-- Haken für die Ausstattung, wenn in dem Cache gespeichert ist, wird er beim laden der Seite schon gesetzt -->
             <div class=" col-4" style="padding-left: 17px">
               <div class="custom-control custom-checkbox mt-3">
                 <input type="checkbox" name="startStopp" class="custom-control-input" id="startStopp" value="true" <?php if (isset($startStopp) && $startStopp == "true") echo "checked='checked'"; ?>>
@@ -274,6 +304,7 @@ if (isset($_SESSION['cache'])) {
   </div>
 
   <?php closeConnection($databaseconnection);?>
+  <!-- die Fehler werden aufgehoben -->
   <?php unset($_SESSION['errorEingabe']) ?>
 
   <footer class="bg-dark fixed-bottom align-center">

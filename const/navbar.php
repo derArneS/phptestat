@@ -1,6 +1,7 @@
 <?php
 require "root.php";
 
+//Zählen der noch nicht gelesenen Nachrichten, die den eingeloggten Nutzer als Empaenger haben
 if (($statementAnzahlNachricht = $databaseconnection->prepare("SELECT COUNT(Gelesen) AS Anzahl FROM Nachrichten WHERE Empfaenger = ? AND Gelesen = 0"))
 && ($statementAnzahlNachricht->bind_param('i', $_SESSION['id']))
 && ($statementAnzahlNachricht->execute())
@@ -24,6 +25,7 @@ if (($statementAnzahlNachricht = $databaseconnection->prepare("SELECT COUNT(Gele
       </li>
     </ul>
 
+    <!-- Wenn man eingeloggt ist, werden einem der Link zum Chat und über Dropdown das Profil und die Möglichkeit zum inserieren gegeben -->
     <?php if(isset($_SESSION['benutzername'])) { ?>
       <ul class="navbar-nav mr-0 my-lg-0">
         <li class="nav-item">
@@ -41,6 +43,7 @@ if (($statementAnzahlNachricht = $databaseconnection->prepare("SELECT COUNT(Gele
           </div>
         </li>
       </ul>
+      <!-- Wenn man nicht eingeloggt ist, hat man die Möglichkeit, sich zu registrieren oder sich einzuloggen -->
     <?php } else {?>
     <ul class="navbar-nav mr-0 my-lg-0">
       <li class="nav-item">
