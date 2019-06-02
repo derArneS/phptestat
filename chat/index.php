@@ -13,7 +13,7 @@ require "../const/private.php"; isPrivate(true, "/chat");
 if (($statement = $databaseconnection->prepare("SELECT Sender, Empfaenger, Sender.Benutzername AS Sendername, Empfaenger.Benutzername AS Empfaengername
                                                 FROM Nachrichten, Benutzer AS Sender, Benutzer AS Empfaenger
                                                 WHERE (Sender = ? OR Empfaenger = ?) AND Nachrichten.Sender = Sender.ID AND Nachrichten.Empfaenger = Empfaenger.ID
-                                                GROUP BY Empfaenger"))
+                                                GROUP BY Empfaenger, Sender"))
 && ($statement->bind_param('ii', $_SESSION['id'], $_SESSION['id']))
 && ($statement->execute())
 && ($resultset = $statement->get_result())) {
